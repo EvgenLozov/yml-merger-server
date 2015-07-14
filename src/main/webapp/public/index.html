@@ -3,13 +3,73 @@
 <head>
     <title>Hello</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <!-- Свіжа збірка мінімізованих CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <!-- Додаткові теми -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
     <script src="js/hello.js"></script>
 </head>
 
 <body>
-<div>
-    <p class="greeting-id">The ID is </p>
-    <p class="greeting-content">The content is </p>
+<div class="container">
+    <!-- Top menu -->
+    <div class="row clearfix">
+        <div class="col-lg-12 column">
+            <p class="greeting-id">The ID is </p>
+            <p class="greeting-content">The content is </p>
+
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">Название конфига</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="login" class="col-sm-2 control-label">Логин для ApiShops</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="login">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-sm-2 control-label">Пароль для ApiShops</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="encoding" class="col-sm-2 control-label">Кодировка</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="encoding">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="urls" class="col-sm-2 control-label">Ссылки на прайсы</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" rows="3" id="urls"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="paths" class="col-sm-2 control-label">Пути к прайсам</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" rows="3" id="paths"></textarea>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">Добавить</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
 </div>
 </body>
 </html>
