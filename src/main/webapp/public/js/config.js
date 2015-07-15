@@ -1,6 +1,11 @@
 $(document).ready(function() {
     $.ajax({
-        url: "/config"
+        url: "/config",
+        statusCode : {
+            500: function() {
+                alert("Не удалось получить данные! " +
+                        "Убедитесь , что конфиг файл config/config.json сущевствует")
+            }}
     }).then(function(data) {
         $('#user').val(data.user);
         $('#psw').val(data.psw);
@@ -13,6 +18,10 @@ $(document).ready(function() {
 
     $( "#saveBtn" ).click(function() {
         saveConfig()
+    });
+
+    $( "#mergeBtn" ).click(function() {
+        merge()
     });
 });
 
@@ -49,6 +58,18 @@ function saveConfig(){
                 alert("Не удалось сохранить данные!")
             }}
     });
+}
 
-    console.log(JSON.stringify(config))
+function merge(){
+    $.ajax({
+        type: "POST",
+        url: "/download",
+        statusCode : {
+            200: function() {
+                alert("Ок!")
+            },
+            500: function() {
+                alert("Ошмбка!")
+            }}
+    });
 }
