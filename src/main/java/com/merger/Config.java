@@ -1,5 +1,6 @@
 package com.merger;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -9,8 +10,11 @@ public class Config {
 
     private String user;
     private String psw;
-    private Set<String> urls;
+    private List<String> urls;
+    private List<String> files;
     private String encoding;
+    private String outputFile;
+    private Set<String> categoryIds;
 
     public String getUser() {
         return user;
@@ -28,11 +32,11 @@ public class Config {
         this.psw = psw;
     }
 
-    public Set<String> getUrls() {
+    public List<String> getUrls() {
         return urls;
     }
 
-    public void setUrls(Set<String> urls) {
+    public void setUrls(List<String> urls) {
         this.urls = urls;
     }
 
@@ -42,5 +46,29 @@ public class Config {
 
     public void setEncoding(String encoding) {
         this.encoding = encoding;
+    }
+
+    public String getOutputFile() {
+        return outputFile;
+    }
+
+    public void setOutputFile(String outputFile) {
+        this.outputFile = outputFile;
+    }
+
+    public List<String> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<String> files) {
+        this.files = files;
+    }
+
+    public Set<String> getCategoryIds() {
+        return categoryIds;
+    }
+
+    public void setCategoryIds(Set<String> categoryIds) {
+        this.categoryIds = categoryIds;
     }
 }
