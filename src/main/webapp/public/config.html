@@ -11,7 +11,7 @@
 
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <script src="js/hello.js"></script>
+    <script src="js/config.js"></script>
 </head>
 
 <body>
@@ -22,27 +22,21 @@
 
             <form class="form-horizontal">
                 <div class="form-group">
-                    <label for="name" class="col-sm-2 control-label">Название конфига</label>
+                    <label for="user" class="col-sm-2 control-label">Логин для ApiShops</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="name">
+                        <input type="text" class="form-control" id="user">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="login" class="col-sm-2 control-label">Логин для ApiShops</label>
+                    <label for="psw" class="col-sm-2 control-label">Пароль для ApiShops</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="login">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="password" class="col-sm-2 control-label">Пароль для ApiShops</label>
-                    <div class="col-sm-6">
-                        <input type="password" class="form-control" id="password">
+                        <input type="password" class="form-control" id="psw">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="encoding" class="col-sm-2 control-label">Кодировка</label>
                     <div class="col-sm-6">
-                        <input type="password" class="form-control" id="encoding">
+                        <input type="text" class="form-control" id="encoding">
                     </div>
                 </div>
                 <div class="form-group">
@@ -52,9 +46,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="paths" class="col-sm-2 control-label">Пути к прайсам</label>
+                    <label for="files" class="col-sm-2 control-label">Пути к прайсам на диске</label>
                     <div class="col-sm-6">
-                        <textarea class="form-control" rows="2" id="paths"></textarea>
+                        <textarea class="form-control" rows="2" id="files"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -66,13 +60,13 @@
                 <div class="form-group">
                     <label for="outputFile" class="col-sm-2 control-label">Результирующий прайс</label>
                     <div class="col-sm-6">
-                        <input type="password" class="form-control" id="outputFile">
+                        <input type="text" class="form-control" id="outputFile">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-6">
-                        <button type="submit" class="btn btn-default">Добавить</button>
+                        <button type="submit" class="btn btn-default">Сохранить</button>
                     </div>
                 </div>
             </form>

@@ -1,7 +1,8 @@
 package com.merger.controller;
 
 import com.merger.Config;
-import org.springframework.web.bind.annotation.PathVariable;
+import com.merger.ConfigRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,10 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/config")
 public class ConfigController {
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Config get(@PathVariable("id") String id) {
-        //todo get config from config repo
-        return new Config();
+
+    @Autowired
+    private ConfigRepository configRepository;
+
+    @RequestMapping(method = RequestMethod.GET)
+    public Config get() {
+        return configRepository.get();
     }
 
 }

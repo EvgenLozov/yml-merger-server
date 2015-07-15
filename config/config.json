@@ -3,5 +3,8 @@
   "psw" : "neuser50",
   "urls" : ["/websiteAction?action=getPriceTiu&id=462382&addPictures=2",
     "/websiteAction?action=getPriceTiu&id=462391&addPictures=2"],
-  "encoding" : "cp1251"
+  "files" : ["files/price1.xml", "files/price2.xml"],
+  "encoding" : "utf-8",
+  "outputFile" : "files/mergedPrice.xml",
+  "categoryIds" : ["154", "155"]
 }
