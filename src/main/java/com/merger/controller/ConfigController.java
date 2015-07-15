@@ -3,6 +3,7 @@ package com.merger.controller;
 import com.merger.Config;
 import com.merger.ConfigRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,12 @@ public class ConfigController {
     @RequestMapping(method = RequestMethod.GET)
     public Config get() {
         return configRepository.get();
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public Config save(@RequestBody Config config) {
+        configRepository.save(config);
+        return config;
     }
 
 }

@@ -1,10 +1,9 @@
 {
   "user" : "user50",
   "psw" : "neuser50",
-  "urls" : ["/websiteAction?action=getPriceTiu&id=462382&addPictures=2",
-    "/websiteAction?action=getPriceTiu&id=462391&addPictures=2"],
-  "files" : ["files/price1.xml", "files/price2.xml"],
-  "encoding" : "utf-8",
+  "urls" : [ "/websiteAction?action=getPriceTiu&id=462382&addPictures=2", "/websiteAction?action=getPriceTiu&id=462391&addPictures=2" ],
+  "files" : [ "files/price1.xml", "files/price2.xml" ],
+  "encoding" : "cp1251",
   "outputFile" : "files/mergedPrice.xml",
-  "categoryIds" : ["154", "155"]
+  "categoryIds" : [ "156", "155", "154" ]
 }
