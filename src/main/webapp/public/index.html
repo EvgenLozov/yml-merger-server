@@ -1,0 +1,146 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Example Backbone App</title>
+  <!-- load the bootstrap stylesheet -->
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
+  <!-- load the libraries we need -->
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.3/zepto.min.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+  <!-- load our scripts -->
+  <script type="text/javascript" src="js/config_router.js"></script>
+  <script type="text/javascript" src="js/models/config_model.js"></script>
+  <script type="text/javascript" src="js/views/config_index.js"></script>
+  <script type="text/javascript" src="js/views/config_row.js"></script>
+  <script type="text/javascript" src="js/views/config_new.js"></script>
+  <script type="text/javascript" src="js/views/config_edit.js"></script>
+  <script type="text/javascript" src="js/views/config_show.js"></script>
+</head>
+<body>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6" id="primary-content">
+        <!-- the container that gets populated with the index -->
+      </div>
+    </div>
+  </div>
+
+  <!-- the form, used for create and edit -->
+  <script type="text/jst" id="formTemplate">
+    <div class="well">
+      <div class="alert alert-danger fade in" style="display:none;"></div>
+      <form class="form-horizontal" id="configForm">
+                 <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">Название</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="name" name="name" value="<%= name %>" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="user" class="col-sm-2 control-label">Логин для ApiShops</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="user" name="user" value="<%= user %>" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="psw" class="col-sm-2 control-label">Пароль для ApiShops</label>
+                    <div class="col-sm-6">
+                        <input type="password" class="form-control" id="psw" name="psw" value="<%= psw %>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="encoding" class="col-sm-2 control-label">Кодировка</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="encoding" name="encoding" value="<%= encoding %>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="urls" class="col-sm-2 control-label">Ссылки на прайсы</label>
+                    <div class="col-sm-6">
+                        <textarea class="form-control" rows="2" id="urls" name="urls"><%= urls %></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="files" class="col-sm-2 control-label">Пути к прайсам на диске</label>
+                    <div class="col-sm-6">
+                        <textarea class="form-control" rows="2" id="files" name="files"><%= files %></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="categoryIds" class="col-sm-2 control-label">ID категорий для прайса</label>
+                    <div class="col-sm-6">
+                        <textarea class="form-control" rows="2" id="categoryIds" name="categoryIds"><%= categoryIds %></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="outputFile" class="col-sm-2 control-label">Результирующий прайс</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="outputFile" name="outputFile" value="<%= outputFile %>">
+                    </div>
+                </div>
+
+                <button class="save btn btn-large btn-info" type="submit">Save</button>
+                <a href="#configs/index" class="btn btn-large">Cancel</a>
+            </form>
+    </div>
+  </script>
+
+  <!-- the index container -->
+  <script type="text/template" id="indexTemplate">
+    <div class="well">
+      <a class="btn btn-block btn-large btn-info" href="#config/new">Create New Config</a>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th width="20%">Название</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </script>
+
+  <!-- the row template, renders once for each item in the index -->
+  <script type="text/template" id="rowTemplate">
+    <td>
+      <a href="#config/<%= id %>/view"><%= name %></a>
+    </td>
+    <td>
+      <a href="#" class="delete btn btn-danger btn-small">delete</a>
+    </td>
+  </script>
+
+  <!-- the show template -->
+  <script type="text/template" id="showTemplate">
+    <ol class="breadcrumb">
+      <li>
+        <a href="#configs/index">All Configs</a>
+      </li>
+      <li class="active">View Config</li>
+    </ol>
+
+    <h2>
+      <%= name %>
+    </h2>
+    <p style="white-space:pre-wrap;"><%= name %></p>
+    <hr/>
+    <a class="btn btn-info btn-block" href="#config/<%= id %>/edit">Edit Config</a>
+  </script>
+
+  <!-- kick off the app -->
+  <script type="text/javascript">
+    var router = new APP.ConfigRouter({
+      configs: new APP.ConfigCollection()
+    });
+
+    // we manually pass in the initial data, but this would be called with a collection.fetch() normally
+    router.configs.fetch({reset: true});
+    
+    // now that everyting is setup we tell backbone to watch the urls
+    Backbone.history.start();
+  </script>
+</body>
+</html>

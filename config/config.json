@@ -1,4 +1,6 @@
-{
+[ {
+  "id" : "1",
+  "name" : "First ",
   "user" : "user50",
   "psw" : "neuser50",
   "urls" : [ "/websiteAction?action=getPriceTiu&id=462382&addPictures=2", "/websiteAction?action=getPriceTiu&id=462391&addPictures=2" ],
@@ -6,4 +8,4 @@
   "encoding" : "cp1251",
   "outputFile" : "files/mergedPrice.xml",
   "categoryIds" : [ "156", "155", "154" ]
-}
+} ]

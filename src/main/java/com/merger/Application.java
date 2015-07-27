@@ -21,7 +21,7 @@ public class Application {
 
     @Bean
     public MergeService mergeService(){
-        return new MergeByDOMService(configRepository().get());
+        return new MergeByDOMService(configRepository().list().get(0));
     }
 
     @Bean

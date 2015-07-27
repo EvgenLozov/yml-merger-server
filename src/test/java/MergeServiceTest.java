@@ -2,6 +2,7 @@ import com.merger.Config;
 import com.merger.ConfigProvider;
 import com.merger.merge.MergeByDOMService;
 import com.merger.merge.MergeByObjectsModelService;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.FileOutputStream;
@@ -9,6 +10,7 @@ import java.io.FileOutputStream;
 /**
  * Created by user50 on 21.06.2015.
  */
+@Ignore
 public class MergeServiceTest {
 
     @Test

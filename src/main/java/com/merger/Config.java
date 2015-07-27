@@ -8,6 +8,8 @@ import java.util.Set;
  */
 public class Config {
 
+    private String id;
+    private String name;
     private String user;
     private String psw;
     private List<String> urls;
@@ -15,6 +17,22 @@ public class Config {
     private String encoding;
     private String outputFile;
     private Set<String> categoryIds;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getUser() {
         return user;
