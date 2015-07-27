@@ -18,7 +18,16 @@ APP.ConfigEditView = Backbone.View.extend({
 
     // update our model with values from the form
     this.config.set({
-      name: this.$el.find('#name').val()
+      name: this.$el.find('#name').val(),
+      user: this.$el.find('#user').val(),
+      psw: this.$el.find('#psw').val(),
+      encoding: this.$el.find('#encoding').val(),
+      currency: this.$el.find('#currency').val(),
+      urls: this.$el.find('#urls').val().split(","),
+      outputFile: this.$el.find('#outputFile').val(),
+      files: this.$el.find('#files').val().split(","),
+      categoryIds: this.$el.find('#categoryIds').val().split(","),
+      replaces: getReplaces(this.$el.find('#replaces').val())
     });
     // we would save to the server here with
     this.config.save();
@@ -32,3 +41,27 @@ APP.ConfigEditView = Backbone.View.extend({
     return this;
   }
 });
+
+function getReplaces(replacesValue){
+  var replaces = [];
+  var replacesArray = replacesValue.split(";");
+
+  console.log(replacesArray.toString());
+
+  replacesArray.forEach(function(replaceString){
+    if (!replaceString.trim()) {
+      return;
+    }
+
+    var replacement = replaceString.split("-")[0].trim();
+    var wordsToReplaceString = replaceString.split("-")[1].trim();
+    var wordsToReplace = wordsToReplaceString.split(",");
+
+    var newReplace = { replacement : replacement,
+      wordsToReplace : wordsToReplace };
+
+    replaces.push(newReplace);
+  });
+
+  return replaces;
+}

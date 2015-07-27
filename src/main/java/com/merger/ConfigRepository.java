@@ -3,10 +3,8 @@ package com.merger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -15,7 +13,7 @@ import java.util.UUID;
  * Created by lozov on 15.07.15.
  */
 public class ConfigRepository {
-    public static final String CONFIG_FILE = "config/config.json";
+    public static final String CONFIG_FILE = "config" + File.separator + "config.json";
     private ObjectMapper objectMapper;
 
     public ConfigRepository(ObjectMapper objectMapper) {
@@ -28,7 +26,10 @@ public class ConfigRepository {
             CollectionType listType = objectMapper.getTypeFactory().constructCollectionType(List.class, Config.class);
 
             return objectMapper.readValue(inputStream, listType);
+        } catch (FileNotFoundException e) {
+            return new ArrayList<>();
         } catch (IOException e) {
+            e.printStackTrace();
             throw new RuntimeException("Unable to read " + CONFIG_FILE);
         }
     }
@@ -78,6 +79,14 @@ public class ConfigRepository {
 
     private void updateStorageFile(List<Config> configList) {
         File configFile = new File(CONFIG_FILE);
+        if (!configFile.exists())
+            try {
+                configFile.getParentFile().mkdirs();
+                configFile.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException("Unable to create " + CONFIG_FILE);
+            }
+
         try {
             objectMapper.writeValue(configFile, configList);
         } catch (IOException e) {

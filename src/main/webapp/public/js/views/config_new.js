@@ -28,8 +28,16 @@ APP.ConfigNewView = Backbone.View.extend({
 
     // update our model with values from the form
     this.config.set({
-      //id: generateUUID(),
-      name: this.$el.find('#name').val()
+      name: this.$el.find('#name').val(),
+      user: this.$el.find('#user').val(),
+      psw: this.$el.find('#psw').val(),
+      encoding: this.$el.find('#encoding').val(),
+      currency: this.$el.find('#currency').val(),
+      urls: this.$el.find('#urls').val().split(","),
+      outputFile: this.$el.find('#outputFile').val(),
+      files: this.$el.find('#files').val().split(","),
+      categoryIds: this.$el.find('#categoryIds').val().split(","),
+      replaces: getReplaces(this.$el.find('#replaces').val())
     });
     if (this.config.isValid()){
       var newConfig = this.config.attributes;

@@ -16,7 +16,10 @@ public class Config {
     private List<String> files;
     private String encoding;
     private String outputFile;
+    private Currency currency;
     private Set<String> categoryIds;
+    private List<Replace> replaces;
+    private double oldPrice;
 
     public String getId() {
         return id;
@@ -74,6 +77,14 @@ public class Config {
         this.outputFile = outputFile;
     }
 
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
     public List<String> getFiles() {
         return files;
     }
@@ -88,5 +99,21 @@ public class Config {
 
     public void setCategoryIds(Set<String> categoryIds) {
         this.categoryIds = categoryIds;
+    }
+
+    public List<Replace> getReplaces() {
+        return replaces;
+    }
+
+    public void setReplaces(List<Replace> replaces) {
+        this.replaces = replaces;
+    }
+
+    public double getOldPrice() {
+        return oldPrice;
+    }
+
+    public void setOldPrice(double oldPrice) {
+        this.oldPrice = oldPrice;
     }
 }

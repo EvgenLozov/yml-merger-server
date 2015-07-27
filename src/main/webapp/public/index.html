@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <title>Example Backbone App</title>
+  <title>Прайс генератор</title>
   <!-- load the bootstrap stylesheet -->
   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
   <!-- load the libraries we need -->
@@ -31,71 +31,91 @@
   <script type="text/jst" id="formTemplate">
     <div class="well">
       <div class="alert alert-danger fade in" style="display:none;"></div>
-      <form class="form-horizontal" id="configForm">
+            <form class="form-horizontal" id="configForm">
                  <div class="form-group">
-                    <label for="name" class="col-sm-2 control-label">Название</label>
-                    <div class="col-sm-6">
+                    <label for="name" class="col-md-4 control-label">Название</label>
+                    <div class="col-md-8">
                         <input type="text" class="form-control" id="name" name="name" value="<%= name %>" >
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="user" class="col-sm-2 control-label">Логин для ApiShops</label>
-                    <div class="col-sm-6">
+                    <label for="user" class="col-md-4 control-label">Логин для ApiShops</label>
+                    <div class="col-md-8">
                         <input type="text" class="form-control" id="user" name="user" value="<%= user %>" >
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="psw" class="col-sm-2 control-label">Пароль для ApiShops</label>
-                    <div class="col-sm-6">
+                    <label for="psw" class="col-md-4 control-label">Пароль для ApiShops</label>
+                    <div class="col-md-8">
                         <input type="password" class="form-control" id="psw" name="psw" value="<%= psw %>">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="encoding" class="col-sm-2 control-label">Кодировка</label>
-                    <div class="col-sm-6">
+                    <label for="encoding" class="col-md-4 control-label">Кодировка</label>
+                    <div class="col-md-8">
                         <input type="text" class="form-control" id="encoding" name="encoding" value="<%= encoding %>">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="urls" class="col-sm-2 control-label">Ссылки на прайсы</label>
-                    <div class="col-sm-6">
+                    <label for="currency" class="col-md-4 control-label">Валюта прайса</label>
+                    <div class="col-md-8">
+                          <select class="form-control" id="currency" value="<%= currency %>">
+                            <option value="RUR">Рубли (рус.)</option>
+                            <option value="UAH">Гривны</option>
+                            <option value="BYR">Рубли (бел.)</option>
+                            <option value="KZT">Тенге</option>
+                          </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="urls" class="col-md-4 control-label">Ссылки на прайсы</label>
+                    <div class="col-md-8">
                         <textarea class="form-control" rows="2" id="urls" name="urls"><%= urls %></textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="files" class="col-sm-2 control-label">Пути к прайсам на диске</label>
-                    <div class="col-sm-6">
+                    <label for="files" class="col-md-4 control-label">Пути к прайсам на диске</label>
+                    <div class="col-md-8">
                         <textarea class="form-control" rows="2" id="files" name="files"><%= files %></textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="categoryIds" class="col-sm-2 control-label">ID категорий для прайса</label>
-                    <div class="col-sm-6">
+                    <label for="categoryIds" class="col-md-4 control-label">ID категорий для прайса</label>
+                    <div class="col-md-8">
                         <textarea class="form-control" rows="2" id="categoryIds" name="categoryIds"><%= categoryIds %></textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="outputFile" class="col-sm-2 control-label">Результирующий прайс</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="outputFile" name="outputFile" value="<%= outputFile %>">
+                    <label for="replaces" class="col-md-4 control-label">Замена слов</label>
+                    <div class="col-md-8">
+                        <textarea class="form-control" rows="2" id="replaces" name="replaces">
+                            <% if(typeof replaces != 'undefined'){
+                            var string = "";
+                            _.each(replaces, function(replace)
+                             { string += replace.replacement; string += '-' ; string += replace.wordsToReplace; string += ';' })
+                             print(string) };
+                             %>
+                        </textarea>
                     </div>
                 </div>
-
-                <button class="save btn btn-large btn-info" type="submit">Save</button>
-                <a href="#configs/index" class="btn btn-large">Cancel</a>
             </form>
+
+        <button class="save btn btn-large btn-info" type="submit">Сохранить</button>
+        <a href="#configs/index" class="btn btn-large">Отмена</a>
     </div>
   </script>
 
   <!-- the index container -->
   <script type="text/template" id="indexTemplate">
     <div class="well">
-      <a class="btn btn-block btn-large btn-info" href="#config/new">Create New Config</a>
+      <a class="btn btn-info" href="#config/new">Создать новый конфиг</a>
     </div>
     <table class="table table-striped">
       <thead>
         <tr>
-          <th width="20%">Название</th>
+          <th width="50%"></th>
+          <th></th>
+          <th></th>
           <th></th>
         </tr>
       </thead>
@@ -109,7 +129,13 @@
       <a href="#config/<%= id %>/view"><%= name %></a>
     </td>
     <td>
-      <a href="#" class="delete btn btn-danger btn-small">delete</a>
+        <a href="#" class="merge btn btn-success btn-sm">Объеденить</a>
+    </td>
+    <td>
+        <a href="#" class="download btn btn-primary btn-sm">Скачать</a>
+    </td>
+    <td>
+      <a href="#" class="delete btn btn-danger btn-sm">Удалить</a>
     </td>
   </script>
 
@@ -117,17 +143,73 @@
   <script type="text/template" id="showTemplate">
     <ol class="breadcrumb">
       <li>
-        <a href="#configs/index">All Configs</a>
+        <a href="#configs/index">Список конфигов</a>
       </li>
-      <li class="active">View Config</li>
+      <li class="active">Просмотр конфига <%= name %></li>
     </ol>
 
-    <h2>
+    <h3>
       <%= name %>
-    </h2>
-    <p style="white-space:pre-wrap;"><%= name %></p>
+    </h3>
+
+    <form class="form-horizontal" id="configForm">
+        <div class="form-group">
+            <label for="user" class="col-md-4 control-label">Логин для ApiShops</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="user" name="user" value="<%= user %>" >
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="psw" class="col-md-4 control-label">Пароль для ApiShops</label>
+            <div class="col-md-8">
+                <input type="password" class="form-control" id="psw" name="psw" value="<%= psw %>">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="encoding" class="col-md-4 control-label">Кодировка</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="encoding" name="encoding" value="<%= encoding %>">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="currency" class="col-md-4 control-label">Валюта прайса</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="currency" name="currency" value="<%= currency %>">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="urls" class="col-md-4 control-label">Ссылки на прайсы</label>
+            <div class="col-md-8">
+                <textarea class="form-control" rows="2" id="urls" name="urls"><%= urls %></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="files" class="col-md-4 control-label">Пути к прайсам на диске</label>
+            <div class="col-md-8">
+                <textarea class="form-control" rows="2" id="files" name="files"><%= files %></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="categoryIds" class="col-md-4 control-label">ID категорий для прайса</label>
+            <div class="col-md-8">
+                <textarea class="form-control" rows="2" id="categoryIds" name="categoryIds"><%= categoryIds %></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="replaces" class="col-md-4 control-label">Замена слов</label>
+            <div class="col-md-8">
+                <textarea class="form-control" rows="2" id="replaces" name="replaces">
+                    <% if(typeof replaces != 'undefined'){
+                    var string = "";
+                    _.each(replaces, function(replace)
+                     { string += replace.replacement; string += '-' ; string += replace.wordsToReplace; string += ';' })
+                     print(string) };
+                     %>
+                </textarea>
+            </div>
+        </div>
     <hr/>
-    <a class="btn btn-info btn-block" href="#config/<%= id %>/edit">Edit Config</a>
+    <a class="btn btn-info" href="#config/<%= id %>/edit">Редактировать</a>
   </script>
 
   <!-- kick off the app -->

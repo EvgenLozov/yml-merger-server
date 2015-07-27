@@ -5,6 +5,8 @@ APP.ConfigRowView = Backbone.View.extend({
   tagName: "tr",
   // functions to fire on events
   events: {
+    "click a.merge": "merge",
+    "click a.download": "download",
     "click a.delete": "destroy"
   },
 
@@ -30,5 +32,42 @@ APP.ConfigRowView = Backbone.View.extend({
     // which would make a DELETE call to the server with the id of the item
     this.configs.remove(this.config);
     this.$el.remove();
+  },
+
+  merge: function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    var configId = this.config.id;
+
+    $.ajax({
+      type: "POST",
+      url : "/pricelists/" + configId + "/merge",
+      success: function(){
+        console.log("Merge " + configId);
+        alert("Объединение прайсов запущено");
+      },
+      error : function(){
+        alert("Ошибка при попытке объединения пайсов");
+      }
+    })
+  },
+
+  download: function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    var configId = this.config.id;
+
+    $.ajax({
+      type: "POST",
+      url : "/pricelists/" + configId + "/download",
+      success: function(){
+        console.log("Download " + configId);
+      },
+      error : function(){
+        alert("Ошибка при попытке объединения пайсов");
+      }
+    })
   }
 });
