@@ -86,6 +86,12 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="oldPrice" class="col-md-4 control-label">Наценка для старой цены, %</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="oldPrice" name="oldPrice" value="<%= oldPrice*100 %>">
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="replaces" class="col-md-4 control-label">Замена слов</label>
                     <div class="col-md-8">
                         <textarea class="form-control" rows="2" id="replaces" name="replaces">
@@ -154,51 +160,57 @@
 
     <form class="form-horizontal" id="configForm">
         <div class="form-group">
-            <label for="user" class="col-md-4 control-label">Логин для ApiShops</label>
+            <label for="user" class="col-md-4 control-label" >Логин для ApiShops</label>
             <div class="col-md-8">
-                <input type="text" class="form-control" id="user" name="user" value="<%= user %>" >
+                <input type="text" class="form-control" id="user" name="user" value="<%= user %>" disabled>
             </div>
         </div>
         <div class="form-group">
             <label for="psw" class="col-md-4 control-label">Пароль для ApiShops</label>
             <div class="col-md-8">
-                <input type="password" class="form-control" id="psw" name="psw" value="<%= psw %>">
+                <input type="password" class="form-control" id="psw" name="psw" value="<%= psw %>" disabled>
             </div>
         </div>
         <div class="form-group">
             <label for="encoding" class="col-md-4 control-label">Кодировка</label>
             <div class="col-md-8">
-                <input type="text" class="form-control" id="encoding" name="encoding" value="<%= encoding %>">
+                <input type="text" class="form-control" id="encoding" name="encoding" value="<%= encoding %>" disabled>
             </div>
         </div>
         <div class="form-group">
             <label for="currency" class="col-md-4 control-label">Валюта прайса</label>
             <div class="col-md-8">
-                <input type="text" class="form-control" id="currency" name="currency" value="<%= currency %>">
+                <input type="text" class="form-control" id="currency" name="currency" value="<%= currency %>" disabled>
             </div>
         </div>
         <div class="form-group">
             <label for="urls" class="col-md-4 control-label">Ссылки на прайсы</label>
             <div class="col-md-8">
-                <textarea class="form-control" rows="2" id="urls" name="urls"><%= urls %></textarea>
+                <textarea class="form-control" rows="2" id="urls" name="urls" disabled><%= urls %></textarea>
             </div>
         </div>
         <div class="form-group">
             <label for="files" class="col-md-4 control-label">Пути к прайсам на диске</label>
             <div class="col-md-8">
-                <textarea class="form-control" rows="2" id="files" name="files"><%= files %></textarea>
+                <textarea class="form-control" rows="2" id="files" name="files" disabled><%= files %></textarea>
             </div>
         </div>
         <div class="form-group">
             <label for="categoryIds" class="col-md-4 control-label">ID категорий для прайса</label>
             <div class="col-md-8">
-                <textarea class="form-control" rows="2" id="categoryIds" name="categoryIds"><%= categoryIds %></textarea>
+                <textarea class="form-control" rows="2" id="categoryIds" name="categoryIds" disabled><%= categoryIds %></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="oldPrice" class="col-md-4 control-label">наценка для старой цены, %</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="oldPrice" name="oldPrice" value="<%= oldPrice*100 %>" disabled>
             </div>
         </div>
         <div class="form-group">
             <label for="replaces" class="col-md-4 control-label">Замена слов</label>
             <div class="col-md-8">
-                <textarea class="form-control" rows="2" id="replaces" name="replaces">
+                <textarea class="form-control" rows="2" id="replaces" name="replaces" disabled>
                     <% if(typeof replaces != 'undefined'){
                     var string = "";
                     _.each(replaces, function(replace)
@@ -208,6 +220,7 @@
                 </textarea>
             </div>
         </div>
+        </form>
     <hr/>
     <a class="btn btn-info" href="#config/<%= id %>/edit">Редактировать</a>
   </script>

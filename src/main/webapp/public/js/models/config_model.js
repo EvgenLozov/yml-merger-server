@@ -11,7 +11,8 @@ APP.ConfigModel = Backbone.Model.extend({
     "encoding" : "utf-8",
     "currency" : "RUR",
     "outputFile" : "",
-    "categoryIds" : []
+    "categoryIds" : [],
+    "oldPrice" : 0
   },
 
 
@@ -50,6 +51,10 @@ function getCurrentDate(){
 
   if(mm<10) {
     mm='0'+mm
+  }
+
+  if(MM<10) {
+    MM='0'+MM
   }
 
   today = dd+'/'+mm+'/'+yyyy + " " + hh + ":" + MM;

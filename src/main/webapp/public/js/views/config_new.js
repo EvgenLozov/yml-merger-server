@@ -37,8 +37,10 @@ APP.ConfigNewView = Backbone.View.extend({
       outputFile: this.$el.find('#outputFile').val(),
       files: this.$el.find('#files').val().split(","),
       categoryIds: this.$el.find('#categoryIds').val().split(","),
+      oldPrice: this.$el.find('#oldPrice').val()/100,
       replaces: getReplaces(this.$el.find('#replaces').val())
     });
+
     if (this.config.isValid()){
       var newConfig = this.config.attributes;
       var configs = this.configs;

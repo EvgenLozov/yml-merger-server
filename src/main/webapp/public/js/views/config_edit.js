@@ -27,6 +27,7 @@ APP.ConfigEditView = Backbone.View.extend({
       outputFile: this.$el.find('#outputFile').val(),
       files: this.$el.find('#files').val().split(","),
       categoryIds: this.$el.find('#categoryIds').val().split(","),
+      oldPrice: this.$el.find('#oldPrice').val()/100,
       replaces: getReplaces(this.$el.find('#replaces').val())
     });
     // we would save to the server here with
@@ -45,8 +46,6 @@ APP.ConfigEditView = Backbone.View.extend({
 function getReplaces(replacesValue){
   var replaces = [];
   var replacesArray = replacesValue.split(";");
-
-  console.log(replacesArray.toString());
 
   replacesArray.forEach(function(replaceString){
     if (!replaceString.trim()) {

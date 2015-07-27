@@ -1,11 +1,40 @@
 [ {
   "id" : "1",
-  "name" : "First ",
+  "name" : "First 1",
   "user" : "user50",
   "psw" : "neuser50",
   "urls" : [ "/websiteAction?action=getPriceTiu&id=462382&addPictures=2", "/websiteAction?action=getPriceTiu&id=462391&addPictures=2" ],
   "files" : [ "files/price1.xml", "files/price2.xml" ],
   "encoding" : "cp1251",
-  "outputFile" : "files/mergedPrice.xml",
-  "categoryIds" : [ "156", "155", "154" ]
+  "outputFile" : null,
+  "currency" : "RUR",
+  "categoryIds" : [ "156", "155", "154" ],
+  "replaces" : [ ],
+  "oldPrice" : 0.22
+}, {
+  "id" : "2756d354-32d0-49bf-b680-0f18dc727f3f",
+  "name" : "Конфиг 27/07/2015 21:44",
+  "user" : "query_manager",
+  "psw" : "query_manager",
+  "urls" : [ "" ],
+  "files" : [ "" ],
+  "encoding" : "utf-8",
+  "outputFile" : null,
+  "currency" : "RUR",
+  "categoryIds" : [ "" ],
+  "replaces" : [ ],
+  "oldPrice" : 0.2
+}, {
+  "id" : "63dbd152-7ddc-40f2-8878-8ba151d2a410",
+  "name" : "Конфиг 27/07/2015 21:54",
+  "user" : "query_manager",
+  "psw" : "query_manager",
+  "urls" : [ "" ],
+  "files" : [ "" ],
+  "encoding" : "utf-8",
+  "outputFile" : null,
+  "currency" : "RUR",
+  "categoryIds" : [ "" ],
+  "replaces" : [ ],
+  "oldPrice" : 0.1
 } ]
