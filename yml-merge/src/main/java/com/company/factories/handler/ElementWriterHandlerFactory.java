@@ -1,0 +1,52 @@
+package com.company.factories.handler;
+
+import company.Factory;
+import company.StAXService;
+import company.XMLEventReaderProvider;
+import company.conditions.AfterElement;
+import company.conditions.EventCondition;
+import company.conditions.OnceTime;
+import company.handlers.xml.SuccessiveXmlEventHandler;
+import company.handlers.xml.XmlEventHandler;
+import company.handlers.xml.XmlEventHandlingProcessTrigger;
+
+import javax.xml.stream.events.XMLEvent;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * конструює XmlEventHandler призначенням якого являється запуск процесу обробки xml-файлів представлених в
+ * readerProviders. Процес обробки запускається один раз після першої зустрічі елементу afterElementName.
+ * XmlEventHandler з допомогою якого будуть оброблятись файли надає фабрика handlerFactory
+ */
+public class ElementWriterHandlerFactory implements Factory<XmlEventHandler>{
+
+    List<XMLEventReaderProvider> readerProviders;
+    String afterElementName;
+    Factory<XmlEventHandler> handlerFactory;
+
+    public ElementWriterHandlerFactory(List<XMLEventReaderProvider> readerProviders,
+                                       String afterElementName,
+                                       Factory<XmlEventHandler> handlerFactory) {
+        this.readerProviders = readerProviders;
+        this.afterElementName = afterElementName;
+        this.handlerFactory = handlerFactory;
+    }
+
+    @Override
+    public XmlEventHandler get() {
+
+        List<XmlEventHandler> handlers = new ArrayList<>();
+
+        for (XMLEventReaderProvider readerProvider : readerProviders) {
+
+            EventCondition<XMLEvent> writeElementsConditions = new OnceTime(new AfterElement(afterElementName));
+            StAXService service = new StAXService(readerProvider);
+
+            handlers.add(new XmlEventHandlingProcessTrigger(writeElementsConditions, service, handlerFactory.get()));
+        }
+
+        return new SuccessiveXmlEventHandler(handlers);
+    }
+
+}

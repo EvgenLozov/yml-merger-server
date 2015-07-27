@@ -1,0 +1,14 @@
+{
+    "user" : "user50",
+    "psw" : "neuser50",
+    "urls" : [],
+    "files":["files/shop.yml"],
+    "encoding" : "cp1251",
+    "outputFile":"files/mergedPrice.xml",
+    "categoryIds" : [2],
+    "currency":"BYR",
+    "replaces":[
+        {"wordsToReplace":["Средство"], "replacement":"Средства" },
+        {"wordsToReplace":["кабель"], "replacement":"Кобель" }
+    ]
+}

@@ -1,0 +1,26 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.7
+version = '1.2'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    compile project(':yml-common')
+
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Merge yml task',
+                'Implementation-Version': version,
+                'Main-Class': 'com.company.Main'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
