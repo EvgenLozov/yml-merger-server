@@ -1,6 +1,6 @@
 package com.merger.controller;
 
-import com.merger.Config;
+import com.company.config.Config;
 import com.merger.ConfigRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
