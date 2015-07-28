@@ -46,7 +46,7 @@ APP.ConfigNewView = Backbone.View.extend({
       var configs = this.configs;
       this.config.save(null,
           {
-            success: function() {
+            success: function(model) {
                         configs.add(model);
                         window.location.hash = "configs/index";
                       },
