@@ -1,5 +1,6 @@
 package com.merger;
 
+import com.company.config.Config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
@@ -54,6 +55,7 @@ public class ConfigRepository {
     public Config create(Config config) {
         String id = UUID.randomUUID().toString();
         config.setId(id);
+        config.setOutputFile("prices/"+id+".xml");
 
         List<Config> configList = list();
         configList.add(config);
@@ -74,7 +76,12 @@ public class ConfigRepository {
     }
 
     public Config get(String id) {
-        return null;
+        for (Config config : list()) {
+            if (config.getId().equals(id))
+                return config;
+        }
+
+        throw new RuntimeException("Unable to find config by id");
     }
 
     private void updateStorageFile(List<Config> configList) {

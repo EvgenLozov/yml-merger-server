@@ -9,6 +9,8 @@ import java.util.List;
  */
 public class Config {
 
+    private String id;
+    private String name;
     private String user;
     private String psw;
     private List<String> urls;
@@ -98,5 +100,21 @@ public class Config {
 
     public void setOldPrice(double oldPrice) {
         this.oldPrice = oldPrice;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
