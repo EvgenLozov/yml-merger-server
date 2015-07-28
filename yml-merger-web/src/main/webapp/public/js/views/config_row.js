@@ -27,11 +27,22 @@ APP.ConfigRowView = Backbone.View.extend({
   destroy: function (event) {
     event.preventDefault();
     event.stopPropagation();
-    // we would call
-    this.config.destroy();
-    // which would make a DELETE call to the server with the id of the item
-    this.configs.remove(this.config);
-    this.$el.remove();
+
+    var configs = this.configs;
+    var config = this.config;
+    var name = this.config.get('name');
+    var el = this.$el;
+
+    this.config.destroy({
+      success: function() {
+        configs.remove(config);
+        el.remove();
+        alert("Конфиг " + name + " успешно удален");
+      },
+      error: function() {
+        alert("Ошибка при удалении");
+      }
+    });
   },
 
   merge: function (event) {
@@ -45,10 +56,10 @@ APP.ConfigRowView = Backbone.View.extend({
       url : "/pricelists/" + configId + "/merge",
       success: function(){
         console.log("Merge " + configId);
-        alert("Объединение прайсов запущено");
+        alert("Процесс запущен");
       },
       error : function(){
-        alert("Ошибка при попытке объединения пайсов");
+        alert("Ошибка при попытке объединения прайсов");
       }
     })
   },
@@ -66,7 +77,7 @@ APP.ConfigRowView = Backbone.View.extend({
         console.log("Download " + configId);
       },
       error : function(){
-        alert("Ошибка при попытке объединения пайсов");
+        alert("Ошибка при скачивании");
       }
     })
   }

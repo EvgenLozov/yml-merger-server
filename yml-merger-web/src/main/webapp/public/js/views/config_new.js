@@ -44,10 +44,16 @@ APP.ConfigNewView = Backbone.View.extend({
     if (this.config.isValid()){
       var newConfig = this.config.attributes;
       var configs = this.configs;
-      this.config.save(newConfig, { success: function(model, response) {
-        configs.add(model);
-        window.location.hash = "configs/index";
-      }, wait: true});
+      this.config.save(null,
+          {
+            success: function() {
+                        configs.add(model);
+                        window.location.hash = "configs/index";
+                      },
+            error: function(){
+                      alert("Ошибка при сохранении")
+                    },
+            wait: true});
     }
   },
 

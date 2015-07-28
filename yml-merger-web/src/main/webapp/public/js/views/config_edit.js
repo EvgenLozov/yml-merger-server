@@ -9,6 +9,16 @@ APP.ConfigEditView = Backbone.View.extend({
   // the constructor
   initialize: function (options) {
     this.config  = options.config;
+    this.config.bind('invalid', this.showErrors, this);
+  },
+
+  showErrors: function (config, errors) {
+    this.$el.find('.error').removeClass('error');
+    this.$el.find('.alert').html(_.values(errors).join('<br>')).show();
+    // highlight the fields with errors
+    _.each(_.keys(errors), _.bind(function (key) {
+      this.$el.find('*[name=' + key + ']').parent().addClass('error');
+    }, this));
   },
 
   save: function (event) {
@@ -30,10 +40,17 @@ APP.ConfigEditView = Backbone.View.extend({
       oldPrice: this.$el.find('#oldPrice').val()/100,
       replaces: getReplaces(this.$el.find('#replaces').val())
     });
-    // we would save to the server here with
-    this.config.save();
-    // redirect back to the index
-    window.location.hash = "configs/index";
+    if (this.config.isValid()){
+      this.config.save(null,
+          {
+            success: function() {
+                         window.location.hash = "configs/index"
+                      },
+            error: function(){
+                      alert("Ошибка при сохранении")
+                    }}
+          );
+    }
   },
 
   // populate the html to the dom
