@@ -202,7 +202,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="oldPrice" class="col-md-4 control-label">наценка для старой цены, %</label>
+            <label for="oldPrice" class="col-md-4 control-label">Наценка для старой цены, %</label>
             <div class="col-md-8">
                 <input type="text" class="form-control" id="oldPrice" name="oldPrice" value="<%= oldPrice*100 %>" disabled>
             </div>
@@ -231,7 +231,6 @@
       configs: new APP.ConfigCollection()
     });
 
-    // we manually pass in the initial data, but this would be called with a collection.fetch() normally
     router.configs.fetch({reset: true});
     
     // now that everyting is setup we tell backbone to watch the urls
