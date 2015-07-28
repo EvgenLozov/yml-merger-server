@@ -33,13 +33,36 @@ APP.ConfigNewView = Backbone.View.extend({
       psw: this.$el.find('#psw').val(),
       encoding: this.$el.find('#encoding').val(),
       currency: this.$el.find('#currency').val(),
-      urls: this.$el.find('#urls').val().split(","),
-      outputFile: this.$el.find('#outputFile').val(),
-      files: this.$el.find('#files').val().split(","),
-      categoryIds: this.$el.find('#categoryIds').val().split(","),
       oldPrice: this.$el.find('#oldPrice').val()/100,
       replaces: getReplaces(this.$el.find('#replaces').val())
     });
+
+    if (!this.$el.find('#urls').val() || !this.$el.find('#urls').val().trim())
+      this.config.set({
+        urls: []
+      });
+    else
+      this.config.set({
+        urls: this.$el.find('#urls').val().split(',')
+      });
+
+    if (!this.$el.find('#files').val() || !this.$el.find('#files').val().trim())
+      this.config.set({
+        files: []
+      });
+    else
+      this.config.set({
+        files: this.$el.find('#files').val().split(',')
+      });
+
+    if (!this.$el.find('#categoryIds').val() || !this.$el.find('#categoryIds').val().trim())
+      this.config.set({
+        categoryIds: []
+      });
+    else
+      this.config.set({
+        categoryIds: this.$el.find('#categoryIds').val().split(',')
+      });
 
     if (this.config.isValid()){
       var newConfig = this.config.attributes;
