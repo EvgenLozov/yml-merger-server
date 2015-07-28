@@ -34,7 +34,7 @@ public class IncludedCategoriesProvider {
 
         Set<Category> categoriesFromConfig = new HashSet<>();
         for (Category category : allCategories) {
-            if (categoryIds.contains(category.getId()))
+            if (categoryIds.isEmpty() || categoryIds.contains(category.getId()))
                 categoriesFromConfig.add(category);
         }
 

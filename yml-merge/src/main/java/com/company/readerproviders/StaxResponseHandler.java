@@ -24,7 +24,6 @@ public class StaxResponseHandler implements HttpResponseHandler<XMLEventReader> 
     @Override
     public XMLEventReader handle(CloseableHttpResponse httpResponse){
         XMLInputFactory ifactory = XMLInputFactory.newFactory();
-        ifactory.setProperty(XMLInputFactory.IS_VALIDATING, false);
 
         try {
             return ifactory.createXMLEventReader(httpResponse.getEntity().getContent(), encoding);

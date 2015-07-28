@@ -1,11 +1,11 @@
 {
     "user" : "user50",
     "psw" : "neuser50",
-    "urls" : [],
-    "files":["files/shop.yml"],
-    "encoding" : "cp1251",
+    "urls" : ["http://www.apishops.com/websiteAction?action=getPriceTiu&id=462401&addPictures=2"],
+    "files":["C:/Users/user50/Desktop/shop (2).yml"],
+    "encoding" : "Windows-1251",
     "outputFile":"files/mergedPrice.xml",
-    "categoryIds" : [2],
+    "categoryIds" : [],
     "currency":"BYR",
     "replaces":[
         {"wordsToReplace":["Средство"], "replacement":"Средства" },
