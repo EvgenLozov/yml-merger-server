@@ -1,15 +1,20 @@
 package com.merger.controller;
 
 import com.company.MergeService;
+import com.company.config.Config;
 import com.merger.ConfigRepository;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.stream.XMLStreamException;
-import java.io.FileNotFoundException;
+import java.io.*;
 
 /**
  * @author lozov
@@ -28,8 +33,11 @@ class PricelistController {
         mergeService.process(configRepository.get(id));
     }
 
-    @RequestMapping(value = "/{id}/download", method = RequestMethod.POST)
-    public void download(@PathVariable String id) {
-
+    @RequestMapping(value = "/{id}/download", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public FileSystemResource download(@PathVariable String id, HttpServletResponse response) {
+        String outputFile = configRepository.get(id).getOutputFile();
+        response.setHeader("Content-Disposition", String.format("attachment; filename=pricelist.xml"));
+        return new FileSystemResource(new File(outputFile));
     }
 }

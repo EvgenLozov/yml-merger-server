@@ -71,11 +71,7 @@ APP.ConfigRowView = Backbone.View.extend({
     var configId = this.config.id;
 
     $.ajax({
-      type: "POST",
       url : "/pricelists/" + configId + "/download",
-      success: function(){
-        console.log("Download " + configId);
-      },
       error : function(){
         alert("Ошибка при скачивании");
       }
