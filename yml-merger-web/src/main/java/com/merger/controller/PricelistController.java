@@ -29,8 +29,24 @@ class PricelistController {
     MergeService mergeService = new MergeService();
 
     @RequestMapping(value = "/{id}/merge", method = RequestMethod.POST)
-    public void merge(@PathVariable String id) throws FileNotFoundException, XMLStreamException {
-        mergeService.process(configRepository.get(id));
+    public void merge(@PathVariable final String id) throws FileNotFoundException, XMLStreamException {
+        Runnable mergeTask = new Runnable() {
+            public void run() {
+                Config config = configRepository.get(id);
+                try {
+                    mergeService.process(config);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (XMLStreamException e) {
+                    e.printStackTrace();
+                }
+
+                config.setLastMerge(System.currentTimeMillis());
+                configRepository.save(config);
+            }
+        };
+
+        new Thread(mergeTask).start();
     }
 
     @RequestMapping(value = "/{id}/download", method = RequestMethod.GET,
