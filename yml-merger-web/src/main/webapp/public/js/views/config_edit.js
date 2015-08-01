@@ -34,7 +34,7 @@ APP.ConfigEditView = Backbone.View.extend({
       encoding: this.$el.find('#encoding').val(),
       currency: this.$el.find('#currency').val(),
       oldPrice: this.$el.find('#oldPrice').val()/100,
-      replaces: getReplaces(this.$el.find('#replaces').val())
+      replaces: getReplaces(this.$el.find('#replaces').val(), this.$el.find('#removes').val())
     });
 
     if (!this.$el.find('#urls').val() || !this.$el.find('#urls').val().trim())
@@ -84,9 +84,10 @@ APP.ConfigEditView = Backbone.View.extend({
   }
 });
 
-function getReplaces(replacesValue){
+function getReplaces(replacesValue, removesValues){
   var replaces = [];
   var replacesArray = replacesValue.split(";");
+  var removesArray = removesValues.split(",");
 
   replacesArray.forEach(function(replaceString){
     if (!replaceString.trim()) {
@@ -102,6 +103,15 @@ function getReplaces(replacesValue){
 
     replaces.push(newReplace);
   });
+
+  removesArray.forEach(function(wordToRemove){
+    wordToRemove.trim();
+  });
+
+  var newReplaceFromRemoves = { replacement : "",
+    wordsToReplace : removesArray };
+
+  replaces.push(newReplaceFromRemoves);
 
   return replaces;
 }

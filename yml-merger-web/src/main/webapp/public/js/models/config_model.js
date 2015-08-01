@@ -12,7 +12,8 @@ APP.ConfigModel = Backbone.Model.extend({
     "currency" : "RUR",
     "outputFile" : "",
     "categoryIds" : [],
-    "oldPrice" : 0
+    "oldPrice" : 0,
+    "replaces": []
   },
 
 

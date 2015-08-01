@@ -9,7 +9,13 @@
   "outputFile" : null,
   "categoryIds" : [ "156", "155", "154" ],
   "currency" : "RUR",
-  "replaces" : [ ],
+  "replaces" : [ {
+    "wordsToReplace" : [ "sdf" ],
+    "replacement" : ""
+  }, {
+    "wordsToReplace" : [ "fsdf" ],
+    "replacement" : ""
+  } ],
   "oldPrice" : 0.22,
   "lastMerge" : 1438417681288
 }, {
@@ -29,4 +35,44 @@
   } ],
   "oldPrice" : 0.12,
   "lastMerge" : 1438420616385
+}, {
+  "id" : "12872789-f237-4435-b782-0363fb69255c",
+  "name" : "Конфиг 01/08/2015 13:32",
+  "user" : "query_manager",
+  "psw" : "query_manager",
+  "urls" : [ ],
+  "files" : [ ],
+  "encoding" : "utf-8",
+  "outputFile" : "prices/12872789-f237-4435-b782-0363fb69255c.xml",
+  "categoryIds" : [ ],
+  "currency" : "RUR",
+  "replaces" : [ {
+    "wordsToReplace" : [ "ert" ],
+    "replacement" : "er t"
+  }, {
+    "wordsToReplace" : [ "ert" ],
+    "replacement" : "wretdfg"
+  } ],
+  "oldPrice" : 0.05,
+  "lastMerge" : 0
+}, {
+  "id" : "b11552a7-cbda-4510-82a8-424b33d64a3f",
+  "name" : "Конфиг 01/08/2015 13:35",
+  "user" : "query_manager",
+  "psw" : "query_manager",
+  "urls" : [ ],
+  "files" : [ ],
+  "encoding" : "utf-8",
+  "outputFile" : "prices/b11552a7-cbda-4510-82a8-424b33d64a3f.xml",
+  "categoryIds" : [ ],
+  "currency" : "RUR",
+  "replaces" : [ {
+    "wordsToReplace" : [ "ghj", "dfg", "rty" ],
+    "replacement" : "dfg"
+  }, {
+    "wordsToReplace" : [ "drgf", " dsfg dfg", " dfg" ],
+    "replacement" : ""
+  } ],
+  "oldPrice" : 0.03,
+  "lastMerge" : 0
 } ]

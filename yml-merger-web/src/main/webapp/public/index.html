@@ -92,14 +92,36 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="removes" class="col-md-4 control-label">Удаление слов</label>
+                    <div class="col-md-8">
+                    <%
+                        var string = "";
+                        _.each(replaces, function(replace)
+                             { if (replace.replacement == ""){
+                                string += replace.wordsToReplace;
+                                string += ','
+                              }
+                             });
+                    %>
+                        <input type="text" class="form-control" id="removes" name="removes" value="<%= string %>">
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="replaces" class="col-md-4 control-label">Замена слов</label>
                     <div class="col-md-8">
                         <textarea class="form-control" rows="2" id="replaces" name="replaces">
-                            <% if(typeof replaces != 'undefined'){
+                            <%
                             var string = "";
                             _.each(replaces, function(replace)
-                             { string += replace.replacement; string += '-' ; string += replace.wordsToReplace; string += ';' })
-                             print(string) };
+                             {
+                                if (replace.replacement != "") {
+                                    string += replace.replacement;
+                                    string += '-' ;
+                                    string += replace.wordsToReplace;
+                                    string += ';'
+                                   }
+                                });
+                                print(string);
                              %>
                         </textarea>
                     </div>
@@ -235,16 +257,38 @@
             </div>
         </div>
         <div class="form-group">
+            <label for="removes" class="col-md-4 control-label">Удаление слов</label>
+            <div class="col-md-8">
+                <%
+                var string = "";
+                _.each(replaces, function(replace)
+                { if (replace.replacement == ""){
+                string += replace.wordsToReplace;
+                string += ','
+                }
+                });
+                %>
+                <input type="text" class="form-control" id="removes" name="removes" value="<%= string %>" disabled>
+            </div>
+        </div>
+        <div class="form-group">
             <label for="replaces" class="col-md-4 control-label">Замена слов</label>
             <div class="col-md-8">
-                <textarea class="form-control" rows="2" id="replaces" name="replaces" disabled>
-                    <% if(typeof replaces != 'undefined'){
-                    var string = "";
-                    _.each(replaces, function(replace)
-                     { string += replace.replacement; string += '-' ; string += replace.wordsToReplace; string += ';' })
-                     print(string) };
-                     %>
-                </textarea>
+                        <textarea class="form-control" rows="2" id="replaces" name="replaces" disabled>
+                            <%
+                            var string = "";
+                            _.each(replaces, function(replace)
+                             {
+                                if (replace.replacement != "") {
+                                    string += replace.replacement;
+                                    string += '-' ;
+                                    string += replace.wordsToReplace;
+                                    string += ';'
+                                   }
+                                });
+                                print(string);
+                             %>
+                        </textarea>
             </div>
         </div>
         </form>

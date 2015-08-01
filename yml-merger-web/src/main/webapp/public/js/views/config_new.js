@@ -34,7 +34,7 @@ APP.ConfigNewView = Backbone.View.extend({
       encoding: this.$el.find('#encoding').val(),
       currency: this.$el.find('#currency').val(),
       oldPrice: this.$el.find('#oldPrice').val()/100,
-      replaces: getReplaces(this.$el.find('#replaces').val())
+      replaces: getReplaces(this.$el.find('#replaces').val(), this.$el.find('#removes').val())
     });
 
     if (!this.$el.find('#urls').val() || !this.$el.find('#urls').val().trim())
