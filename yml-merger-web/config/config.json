@@ -7,27 +7,26 @@
   "files" : [ "files/price1.xml", "files/price2.xml" ],
   "encoding" : "cp1251",
   "outputFile" : null,
-  "currency" : "RUR",
   "categoryIds" : [ "156", "155", "154" ],
+  "currency" : "RUR",
   "replaces" : [ ],
-  "oldPrice" : 0.22
+  "oldPrice" : 0.22,
+  "lastMerge" : 1438417681288
 }, {
-  "id" : "c57cc399-ed07-42a3-8a5d-0c495fb54110",
-  "name" : "Конфиг 28/07/2015 13:20",
+  "id" : "973897e1-fcfb-4cac-89d8-e45217f3f1f2",
+  "name" : "Конфиг 28/07/2015 20:21",
   "user" : "query_manager",
   "psw" : "query_manager",
   "urls" : [ ],
-  "files" : [],
+  "files" : [ ],
   "encoding" : "utf-8",
-  "outputFile" : null,
+  "outputFile" : "",
+  "categoryIds" : [ ],
   "currency" : "RUR",
-  "categoryIds" : [ "125", " 456" ],
   "replaces" : [ {
-    "wordsToReplace" : [ "оптовый", "оптом" ],
-    "replacement" : "опт"
-  }, {
-    "wordsToReplace" : [ "недорого", " почти даром" ],
-    "replacement" : "дешево"
+    "wordsToReplace" : null,
+    "replacement" : "dfg"
   } ],
-  "oldPrice" : 0.02
+  "oldPrice" : 0.12,
+  "lastMerge" : 1438420616385
 } ]

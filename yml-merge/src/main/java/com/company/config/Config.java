@@ -21,6 +21,7 @@ public class Config {
     private Currency currency;
     private List<Replace> replaces;
     private double oldPrice;
+    private long lastMerge;
 
     public String getUser() {
         return user;
@@ -116,5 +117,13 @@ public class Config {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public long getLastMerge() {
+        return lastMerge;
+    }
+
+    public void setLastMerge(long lastMerge) {
+        this.lastMerge = lastMerge;
     }
 }
