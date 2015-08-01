@@ -5,8 +5,6 @@ import com.sun.xml.internal.stream.events.CharacterEvent;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.XMLEvent;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -40,29 +38,12 @@ public class ReplaceWords implements AggregatedXmlEventHandler {
     }
 
     private String replace(String data) {
-        List<String> words = new ArrayList<>();
+        String modifiedData = data;
 
-        for (String word : data.split(" ")) {
-            if (wordsToReplace.contains(word))
-                words.add(replacement);
-            else
-                words.add(word);
+        for (String word : wordsToReplace) {
+            modifiedData = modifiedData.replaceAll(word, replacement);
         }
 
-        return join(words);
-    }
-
-    private String join(Iterable<String> strings)
-    {
-        StringBuilder builder = new StringBuilder();
-
-        for (String string : strings) {
-            if (builder.length() > 0) {
-                builder.append(" ");
-            }
-            builder.append(string);
-        }
-
-        return builder.toString();
+        return modifiedData;
     }
 }
