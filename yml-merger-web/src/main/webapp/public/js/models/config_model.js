@@ -13,7 +13,10 @@ APP.ConfigModel = Backbone.Model.extend({
     "outputFile" : "",
     "categoryIds" : [],
     "oldPrice" : 0,
-    "replaces": []
+    "replaces": [],
+    "autoMerge" : false,
+    "period" : 0,
+    "time" : "00:00"
   },
 
 
@@ -27,10 +30,40 @@ APP.ConfigModel = Backbone.Model.extend({
     if (!attrs.psw || !attrs.psw.trim()) errors.psw = "Укажите пароль для ApiShops";
     if (!attrs.encoding || !attrs.encoding.trim()) errors.encoding = "Укажите кодировку";
     if (!attrs.oldPrice || attrs.oldPrice <0 ) errors.oldPrice = "Наценка для старой цены должна быть больше 0";
+    if (!attrs.period || attrs.period < 1 ) errors.period = "Период обновления должен быть не менше 1 дня";
+
+    if (!attrs.time || !attrs.name.trim() )
+      errors.time = "Укажите время обновления";
+    else
+      if (!this.checkTime(attrs.time))
+        errors.time = "Ошибка в формате времени";
 
     if (!_.isEmpty(errors)) {
       return errors;
     }
+  },
+
+  checkTime: function(timeString){
+    var hoursString = timeString.split(":")[0];
+    var minutesString = timeString.split(":")[1];
+
+    if (!hoursString || !minutesString)
+    return false;
+
+    var hours;
+    var minutes;
+    try {
+      hours = parseInt(hoursString);
+      minutes = parseInt(minutesString);
+    } catch (e){
+      return false;
+    }
+
+    if (hours < 0 || hours > 23 ||
+        minutes < 0 || minutes > 59)
+      return false;
+
+    return true;
   }
 });
 
