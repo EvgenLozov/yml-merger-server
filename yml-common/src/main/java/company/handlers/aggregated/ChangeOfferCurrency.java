@@ -1,5 +1,6 @@
 package company.handlers.aggregated;
 
+import com.sun.xml.internal.stream.events.CharacterEvent;
 import company.Currency;
 import company.handlers.xml.SuccessiveXmlEventHandler;
 import company.handlers.xml.XmlEventHandler;
@@ -40,6 +41,8 @@ public class ChangeOfferCurrency implements AggregatedXmlEventHandler {
         for (XMLEvent xmlEvent : offer) {
             handler.handle(xmlEvent);
         }
+
+        changeCurrencyId(offer);
     }
 
     private Currency getOfferCurrency(List<XMLEvent> offer)
@@ -58,4 +61,24 @@ public class ChangeOfferCurrency implements AggregatedXmlEventHandler {
 
         throw new RuntimeException("Unable to determine offer's currency");
     }
+
+    private void changeCurrencyId(List<XMLEvent> offer)
+    {
+        int index = 0;
+
+        for (XMLEvent xmlEvent : offer) {
+            if (xmlEvent.isStartElement() && xmlEvent.asStartElement().getName().getLocalPart().equals("currencyId"))
+            {
+                CharacterEvent characterEvent = (CharacterEvent) offer.get(index + 1);
+                characterEvent.setData(currency.name());
+
+            }
+            index++;
+        }
+
+
+    }
+
+
+
 }
