@@ -64,6 +64,19 @@ APP.ConfigNewView = Backbone.View.extend({
         categoryIds: this.$el.find('#categoryIds').val().split(',')
       });
 
+    var autoMerge = this.$el.find('#autoMerge').attr('checked');
+
+    this.config.set({
+      autoMerge: autoMerge
+    });
+
+    if (autoMerge){
+      this.config.set({
+        period: this.$el.find('#period').val(),
+        time: this.$el.find('#time').val()
+      });
+    }
+
     if (this.config.isValid()){
       var newConfig = this.config.attributes;
       var configs = this.configs;

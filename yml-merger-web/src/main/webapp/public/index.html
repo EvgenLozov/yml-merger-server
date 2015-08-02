@@ -126,6 +126,28 @@
                         </textarea>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="autoMerge" class="col-md-4 control-label">Обновлять автоматически</label>
+                    <div class="col-md-2">
+                        <% if (autoMerge) { %>
+                        <input type="checkbox" id="autoMerge" name="autoMerge" checked>
+                        <% } else { %>
+                        <input type="checkbox" id="autoMerge" name="autoMerge">
+                        <% } %>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="period" class="col-md-4 control-label">Обновлять каждые, дней</label>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" id="period" name="period" value="<%= period %>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="time" class="col-md-4 control-label">Время обновления ( 24-часовой формат, напр. 18:20)</label>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" id="time" name="time" value="<%= time %>">
+                </div>
+            </div>
             </form>
 
         <button class="save btn btn-large btn-info" type="submit">Сохранить</button>
@@ -289,6 +311,28 @@
                                 print(string);
                              %>
                         </textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="autoMerge" class="col-md-4 control-label">Обновлять автоматически</label>
+            <div class="col-md-2">
+                <% if (autoMerge) { %>
+                <input type="checkbox" id="autoMerge" name="autoMerge" checked disabled>
+                <% } else { %>
+                <input type="checkbox" id="autoMerge" name="autoMerge" disabled>
+                <% } %>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="period" class="col-md-4 control-label">Обновлять каждые, дней</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="period" name="period" value="<%= period %>" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="time" class="col-md-4 control-label">Время обновления ( 24-часовой формат, напр. 18:20)</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="time" name="time" value="<%= time %>" disabled>
             </div>
         </div>
         </form>

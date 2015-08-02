@@ -22,6 +22,9 @@ public class Config {
     private List<Replace> replaces;
     private double oldPrice;
     private long lastMerge;
+    private boolean autoMerge;
+    private int period;
+    private String time;
 
     public String getUser() {
         return user;
@@ -125,5 +128,29 @@ public class Config {
 
     public void setLastMerge(long lastMerge) {
         this.lastMerge = lastMerge;
+    }
+
+    public boolean isAutoMerge() {
+        return autoMerge;
+    }
+
+    public void setAutoMerge(boolean autoMerge) {
+        this.autoMerge = autoMerge;
+    }
+
+    public int getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(int period) {
+        this.period = period;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }
