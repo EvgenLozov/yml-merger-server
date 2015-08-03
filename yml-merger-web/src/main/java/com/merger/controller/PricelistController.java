@@ -26,7 +26,8 @@ class PricelistController {
     @Autowired
     private ConfigRepository configRepository;
 
-    MergeService mergeService = new MergeService();
+    @Autowired
+    MergeService mergeService;
 
     @RequestMapping(value = "/{id}/merge", method = RequestMethod.POST)
     public void merge(@PathVariable final String id) throws FileNotFoundException, XMLStreamException {

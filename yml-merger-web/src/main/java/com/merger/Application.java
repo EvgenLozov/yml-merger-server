@@ -1,7 +1,12 @@
 package com.merger;
 
+import com.company.MergeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.merger.scheduler.*;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -23,5 +28,23 @@ public class Application {
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
         return new ConfigRepository(mapper);
+    }
+
+    @Bean
+    public MergeService mergeService(){
+        return new MergeService();
+    }
+    @Bean
+    public SchedulerService schedulerService() throws SchedulerException {
+        JobKeyFactory jobKeyFactory = new JobKeyFactory();
+        JobDetailFactory jobDetailFactory = new JobDetailFactory(jobKeyFactory);
+        TriggerFactory triggerFactory = new TriggerFactory(jobKeyFactory);
+
+        MergeJobFactory mergeJobFactory = new MergeJobFactory(mergeService());
+        Scheduler scheduler = new StdSchedulerFactory().getScheduler();
+        scheduler.setJobFactory(mergeJobFactory);
+        scheduler.start();
+
+        return new SchedulerService(scheduler, jobKeyFactory, jobDetailFactory, triggerFactory);
     }
 }
