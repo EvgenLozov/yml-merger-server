@@ -14,6 +14,10 @@ public class MergeJobFactory extends SimpleJobFactory{
 
     private MergeService mergeService;
 
+    public MergeJobFactory(MergeService mergeService) {
+        this.mergeService = mergeService;
+    }
+
     @Override
     public Job newJob(TriggerFiredBundle bundle, Scheduler scheduler) throws SchedulerException {
         MergeJob job = (MergeJob) super.newJob(bundle, scheduler);

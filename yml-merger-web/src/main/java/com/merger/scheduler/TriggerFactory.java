@@ -4,6 +4,8 @@ import com.company.config.Config;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 
+import java.util.logging.Logger;
+
 import static org.quartz.CalendarIntervalScheduleBuilder.calendarIntervalSchedule;
 import static org.quartz.DateBuilder.todayAt;
 
@@ -13,6 +15,10 @@ import static org.quartz.DateBuilder.todayAt;
 public class TriggerFactory {
 
     private JobKeyFactory jobKeyFactory;
+
+    public TriggerFactory(JobKeyFactory jobKeyFactory) {
+        this.jobKeyFactory = jobKeyFactory;
+    }
 
     public Trigger get(Config config){
         Integer hours = Integer.valueOf(config.getTime().split(":")[0]);

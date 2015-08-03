@@ -1,6 +1,7 @@
 package com.merger.scheduler;
 
 import com.company.config.Config;
+import com.google.gson.Gson;
 import org.eclipse.jetty.util.ajax.JSON;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
@@ -11,11 +12,16 @@ import org.quartz.JobDetail;
 public class JobDetailFactory {
 
     private JobKeyFactory jobKeyFactory;
+    private Gson gson = new Gson();
+
+    public JobDetailFactory(JobKeyFactory jobKeyFactory) {
+        this.jobKeyFactory = jobKeyFactory;
+    }
 
     public JobDetail get(Config config){
         return JobBuilder.newJob(MergeJob.class)
                          .withIdentity(jobKeyFactory.get(config).getName())
-                         .usingJobData("config", JSON.toString(config))
+                         .usingJobData("config", gson.toJson(config))
                          .build();
     }
 }
