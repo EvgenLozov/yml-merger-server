@@ -1,16 +1,19 @@
 
 "use strict";
 APP.ConfigNewView = Backbone.View.extend({
-  // functions to fire on events
+
   events: {
-    "click button.save": "save"
+    "click button.save": "save",
+    "click button.addReplace": "addReplace"
   },
 
-  // the constructor
   initialize: function (options) {
     this.config  = options.config;
     this.configs = options.configs;
     this.config.bind('invalid', this.showErrors, this);
+
+    this.replaces = new APP.ReplaceCollection({});
+    this.replacesView = new APP.ReplaceViewCollection({collection : this.replaces});
   },
 
   showErrors: function (config, errors) {
@@ -93,11 +96,28 @@ APP.ConfigNewView = Backbone.View.extend({
     }
   },
 
-  // populate the html to the dom
   render: function () {
     this.$el.html(_.template($('#formTemplate').html(), this.config.toJSON()));
     return this;
+  },
+
+  addReplace: function(event){
+    event.stopPropagation();
+    event.preventDefault();
+
+    var replacement = this.$el.find('#replacement').val();
+    var wordsToReplace = this.$el.find('#wordsToReplace').val();
+
+    var replace = new APP.ReplaceModel({replacement : replacement, wordsToReplace: wordsToReplace});
+    this.replaces.add(replace);
+
+    this.$el.find('#replacement').val("");
+    this.$el.find('#wordsToReplace').val("");
+
+    this.$el.find('#replacesTable').empty();
+    this.$el.find('#replacesTable').html(this.replacesView.render().el);
   }
+
 });
 
 function generateUUID() {
