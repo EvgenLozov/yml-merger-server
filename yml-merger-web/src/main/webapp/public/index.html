@@ -23,7 +23,7 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-md-6" id="primary-content">
+      <div class="col-md-8" id="primary-content">
         <!-- the container that gets populated with the index -->
       </div>
     </div>
@@ -124,7 +124,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <button class="addReplace btn btn-sm btn-info pull-right" type="submit">Добавить</button>
+                            <button class="addReplace btn btn-sm btn-info pull-right" type="button">Добавить</button>
                         </td>
                     </tr>
                     </table>
@@ -133,6 +133,7 @@
                     </div>
                     <div class="col-md-8" id="replacesDiv">
                     <table class="table table-striped" id="replacesTable">
+
                     </table>
                     </div>
                 </div>
@@ -166,13 +167,13 @@
   </script>
 
   <script type="text/template" id="replaceTemplate">
-      <td>
+      <td width="30%">
           <%= replacement %>
       </td>
-      <td>
+      <td width="50%">
           <%= wordsToReplace %>
       </td>
-      <td>
+      <td width="20%">
           <a href="#" class="delete btn btn-danger btn-sm">Удалить</a>
       </td>
   </script>

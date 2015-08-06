@@ -97,34 +97,28 @@ APP.ConfigEditView = Backbone.View.extend({
   }
 });
 
-function getReplaces(replacesValue, removesValues){
+function getReplaces(rows, removesValues){
   var replaces = [];
-  var replacesArray = replacesValue.split(";");
-  var removesArray = removesValues.split(",");
 
-  replacesArray.forEach(function(replaceString){
-    if (!replaceString.trim()) {
-      return;
-    }
+  if (removesValues){
+    replaces.push(getReplaceFromRemoves(removesValues))
+  }
 
-    var replacement = replaceString.split("-")[0].trim();
-    var wordsToReplaceString = replaceString.split("-")[1].trim();
-    var wordsToReplace = wordsToReplaceString.split(",");
+  _.each(rows, function(row){
+    var replacement = row.children[0].textContent.trim();
+    var wordsToReplace = row.children[1].textContent.trim().split(",");
 
-    var newReplace = { replacement : replacement,
-      wordsToReplace : wordsToReplace };
-
-    replaces.push(newReplace);
+    replaces.push({replacement: replacement, wordsToReplace: wordsToReplace});
   });
-
-  removesArray.forEach(function(wordToRemove){
-    wordToRemove.trim();
-  });
-
-  var newReplaceFromRemoves = { replacement : "",
-    wordsToReplace : removesArray };
-
-  replaces.push(newReplaceFromRemoves);
 
   return replaces;
+}
+
+function getReplaceFromRemoves(values){
+  var removes = values.split(",");
+  removes.forEach(function(removesItem){
+    removesItem.trim()
+  });
+
+  return {replacement : "", wordsToReplace : removes};
 }

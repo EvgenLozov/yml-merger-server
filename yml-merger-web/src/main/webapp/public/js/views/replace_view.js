@@ -29,8 +29,6 @@ APP.ReplaceViewCollection = Backbone.View.extend({
     el : "tbody",
 
     initialize: function (options) {
-        this.collection.bind('add', this.render, this);
-        this.collection.bind('change', this.render, this);
         this.collection.bind('destroy', this.render, this);
     },
 
