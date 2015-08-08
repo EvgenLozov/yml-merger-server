@@ -2,6 +2,7 @@ package com.company.config;
 
 import company.Currency;
 
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -35,11 +36,11 @@ public class Config {
     }
 
     public String getPsw() {
-        return psw;
+        return this.psw;
     }
 
     public void setPsw(String psw) {
-        this.psw = psw;
+        this.psw = Base64.getEncoder().encodeToString(psw.getBytes());
     }
 
     public List<String> getUrls() {

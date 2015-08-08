@@ -27,7 +27,8 @@ import java.util.*;
 public class MergeService {
 
     public void process(Config config) throws FileNotFoundException, XMLStreamException {
-        CloseableHttpClient httpClient = new HttpClientProvider(config.getUser(), config.getPsw()).get();
+        String psw = new String(Base64.getDecoder().decode(config.getPsw().getBytes()));
+        CloseableHttpClient httpClient = new HttpClientProvider(config.getUser(), psw).get();
         HttpService httpService = new HttpService(httpClient);
 
         List<XMLEventReaderProvider> readerProviders = new ArrayList<>();
