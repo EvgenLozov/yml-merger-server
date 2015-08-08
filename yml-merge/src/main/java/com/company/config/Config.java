@@ -40,7 +40,7 @@ public class Config {
     }
 
     public void setPsw(String psw) {
-        this.psw = Base64.getEncoder().encodeToString(psw.getBytes());
+        this.psw = psw;
     }
 
     public List<String> getUrls() {

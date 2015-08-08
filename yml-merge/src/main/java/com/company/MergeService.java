@@ -39,6 +39,9 @@ public class MergeService {
         for (String fileName : config.getFiles())
             readerProviders.add(new FileXMLEventReaderProvider(fileName, config.getEncoding()));
 
+        if (readerProviders.isEmpty())
+            throw new RuntimeException("Must best specified at least one price list source");
+
         StAXService staxService = new StAXService(readerProviders.get(0));
 
         XMLOutputFactory oFactory = XMLOutputFactory.newFactory();
