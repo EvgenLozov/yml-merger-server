@@ -30,7 +30,7 @@ APP.ConfigEditView = Backbone.View.extend({
     this.config.set({
       name: this.$el.find('#name').val(),
       user: this.$el.find('#user').val(),
-      psw: this.$el.find('#psw').val(),
+      psw: btoa(this.$el.find('#psw').val()),
       encoding: this.$el.find('#encoding').val(),
       currency: this.$el.find('#currency').val(),
       oldPrice: this.$el.find('#oldPrice').val()/100,
