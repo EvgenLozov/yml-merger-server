@@ -17,8 +17,10 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -26,7 +28,7 @@ import java.util.*;
  */
 public class MergeService {
 
-    public void process(Config config) throws FileNotFoundException, XMLStreamException {
+    public void process(Config config) throws IOException, XMLStreamException {
         String psw = new String(Base64.getDecoder().decode(config.getPsw().getBytes()));
         CloseableHttpClient httpClient = new HttpClientProvider(config.getUser(), psw).get();
         HttpService httpService = new HttpService(httpClient);
@@ -45,7 +47,11 @@ public class MergeService {
         StAXService staxService = new StAXService(readerProviders.get(0));
 
         XMLOutputFactory oFactory = XMLOutputFactory.newFactory();
-        XMLEventWriter mergedOut = oFactory.createXMLEventWriter(new FileOutputStream(config.getOutputFile()), config.getEncoding());
+
+        String outFilePath = getTmpFileInSameFolder(config.getOutputFile());
+
+        FileOutputStream fileOutputStream  = new FileOutputStream(outFilePath);
+        XMLEventWriter mergedOut = oFactory.createXMLEventWriter(fileOutputStream, config.getEncoding());
 
         List<Factory<XmlEventHandler>> factories = new ArrayList<>();
         factories.add(new CurrencyHandlerFactory(config.getCurrency()));
@@ -61,6 +67,27 @@ public class MergeService {
 
         mergedOut.flush();
         mergedOut.close();
+        fileOutputStream.close();
+
+        deleteOldFile(config.getOutputFile());
+        rename(outFilePath, config.getOutputFile());
+    }
+
+    private String getTmpFileInSameFolder(String filePath)
+    {
+        return new File(filePath).getParentFile()+"/tmp"+UUID.randomUUID().toString();
+    }
+
+    private void deleteOldFile(String oldFile)
+    {
+        if (new File(oldFile).exists() && !new File(oldFile).delete())
+            throw new RuntimeException("Unable to delete "+oldFile);
+    }
+
+    private void rename(String fileToRename, String newName )
+    {
+        if (!new File(fileToRename).renameTo(new File(newName )))
+            throw new RuntimeException("Unable to rename "+fileToRename+" to "+newName );
     }
 
 }
