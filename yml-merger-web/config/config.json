@@ -3,21 +3,21 @@
   "name" : "First 1",
   "user" : "user50",
   "psw" : "neuser50",
-  "urls" : [ "/websiteAction?action=getPriceTiu&id=462382&addPictures=2", "/websiteAction?action=getPriceTiu&id=462391&addPictures=2" ],
-  "files" : [ "files/price1.xml", "files/price2.xml" ],
+  "urls" : [  ],
+  "files" : [ "prices/pricelist.xml"],
   "encoding" : "cp1251",
-  "outputFile" : null,
+  "outputFile" : "prices/1.xml",
   "categoryIds" : [ "156", "155", "154" ],
   "currency" : "RUR",
   "replaces" : [ {
-    "wordsToReplace" : [ "sdf" ],
-    "replacement" : ""
-  }, {
-    "wordsToReplace" : [ "fsdf" ],
+    "wordsToReplace" : [ "", "sdf", "fsdf" ],
     "replacement" : ""
   } ],
   "oldPrice" : 0.22,
-  "lastMerge" : 1438417681288
+  "lastMerge" : 1438417681288,
+  "autoMerge" : true,
+  "period" : 2,
+  "time" : "17:24"
 }, {
   "id" : "973897e1-fcfb-4cac-89d8-e45217f3f1f2",
   "name" : "Конфиг 28/07/2015 20:21",
@@ -34,7 +34,10 @@
     "replacement" : "dfg"
   } ],
   "oldPrice" : 0.12,
-  "lastMerge" : 1438420616385
+  "lastMerge" : 1438420616385,
+  "autoMerge" : false,
+  "period" : 4,
+  "time" : "17:20"
 }, {
   "id" : "12872789-f237-4435-b782-0363fb69255c",
   "name" : "Конфиг 01/08/2015 13:32",
@@ -54,7 +57,10 @@
     "replacement" : "wretdfg"
   } ],
   "oldPrice" : 0.05,
-  "lastMerge" : 0
+  "lastMerge" : 0,
+  "autoMerge" : false,
+  "period" : 0,
+  "time" : null
 }, {
   "id" : "b11552a7-cbda-4510-82a8-424b33d64a3f",
   "name" : "Конфиг 01/08/2015 13:35",
@@ -74,5 +80,8 @@
     "replacement" : ""
   } ],
   "oldPrice" : 0.03,
-  "lastMerge" : 0
+  "lastMerge" : 0,
+  "autoMerge" : false,
+  "period" : 0,
+  "time" : null
 } ]
