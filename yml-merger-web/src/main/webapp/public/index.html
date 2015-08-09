@@ -16,12 +16,14 @@
   <script type="text/javascript" src="js/views/config_new.js"></script>
   <script type="text/javascript" src="js/views/config_edit.js"></script>
   <script type="text/javascript" src="js/views/config_show.js"></script>
+  <script type="text/javascript" src="js/models/replace_model.js"></script>
+  <script type="text/javascript" src="js/views/replace_view.js"></script>
 </head>
 <body>
 
   <div class="container">
     <div class="row">
-      <div class="col-md-6" id="primary-content">
+      <div class="col-md-8" id="primary-content">
         <!-- the container that gets populated with the index -->
       </div>
     </div>
@@ -47,7 +49,7 @@
                 <div class="form-group">
                     <label for="psw" class="col-md-4 control-label">Пароль для ApiShops</label>
                     <div class="col-md-8">
-                        <input type="password" class="form-control" id="psw" name="psw" value="<%= psw %>">
+                        <input type="password" class="form-control" id="psw" name="psw" value="<%= atob(psw) %>">
                     </div>
                 </div>
                 <div class="form-group">
@@ -92,38 +94,32 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="removes" class="col-md-4 control-label">Удаление слов</label>
-                    <div class="col-md-8">
-                    <%
-                        var string = "";
-                        _.each(replaces, function(replace)
-                             { if (replace.replacement == ""){
-                                string += replace.wordsToReplace;
-                                string += ','
-                              }
-                             });
-                    %>
-                        <input type="text" class="form-control" id="removes" name="removes" value="<%= string %>">
-                    </div>
-                </div>
-                <div class="form-group">
                     <label for="replaces" class="col-md-4 control-label">Замена слов</label>
                     <div class="col-md-8">
-                        <textarea class="form-control" rows="2" id="replaces" name="replaces">
-                            <%
-                            var string = "";
-                            _.each(replaces, function(replace)
-                             {
-                                if (replace.replacement != "") {
-                                    string += replace.replacement;
-                                    string += '-' ;
-                                    string += replace.wordsToReplace;
-                                    string += ';'
-                                   }
-                                });
-                                print(string);
-                             %>
-                        </textarea>
+                    <table  class="table">
+                    <tr>
+                        <td>
+                            <textarea class="form-control" rows="2" id="wordsToReplace" placeholder="Что заменить"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="form-control" id="replacement" placeholder="На что заменить"">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button class="addReplace btn btn-sm btn-info pull-right" type="button">Добавить</button>
+                        </td>
+                    </tr>
+                    </table>
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-8" id="replacesDiv">
+                    <table class="table table-striped" id="replacesTable">
+
+                    </table>
                     </div>
                 </div>
                 <div class="form-group">
@@ -155,6 +151,22 @@
     </div>
   </script>
 
+  <script type="text/template" id="replaceTemplate">
+      <td width="50%">
+          <%= wordsToReplace %>
+      </td>
+      <td width="30%">
+          <% if (replacement == "") {
+            print("[Пустая строка]")
+          } else {
+            print(replacement)
+          } %>
+      </td>
+      <td width="20%">
+          <a href="#" class="delete btn btn-danger btn-sm">Удалить</a>
+      </td>
+  </script>
+
   <!-- the index container -->
   <script type="text/template" id="indexTemplate">
     <div class="well">
@@ -163,8 +175,8 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th width="50%"></th>
-          <th></th>
+          <th width="40%">Название</th>
+          <th>Посл. обновление</th>
           <th></th>
           <th></th>
           <th></th>
@@ -181,28 +193,33 @@
     </td>
     <td>
         <%
-        var today = new Date(lastMerge);
-        var hh = today.getHours();
-        var MM = today.getMinutes();
-        var dd = today.getDate();
-        var mm = today.getMonth()+1; //January is 0!
-        var yyyy = today.getFullYear();
-
-        if(dd<10) {
-        dd='0'+dd
+        if (lastMerge == 0 ){
+            print ('Отсувствует');
         }
+        else {
+            var today = new Date(lastMerge);
+            var hh = today.getHours();
+            var MM = today.getMinutes();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
 
-        if(mm<10) {
-        mm='0'+mm
+            if(dd<10) {
+            dd='0'+dd
+            }
+
+            if(mm<10) {
+            mm='0'+mm
+            }
+
+            if(MM<10) {
+            MM='0'+MM
+            }
+
+            today = dd+'/'+mm+'/'+yyyy + " " + hh + ":" + MM;
+
+            print (today);
         }
-
-        if(MM<10) {
-        MM='0'+MM
-        }
-
-        today = dd+'/'+mm+'/'+yyyy + " " + hh + ":" + MM;
-
-        print (today);
         %>
     </td>
     <td>
@@ -239,7 +256,7 @@
         <div class="form-group">
             <label for="psw" class="col-md-4 control-label">Пароль для ApiShops</label>
             <div class="col-md-8">
-                <input type="password" class="form-control" id="psw" name="psw" value="<%= psw %>" disabled>
+                <input type="password" class="form-control" id="psw" name="psw" value="<%= atob(psw) %>" disabled>
             </div>
         </div>
         <div class="form-group">
@@ -279,38 +296,29 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="removes" class="col-md-4 control-label">Удаление слов</label>
+            <label class="col-md-4 control-label">Замена слов</label>
             <div class="col-md-8">
-                <%
-                var string = "";
-                _.each(replaces, function(replace)
-                { if (replace.replacement == ""){
-                string += replace.wordsToReplace;
-                string += ','
-                }
-                });
-                %>
-                <input type="text" class="form-control" id="removes" name="removes" value="<%= string %>" disabled>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="replaces" class="col-md-4 control-label">Замена слов</label>
-            <div class="col-md-8">
-                        <textarea class="form-control" rows="2" id="replaces" name="replaces" disabled>
-                            <%
-                            var string = "";
-                            _.each(replaces, function(replace)
-                             {
-                                if (replace.replacement != "") {
-                                    string += replace.replacement;
-                                    string += '-' ;
-                                    string += replace.wordsToReplace;
-                                    string += ';'
-                                   }
-                                });
-                                print(string);
-                             %>
-                        </textarea>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th width="70%">Что заменить</th>
+                        <th width="30%">На что заменить</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% _.each(replaces, function(replace)
+                        { %>
+                        <tr>
+                        <td> <%= replace.wordsToReplace %> </td>
+                        <% if (replace.replacement != "") { %>
+                                <td> <%= replace.replacement %></td>
+                                <% } else { %>
+                                <td> [Пустая строка] </td> <% } %>
+                            </tr>
+                        <% }
+                      ); %>
+                    </tbody>
+                </table>
             </div>
         </div>
         <div class="form-group">

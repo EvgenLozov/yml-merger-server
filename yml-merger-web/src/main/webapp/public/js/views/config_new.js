@@ -1,16 +1,21 @@
 
 "use strict";
 APP.ConfigNewView = Backbone.View.extend({
-  // functions to fire on events
+
   events: {
-    "click button.save": "save"
+    "click button.save": "save",
+    "click button.addReplace": "addReplace"
   },
 
-  // the constructor
   initialize: function (options) {
+    this.template = _.template($('#formTemplate').html());
+
     this.config  = options.config;
     this.configs = options.configs;
     this.config.bind('invalid', this.showErrors, this);
+
+    this.replaces = new APP.ReplaceCollection();
+    this.replacesView = new APP.ReplaceViewCollection({collection : this.replaces});
   },
 
   showErrors: function (config, errors) {
@@ -30,11 +35,11 @@ APP.ConfigNewView = Backbone.View.extend({
     this.config.set({
       name: this.$el.find('#name').val(),
       user: this.$el.find('#user').val(),
-      psw: this.$el.find('#psw').val(),
+      psw: btoa(this.$el.find('#psw').val()),
       encoding: this.$el.find('#encoding').val(),
       currency: this.$el.find('#currency').val(),
       oldPrice: this.$el.find('#oldPrice').val()/100,
-      replaces: getReplaces(this.$el.find('#replaces').val(), this.$el.find('#removes').val())
+      replaces: getReplaces(this.$el.find("#replacesTable").find('tbody').children())
     });
 
     if (!this.$el.find('#urls').val() || !this.$el.find('#urls').val().trim())
@@ -93,19 +98,35 @@ APP.ConfigNewView = Backbone.View.extend({
     }
   },
 
-  // populate the html to the dom
   render: function () {
-    this.$el.html(_.template($('#formTemplate').html(), this.config.toJSON()));
-    return this;
-  }
-});
+    this.$el.html(this.template(this.config.toJSON()));
 
-function generateUUID() {
-  var d = new Date().getTime();
-  var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    var r = (d + Math.random()*16)%16 | 0;
-    d = Math.floor(d/16);
-    return (c=='x' ? r : (r&0x3|0x8)).toString(16);
-  });
-  return uuid;
-};
+    this.$el.find("#replacesTable").append(this.replacesView.$el);
+    this.replacesView.render();
+
+    return this;
+  },
+
+  addReplace: function(){
+    var replacement = this.$el.find('#replacement').val();
+    var wordsToReplace = this.$el.find('#wordsToReplace').val().split(",");
+    wordsToReplace = wordsToReplace.filter(function(e){return e.trim()});
+
+    _.each(wordsToReplace, function(word){
+      word.trim();
+    });
+
+    var replace = new APP.ReplaceModel();
+    replace.set({replacement : replacement, wordsToReplace: wordsToReplace});
+    if (!replace.isValid()){
+      this.showErrors(replace, replace.validationError);
+      return;
+    }
+
+    this.replaces.add(replace);
+
+    this.$el.find('#replacement').val("");
+    this.$el.find('#wordsToReplace').val("");
+  }
+
+});

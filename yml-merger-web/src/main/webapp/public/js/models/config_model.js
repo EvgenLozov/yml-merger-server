@@ -4,15 +4,15 @@ APP.ConfigModel = Backbone.Model.extend({
 
   defaults: {
     "name" : "Конфиг " + getCurrentDate(),
-    "user" : "",
-    "psw" : "",
+    "user" : "test",
+    "psw" : "test",
     "urls" : [ ],
     "files" : [ ],
     "encoding" : "utf-8",
     "currency" : "RUR",
     "outputFile" : "",
     "categoryIds" : [],
-    "oldPrice" : 0,
+    "oldPrice" : 0.01,
     "replaces": [],
     "autoMerge" : false,
     "period" : 0,
@@ -30,13 +30,30 @@ APP.ConfigModel = Backbone.Model.extend({
     if (!attrs.psw || !attrs.psw.trim()) errors.psw = "Укажите пароль для ApiShops";
     if (!attrs.encoding || !attrs.encoding.trim()) errors.encoding = "Укажите кодировку";
     if (!attrs.oldPrice || attrs.oldPrice <0 ) errors.oldPrice = "Наценка для старой цены должна быть больше 0";
-    if (!attrs.period || attrs.period < 1 ) errors.period = "Период обновления должен быть не менше 1 дня";
 
-    if (!attrs.time || !attrs.name.trim() )
-      errors.time = "Укажите время обновления";
-    else
-      if (!this.checkTime(attrs.time))
-        errors.time = "Ошибка в формате времени";
+    if (attrs.autoMerge)
+      if (!attrs.period || attrs.period < 1 ) errors.period = "Период обновления должен быть не менше 1 дня";
+
+    if (attrs.autoMerge)
+      if (!attrs.time || !attrs.name.trim() )
+        errors.time = "Укажите время обновления";
+      else
+        if (!this.checkTime(attrs.time))
+          errors.time = "Ошибка в формате времени";
+
+    var errorsMessages = "";
+
+    var replaces = new APP.ReplaceCollection(attrs.replaces);
+    replaces.each(function(replace){
+      if (!replace.isValid()){
+        _.each(replace.validationError, function(errorMessage){
+          errorsMessages += errorMessage + ";";
+        });
+      }
+    });
+
+    if (errorsMessages.trim())
+      errors.replace = errorsMessages;
 
     if (!_.isEmpty(errors)) {
       return errors;
