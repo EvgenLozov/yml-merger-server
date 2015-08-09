@@ -26,20 +26,22 @@ APP.ReplaceView = Backbone.View.extend({
 });
 
 APP.ReplaceViewCollection = Backbone.View.extend({
-    el : "tbody",
+    tagName : "tbody",
 
     initialize: function (options) {
+        this.collection.bind('add', this.addOne, this);
         this.collection.bind('destroy', this.render, this);
+    },
+
+    addOne : function ( replace ) {
+        var replaceView = new APP.ReplaceView({ model: replace });
+        this.$el.append(replaceView.render().el);
     },
 
     render : function(){
         this.$el.empty();
 
-        this.collection.each(function(replace){
-            var replaceView = new APP.ReplaceView({ model: replace });
-            this.$el.append(replaceView.render().el);
-        }, this);
-
+        this.collection.each(this.addOne, this);
         return this;
     }
 });

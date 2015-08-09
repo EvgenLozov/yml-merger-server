@@ -8,6 +8,8 @@ APP.ConfigNewView = Backbone.View.extend({
   },
 
   initialize: function (options) {
+    this.template = _.template($('#formTemplate').html());
+
     this.config  = options.config;
     this.configs = options.configs;
     this.config.bind('invalid', this.showErrors, this);
@@ -37,7 +39,7 @@ APP.ConfigNewView = Backbone.View.extend({
       encoding: this.$el.find('#encoding').val(),
       currency: this.$el.find('#currency').val(),
       oldPrice: this.$el.find('#oldPrice').val()/100,
-      replaces: getReplaces(this.$el.find("#replacesTable").find('tbody').children(), this.$el.find('#removes').val())
+      replaces: getReplaces(this.$el.find("#replacesTable").find('tbody').children())
     });
 
     if (!this.$el.find('#urls').val() || !this.$el.find('#urls').val().trim())
@@ -97,13 +99,18 @@ APP.ConfigNewView = Backbone.View.extend({
   },
 
   render: function () {
-    this.$el.html(_.template($('#formTemplate').html(), this.config.toJSON()));
+    this.$el.html(this.template(this.config.toJSON()));
+
+    this.$el.find("#replacesTable").append(this.replacesView.$el);
+    this.replacesView.render();
+
     return this;
   },
 
   addReplace: function(){
     var replacement = this.$el.find('#replacement').val();
     var wordsToReplace = this.$el.find('#wordsToReplace').val().split(",");
+    wordsToReplace = wordsToReplace.filter(function(e){return e.trim()});
 
     _.each(wordsToReplace, function(word){
       word.trim();
@@ -120,9 +127,6 @@ APP.ConfigNewView = Backbone.View.extend({
 
     this.$el.find('#replacement').val("");
     this.$el.find('#wordsToReplace').val("");
-
-    this.$el.find('#replacesTable').empty();
-    this.$el.find('#replacesTable').html(this.replacesView.render().el);
   }
 
 });
