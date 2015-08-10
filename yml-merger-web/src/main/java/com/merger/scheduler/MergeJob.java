@@ -10,6 +10,7 @@ import org.quartz.JobExecutionException;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 /**
@@ -30,7 +31,7 @@ public class MergeJob implements Job {
 
         try {
             mergeService.process(config);
-        } catch (FileNotFoundException | XMLStreamException e) {
+        } catch (XMLStreamException | IOException e) {
             logger.warning("Unable to do auto merge of " + config.getName());
             e.printStackTrace();
         }

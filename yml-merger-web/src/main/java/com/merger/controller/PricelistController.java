@@ -40,6 +40,8 @@ class PricelistController {
                     e.printStackTrace();
                 } catch (XMLStreamException e) {
                     e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
 
                 config.setLastMerge(System.currentTimeMillis());
