@@ -2,12 +2,19 @@
 <html>
 <head>
   <title>Прайс генератор</title>
-  <!-- load the bootstrap stylesheet -->
-  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
-  <!-- load the libraries we need -->
-  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.3/zepto.min.js"></script>
-  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
-  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.3/zepto.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+
   <!-- load our scripts -->
   <script type="text/javascript" src="js/config_router.js"></script>
   <script type="text/javascript" src="js/models/config_model.js"></script>
@@ -224,7 +231,23 @@
         <a href="#" class="merge btn btn-success btn-sm">Объеденить</a>
     </td>
     <td>
-        <a href="/pricelists/<%= id %>/download" class="btn btn-primary btn-sm">Скачать</a>
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="downloadMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Скачать
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="downloadMenu">
+                <% if (_.contains(currencies, "RUR")) %>
+                    <li><a href="#" class="merge" currencyVal="RUR">RUR</a></li>
+                <% if (_.contains(currencies, "UAH")) %>
+                <li><a href="#" class="merge" currencyVal="UAH">UAH</a></li>
+                <% if (_.contains(currencies, "BYR")) %>
+                <li><a href="#" class="merge" currencyVal="BYR">BYR</a></li>
+                <% if (_.contains(currencies, "KZT")) {%>
+                <li><a href="#" class="merge" currencyVal="KZT">KZT</a></li> <% } %>
+            </ul>
+        </div>
+        <!--<a href="/pricelists/<%= id %>/download" class="btn btn-primary btn-sm">Скачать</a>-->
     </td>
     <td>
       <a href="#" class="delete btn btn-danger btn-sm">Удалить</a>
