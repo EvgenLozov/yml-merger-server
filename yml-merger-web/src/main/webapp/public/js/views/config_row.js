@@ -53,17 +53,18 @@ APP.ConfigRowView = Backbone.View.extend({
     var currency = event.currentTarget.getAttribute('currencyVal');
     console.log("Merge for name: " + this.config.get('name') + ", currency: " + currency);
 
-    //$.ajax({
-    //  type: "POST",
-    //  url : "/pricelists/" + configId + "/merge",
-    //  success: function(){
-    //    console.log("Merge " + configId);
-    //    alert("Процесс запущен");
-    //  },
-    //  error : function(){
-    //    alert("Ошибка при попытке объединения прайсов");
-    //  }
-    //})
+    $.ajax({
+      type: "POST",
+      url : "/pricelists/" + configId + "/merge",
+      data: {currency: currency},
+      success: function(){
+        console.log("Merge " + configId);
+        alert("Процесс запущен");
+      },
+      error : function(){
+        alert("Ошибка при попытке объединения прайсов");
+      }
+    })
 
     this.$el.find('#downloadMenu').dropdown('toggle');
   },

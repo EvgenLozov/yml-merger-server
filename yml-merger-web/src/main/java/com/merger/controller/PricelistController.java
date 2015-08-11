@@ -7,10 +7,7 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.stream.XMLStreamException;
@@ -30,7 +27,8 @@ class PricelistController {
     MergeService mergeService;
 
     @RequestMapping(value = "/{id}/merge", method = RequestMethod.POST)
-    public void merge(@PathVariable final String id) throws FileNotFoundException, XMLStreamException {
+    public void merge(@PathVariable final String id,
+                      @RequestParam String currency) throws FileNotFoundException, XMLStreamException {
         Runnable mergeTask = () -> {
             Config config = configRepository.get(id);
             try {
