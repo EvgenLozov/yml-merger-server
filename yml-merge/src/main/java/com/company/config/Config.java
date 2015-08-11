@@ -2,7 +2,6 @@ package com.company.config;
 
 import company.Currency;
 
-import java.util.Base64;
 import java.util.List;
 
 /**
@@ -19,7 +18,7 @@ public class Config {
     private String encoding;
     private String outputFile;
     private List<String> categoryIds;
-    private Currency currency;
+    private List<Currency> currencies;
     private List<Replace> replaces;
     private double oldPrice;
     private long lastMerge;
@@ -79,12 +78,12 @@ public class Config {
         return categoryIds;
     }
 
-    public Currency getCurrency() {
-        return currency;
+    public List<Currency> getCurrencies() {
+        return currencies;
     }
 
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
+    public void setCurrencies(List<Currency> currencies) {
+        this.currencies = currencies;
     }
 
     public void setCategoryIds(List<String> categoryIds) {

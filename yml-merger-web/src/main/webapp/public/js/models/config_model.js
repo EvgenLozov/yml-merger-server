@@ -9,7 +9,7 @@ APP.ConfigModel = Backbone.Model.extend({
     "urls" : [ ],
     "files" : [ ],
     "encoding" : "utf-8",
-    "currency" : "RUR",
+    "currencies" : ["RUR"],
     "outputFile" : "",
     "categoryIds" : [],
     "oldPrice" : 0.01,
@@ -30,6 +30,7 @@ APP.ConfigModel = Backbone.Model.extend({
     if (!attrs.psw || !attrs.psw.trim()) errors.psw = "Укажите пароль для ApiShops";
     if (!attrs.encoding || !attrs.encoding.trim()) errors.encoding = "Укажите кодировку";
     if (!attrs.oldPrice || attrs.oldPrice <0 ) errors.oldPrice = "Наценка для старой цены должна быть больше 0";
+    if (!attrs.currencies || !attrs.currencies.length > 0) errors.currencies = "Укажите хотя бы одну валюту";
 
     if (attrs.autoMerge)
       if (!attrs.period || attrs.period < 1 ) errors.period = "Период обновления должен быть не менше 1 дня";

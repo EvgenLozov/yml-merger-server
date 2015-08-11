@@ -32,13 +32,17 @@ APP.ConfigEditView = Backbone.View.extend({
     event.stopPropagation();
     event.preventDefault();
 
-    // update our model with values from the form
+    var currencies = [];
+    $.each($("input[name='currency']:checked"), function(){
+      currencies.push($(this).val());
+    });
+
     this.config.set({
       name: this.$el.find('#name').val(),
       user: this.$el.find('#user').val(),
       psw: btoa(this.$el.find('#psw').val()),
       encoding: this.$el.find('#encoding').val(),
-      currency: this.$el.find('#currency').val(),
+      currencies: currencies,
       oldPrice: this.$el.find('#oldPrice').val()/100,
       replaces: getReplaces(this.$el.find("#replacesTable").find('tbody').children())
     });
@@ -102,6 +106,13 @@ APP.ConfigEditView = Backbone.View.extend({
 
     this.$el.find("#replacesTable").append(this.replacesView.$el);
     this.replacesView.render();
+
+    var currencies = this.config.get('currencies');
+    $.each(this.$el.find("input[name='currency']"), function(){
+      if (_.contains(currencies, $(this).val())){
+        $(this).prop('checked', true);
+      }
+    });
 
     return this;
   },

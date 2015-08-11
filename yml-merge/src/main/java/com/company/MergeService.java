@@ -2,7 +2,6 @@ package com.company;
 
 import com.company.allowedcategories.IncludedCategoriesProvider;
 import com.company.config.Config;
-import com.company.config.ConfigProvider;
 import com.company.factories.handler.*;
 import com.company.http.HttpClientProvider;
 import com.company.http.HttpService;
@@ -18,7 +17,6 @@ import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
@@ -54,11 +52,11 @@ public class MergeService {
         XMLEventWriter mergedOut = oFactory.createXMLEventWriter(fileOutputStream, config.getEncoding());
 
         List<Factory<XmlEventHandler>> factories = new ArrayList<>();
-        factories.add(new CurrencyHandlerFactory(config.getCurrency()));
+        factories.add(new CurrencyHandlerFactory(config.getCurrencies().get(0)));
         factories.add(new ConditionalCopierXmlEventHandlerFactory(mergedOut, Arrays.asList("categories", "offers")));
 
         Set<String> allowedCategories = new IncludedCategoriesProvider(readerProviders, new TreeSet<>(config.getCategoryIds())).get();
-        factories.add(new ElementWriterHandlerFactory(readerProviders, "offers", new OfferHandlerFactory(config.getCurrency(), mergedOut, allowedCategories, config.getReplaces())));
+        factories.add(new ElementWriterHandlerFactory(readerProviders, "offers", new OfferHandlerFactory(config.getCurrencies().get(0), mergedOut, allowedCategories, config.getReplaces())));
         factories.add(new ElementWriterHandlerFactory(readerProviders, "categories", new CategoryHandlerFactory(mergedOut, allowedCategories)));
 
         XmlEventHandler xmlEventHandler = new MergeXmlEventHandlerFactory(factories).get();

@@ -59,14 +59,12 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="currency" class="col-md-4 control-label">Валюта прайса</label>
+                <label class="col-md-4 control-label">Валюта</label>
                     <div class="col-md-8">
-                          <select class="form-control" id="currency" value="<%= currency %>">
-                            <option value="RUR">Рубли (рус.)</option>
-                            <option value="UAH">Гривны</option>
-                            <option value="BYR">Рубли (бел.)</option>
-                            <option value="KZT">Тенге</option>
-                          </select>
+                            <label class="checkbox-inline"><input type="checkbox" name="currency" value="RUR">Рубли (рус.)</label>
+                            <label class="checkbox-inline"><input type="checkbox" name="currency" value="UAH">Гривны</label>
+                            <label class="checkbox-inline"><input type="checkbox" name="currency" value="BYR">Рубли (бел.)</label>
+                            <label class="checkbox-inline"><input type="checkbox" name="currency" value="KZT">Тенге</label>
                     </div>
                 </div>
                 <div class="form-group">
@@ -268,7 +266,7 @@
         <div class="form-group">
             <label for="currency" class="col-md-4 control-label">Валюта прайса</label>
             <div class="col-md-8">
-                <input type="text" class="form-control" id="currency" name="currency" value="<%= currency %>" disabled>
+                <input type="text" class="form-control" id="currency" name="currency" value="<%= currencies %>" disabled>
             </div>
         </div>
         <div class="form-group">

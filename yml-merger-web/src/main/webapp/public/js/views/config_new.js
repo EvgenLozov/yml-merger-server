@@ -31,13 +31,17 @@ APP.ConfigNewView = Backbone.View.extend({
     event.stopPropagation();
     event.preventDefault();
 
-    // update our model with values from the form
+    var currencies = [];
+    $.each($("input[name='currency']:checked"), function(){
+      currencies.push($(this).val());
+    });
+
     this.config.set({
       name: this.$el.find('#name').val(),
       user: this.$el.find('#user').val(),
       psw: btoa(this.$el.find('#psw').val()),
       encoding: this.$el.find('#encoding').val(),
-      currency: this.$el.find('#currency').val(),
+      currencies: currencies,
       oldPrice: this.$el.find('#oldPrice').val()/100,
       replaces: getReplaces(this.$el.find("#replacesTable").find('tbody').children())
     });
