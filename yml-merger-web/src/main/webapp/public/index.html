@@ -238,13 +238,13 @@
             </button>
             <ul class="dropdown-menu" aria-labelledby="downloadMenu">
                 <% if (_.contains(currencies, "RUR")) %>
-                    <li><a href="#" class="merge" currencyVal="RUR">RUR</a></li>
+                    <li><a href="#" class="download" currencyVal="RUR">RUR</a></li>
                 <% if (_.contains(currencies, "UAH")) %>
-                <li><a href="#" class="merge" currencyVal="UAH">UAH</a></li>
+                <li><a href="#" class="download" currencyVal="UAH">UAH</a></li>
                 <% if (_.contains(currencies, "BYR")) %>
-                <li><a href="#" class="merge" currencyVal="BYR">BYR</a></li>
+                <li><a href="#" class="download" currencyVal="BYR">BYR</a></li>
                 <% if (_.contains(currencies, "KZT")) {%>
-                <li><a href="#" class="merge" currencyVal="KZT">KZT</a></li> <% } %>
+                <li><a href="#" class="download" currencyVal="KZT">KZT</a></li> <% } %>
             </ul>
         </div>
         <!--<a href="/pricelists/<%= id %>/download" class="btn btn-primary btn-sm">Скачать</a>-->

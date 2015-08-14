@@ -49,14 +49,9 @@ APP.ConfigRowView = Backbone.View.extend({
     event.preventDefault();
     event.stopPropagation();
 
-    var configId = this.config.id;
-    var currency = event.currentTarget.getAttribute('currencyVal');
-    console.log("Merge for name: " + this.config.get('name') + ", currency: " + currency);
-
     $.ajax({
       type: "POST",
       url : "/pricelists/" + configId + "/merge",
-      data: {currency: currency},
       success: function(){
         console.log("Merge " + configId);
         alert("Процесс запущен");
@@ -64,9 +59,7 @@ APP.ConfigRowView = Backbone.View.extend({
       error : function(){
         alert("Ошибка при попытке объединения прайсов");
       }
-    })
-
-    this.$el.find('#downloadMenu').dropdown('toggle');
+    });
   },
 
   download: function (event) {
@@ -74,12 +67,11 @@ APP.ConfigRowView = Backbone.View.extend({
     event.stopPropagation();
 
     var configId = this.config.id;
+    var currency = event.currentTarget.getAttribute('currencyVal');
+    console.log("Download for name: " + this.config.get('name') + ", currency: " + currency);
 
-    $.ajax({
-      url : "/pricelists/" + configId + "/download",
-      error : function(){
-        alert("Ошибка при скачивании");
-      }
-    })
+    window.location = "/pricelists/" + configId + "/download" + "?currency=" + currency;
+
+    this.$el.find('#downloadMenu').dropdown('toggle');
   }
 });
