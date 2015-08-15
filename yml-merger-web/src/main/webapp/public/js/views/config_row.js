@@ -67,10 +67,12 @@ APP.ConfigRowView = Backbone.View.extend({
     event.stopPropagation();
 
     var configId = this.config.id;
+    var configName = this.config.get('name');
     var currency = event.currentTarget.getAttribute('currencyVal');
     console.log("Download for name: " + this.config.get('name') + ", currency: " + currency);
 
-    window.location = "/pricelists/" + configId + "/download" + "?currency=" + currency;
+    window.location = "/pricelists/" + configId + "/download" +
+                      "?name=" + configName + "&currency=" + currency;
 
     this.$el.find('#downloadMenu').dropdown('toggle');
   }

@@ -44,9 +44,18 @@ class PricelistController {
 
     @RequestMapping(value = "/{id}/download", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public FileSystemResource download(@PathVariable String id, HttpServletResponse response) {
+    public FileSystemResource download(@PathVariable String id, HttpServletResponse response) throws IOException {
         String outputFile = configRepository.get(id).getOutputFile();
         File file = new File(outputFile);
+
+        if (!file.exists()){
+            response.setStatus(404);
+            response.getWriter().write("File not found!");
+            response.getWriter().flush();
+            response.getWriter().close();
+            return null;
+        }
+
         response.setHeader("Content-Disposition", String.format("attachment; filename=%s.xml", file.getName()));
         return new FileSystemResource(file);
     }
