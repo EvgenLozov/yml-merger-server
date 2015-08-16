@@ -3,6 +3,7 @@ package com.merger.controller;
 import com.company.MergeService;
 import com.company.config.Config;
 import com.merger.ConfigRepository;
+import company.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
@@ -44,9 +45,12 @@ class PricelistController {
 
     @RequestMapping(value = "/{id}/download", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public FileSystemResource download(@PathVariable String id, HttpServletResponse response) throws IOException {
-        String outputFile = configRepository.get(id).getOutputFile();
-        File file = new File(outputFile);
+    public FileSystemResource download(@PathVariable String id,
+                                       @RequestParam Currency currency,
+                                       HttpServletResponse response) throws IOException {
+
+        String fileName = configRepository.get(id).getOutputFile() + File.separator + currency.name();
+        File file = new File(fileName);
 
         if (!file.exists()){
             response.setStatus(404);
