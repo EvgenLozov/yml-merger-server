@@ -2,7 +2,6 @@ package com.company.processing;
 
 import com.company.factories.handler.*;
 import com.company.readerproviders.ByteArrayXmlEventReaderProvider;
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import company.Currency;
 import company.Factory;
 import company.StAXService;
@@ -12,6 +11,8 @@ import company.handlers.xml.XmlEventHandler;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,8 +28,8 @@ public class ChangeCurrencyProcessor implements ByteArrayProcessor {
     }
 
     @Override
-    public byte[] process(byte[] bytes) throws XMLStreamException {
-        ByteOutputStream byteOutputStream = new ByteOutputStream();
+    public byte[] process(byte[] bytes) throws XMLStreamException, IOException {
+        ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
 
         XMLOutputFactory oFactory = XMLOutputFactory.newFactory();
 

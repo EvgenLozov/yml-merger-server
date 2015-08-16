@@ -7,7 +7,6 @@ import com.company.http.HttpClientProvider;
 import com.company.http.HttpService;
 import com.company.readerproviders.FileXMLEventReaderProvider;
 import com.company.readerproviders.HttpXMLEventReaderProvider;
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import company.Factory;
 import company.StAXService;
 import company.XMLEventReaderProvider;
@@ -18,7 +17,9 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 public class MergedYmlSource implements ByteArraySource {
@@ -30,7 +31,7 @@ public class MergedYmlSource implements ByteArraySource {
     }
 
     @Override
-    public byte[] provide() throws XMLStreamException, FileNotFoundException {
+    public byte[] provide() throws XMLStreamException, IOException {
 
 
         List<XMLEventReaderProvider> readerProviders = new ArrayList<>();
@@ -55,7 +56,7 @@ public class MergedYmlSource implements ByteArraySource {
         XMLOutputFactory oFactory = XMLOutputFactory.newFactory();
 
 
-        ByteOutputStream outputStream  = new ByteOutputStream();
+        ByteArrayOutputStream outputStream  = new ByteArrayOutputStream();
         XMLEventWriter mergedOut = oFactory.createXMLEventWriter(outputStream, config.getEncoding());
 
         List<Factory<XmlEventHandler>> factories = new ArrayList<>();

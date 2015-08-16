@@ -10,6 +10,7 @@
     "replaces":[
         {"wordsToReplace":["Средство"], "replacement":"Средства" },
         {"wordsToReplace":["Антенны"], "replacement":"пиписьки" },
+        {"wordsToReplace":["id=\"9\" parentId=\"2\""], "replacement":"id=\"9\" parentId=\"3\"" },
         {"wordsToReplace":["кабель"], "replacement":"Кобель" }
     ]
 }
