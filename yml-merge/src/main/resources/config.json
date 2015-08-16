@@ -4,11 +4,12 @@
     "urls" : [],
     "files":["D:/projects/yml-merger-server/files/shop.yml"],
     "encoding" : "Windows-1251",
-    "outputFile":"files/mergedPrice.xml",
+    "outputFile":"files",
     "categoryIds" : [],
-    "currency":"BYR",
+    "currencies":["BYR","RUR"],
     "replaces":[
         {"wordsToReplace":["Средство"], "replacement":"Средства" },
+        {"wordsToReplace":["Антенны"], "replacement":"пиписьки" },
         {"wordsToReplace":["кабель"], "replacement":"Кобель" }
     ]
 }

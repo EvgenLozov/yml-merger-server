@@ -5,6 +5,9 @@ import com.company.config.Config;
 import com.company.factories.handler.*;
 import com.company.http.HttpClientProvider;
 import com.company.http.HttpService;
+import com.company.processing.MergePostProcessor;
+import com.company.processing.MergedYmlSource;
+import com.company.processing.ReplaceProcessing;
 import com.company.readerproviders.FileXMLEventReaderProvider;
 import com.company.readerproviders.HttpXMLEventReaderProvider;
 import company.Factory;
@@ -27,65 +30,13 @@ import java.util.*;
 public class MergeService {
 
     public void process(Config config) throws IOException, XMLStreamException {
-        String psw = new String(Base64.getDecoder().decode(config.getPsw().getBytes()));
-        CloseableHttpClient httpClient = new HttpClientProvider(config.getUser(), psw).get();
-        HttpService httpService = new HttpService(httpClient);
+        byte[] bytes = new MergedYmlSource(config).provide();
 
-        List<XMLEventReaderProvider> readerProviders = new ArrayList<>();
 
-        for (String url : config.getUrls())
-            readerProviders.add(new HttpXMLEventReaderProvider(httpService, url, config.getEncoding()));
+        ReplaceProcessing processing = new ReplaceProcessing(config.getEncoding(), config.getReplaces());
+        bytes = processing.process(bytes);
 
-        for (String fileName : config.getFiles())
-            readerProviders.add(new FileXMLEventReaderProvider(fileName, config.getEncoding()));
-
-        if (readerProviders.isEmpty())
-            throw new RuntimeException("Must best specified at least one price list source");
-
-        StAXService staxService = new StAXService(readerProviders.get(0));
-
-        XMLOutputFactory oFactory = XMLOutputFactory.newFactory();
-
-        String outFilePath = getTmpFileInSameFolder(config.getOutputFile());
-
-        FileOutputStream fileOutputStream  = new FileOutputStream(outFilePath);
-        XMLEventWriter mergedOut = oFactory.createXMLEventWriter(fileOutputStream, config.getEncoding());
-
-        List<Factory<XmlEventHandler>> factories = new ArrayList<>();
-        factories.add(new CurrencyHandlerFactory(config.getCurrencies().get(0)));
-        factories.add(new ConditionalCopierXmlEventHandlerFactory(mergedOut, Arrays.asList("categories", "offers")));
-
-        Set<String> allowedCategories = new IncludedCategoriesProvider(readerProviders, new TreeSet<>(config.getCategoryIds())).get();
-        factories.add(new ElementWriterHandlerFactory(readerProviders, "offers", new OfferHandlerFactory(config.getCurrencies().get(0), mergedOut, allowedCategories, config.getReplaces())));
-        factories.add(new ElementWriterHandlerFactory(readerProviders, "categories", new CategoryHandlerFactory(mergedOut, allowedCategories)));
-
-        XmlEventHandler xmlEventHandler = new MergeXmlEventHandlerFactory(factories).get();
-
-        staxService.process(xmlEventHandler);
-
-        mergedOut.flush();
-        mergedOut.close();
-        fileOutputStream.close();
-
-        deleteOldFile(config.getOutputFile());
-        rename(outFilePath, config.getOutputFile());
-    }
-
-    private String getTmpFileInSameFolder(String filePath)
-    {
-        return new File(filePath).getParentFile()+"/tmp"+UUID.randomUUID().toString();
-    }
-
-    private void deleteOldFile(String oldFile)
-    {
-        if (new File(oldFile).exists() && !new File(oldFile).delete())
-            throw new RuntimeException("Unable to delete "+oldFile);
-    }
-
-    private void rename(String fileToRename, String newName )
-    {
-        if (!new File(fileToRename).renameTo(new File(newName )))
-            throw new RuntimeException("Unable to rename "+fileToRename+" to "+newName );
+        new MergePostProcessor(config.getEncoding(), config.getCurrencies(), config.getOutputFile()).process(bytes);
     }
 
 }

@@ -1,33 +1,28 @@
 package com.company.factories.handler;
 
-import com.company.config.Replace;
 import company.Currency;
-import company.DataProvider;
 import company.Factory;
-import company.conditions.OfferBelongToCategories;
 import company.conditions.TrueCondition;
-import company.handlers.aggregated.*;
+import company.handlers.aggregated.AggregatedXmlEventHandler;
+import company.handlers.aggregated.AggregatedXmlEventWriter;
+import company.handlers.aggregated.ChangeOfferCurrency;
+import company.handlers.aggregated.SuccessiveAggregatedEventHandler;
 import company.handlers.xml.AggregatedXmlEventNotifier;
-import company.handlers.xml.CurrentPriceNameProvider;
 import company.handlers.xml.SuccessiveXmlEventHandler;
 import company.handlers.xml.XmlEventHandler;
-import company.handlers.xml.currency.RenameElementNameHandler;
 
 import javax.xml.stream.XMLEventWriter;
-import javax.xml.stream.events.XMLEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
-public class OfferHandlerFactory implements Factory<XmlEventHandler> {
+public class ChangeOfferCurrencyHandlerFactory implements Factory<XmlEventHandler> {
 
     XMLEventWriter out;
-    Set<String> allowedCategories;
+    Currency currency;
 
-    public OfferHandlerFactory( XMLEventWriter out, Set<String> allowedCategories) {
+    public ChangeOfferCurrencyHandlerFactory(XMLEventWriter out, Currency currency) {
         this.out = out;
-        this.allowedCategories = allowedCategories;
+        this.currency = currency;
     }
 
     @Override
@@ -35,7 +30,9 @@ public class OfferHandlerFactory implements Factory<XmlEventHandler> {
         List<XmlEventHandler> handlers = new ArrayList<>();
 
         List<AggregatedXmlEventHandler> offersHandlers = new ArrayList<>();
-        offersHandlers.add(new AggregatedXmlEventWriter(out, new OfferBelongToCategories(allowedCategories)));
+        offersHandlers.add(new ChangeOfferCurrency(currency));
+        offersHandlers.add(new AggregatedXmlEventWriter(out, new TrueCondition<>()));
+
 
         handlers.add(new AggregatedXmlEventNotifier(new SuccessiveAggregatedEventHandler(offersHandlers), "offer"));
 

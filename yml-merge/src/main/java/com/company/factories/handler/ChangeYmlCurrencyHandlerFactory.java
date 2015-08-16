@@ -5,11 +5,14 @@ import company.Factory;
 import company.handlers.xml.XmlEventHandler;
 import company.handlers.xml.currency.ChangeYmlCurrencyHandler;
 
-public class CurrencyHandlerFactory implements Factory<XmlEventHandler> {
+/*
+* Конструюює обробник призначенням якого являється зміна валюти прайса
+* */
+public class ChangeYmlCurrencyHandlerFactory implements Factory<XmlEventHandler> {
 
     Currency currency;
 
-    public CurrencyHandlerFactory(Currency currency) {
+    public ChangeYmlCurrencyHandlerFactory(Currency currency) {
         this.currency = currency;
     }
 
