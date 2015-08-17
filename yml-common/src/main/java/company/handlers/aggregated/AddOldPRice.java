@@ -27,13 +27,13 @@ public class AddOldPRice implements AggregatedXmlEventHandler {
         XMLEvent end = xmlEventFactory.createDTD("\n");
         XMLEvent tab = xmlEventFactory.createDTD("\t");
 
-        StartElement startElement = xmlEventFactory.createStartElement("", "", "oldprice");
+        StartElement startElement = xmlEventFactory.createStartElement("", "", "oldPrice");
 
         double price = getPrice(events);
         price = (int)(price * (1 + oldPrice/100));
         Characters textElement = xmlEventFactory.createCharacters(String.valueOf(price));
 
-        EndElement endElement = xmlEventFactory.createEndElement("", "", "oldprice");
+        EndElement endElement = xmlEventFactory.createEndElement("", "", "oldPrice");
 
         for (int i=0;i<events.size();i++)
             if (events.get(i).isEndElement() &&  events.get(i).asEndElement().getName().getLocalPart().equals("price")) {
