@@ -49,6 +49,8 @@ APP.ConfigRowView = Backbone.View.extend({
     event.preventDefault();
     event.stopPropagation();
 
+    var configId = this.config.id;
+
     $.ajax({
       type: "POST",
       url : "/pricelists/" + configId + "/merge",
