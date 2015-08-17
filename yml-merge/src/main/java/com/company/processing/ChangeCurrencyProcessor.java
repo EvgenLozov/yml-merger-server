@@ -21,10 +21,12 @@ public class ChangeCurrencyProcessor implements ByteArrayProcessor {
 
     String encoding;
     Currency currency;
+    double oldPrice;
 
-    public ChangeCurrencyProcessor(String encoding, Currency currency) {
+    public ChangeCurrencyProcessor(String encoding, Currency currency, double oldPrice) {
         this.encoding = encoding;
         this.currency = currency;
+        this.oldPrice = oldPrice;
     }
 
     @Override
@@ -42,7 +44,7 @@ public class ChangeCurrencyProcessor implements ByteArrayProcessor {
 
 
         factories.add(new ElementWriterHandlerFactory(Arrays.asList(new ByteArrayXmlEventReaderProvider(bytes, encoding)),
-                "offers", new ChangeOfferCurrencyHandlerFactory( mergedOut, currency)));
+                "offers", new ChangeOfferCurrencyHandlerFactory( mergedOut, currency, oldPrice)));
 
 
         StAXService staxService = new StAXService(new ByteArrayXmlEventReaderProvider(bytes, encoding));

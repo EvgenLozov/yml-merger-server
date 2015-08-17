@@ -3,10 +3,7 @@ package com.company.factories.handler;
 import company.Currency;
 import company.Factory;
 import company.conditions.TrueCondition;
-import company.handlers.aggregated.AggregatedXmlEventHandler;
-import company.handlers.aggregated.AggregatedXmlEventWriter;
-import company.handlers.aggregated.ChangeOfferCurrency;
-import company.handlers.aggregated.SuccessiveAggregatedEventHandler;
+import company.handlers.aggregated.*;
 import company.handlers.xml.AggregatedXmlEventNotifier;
 import company.handlers.xml.SuccessiveXmlEventHandler;
 import company.handlers.xml.XmlEventHandler;
@@ -19,10 +16,12 @@ public class ChangeOfferCurrencyHandlerFactory implements Factory<XmlEventHandle
 
     XMLEventWriter out;
     Currency currency;
+    double oldPrice;
 
-    public ChangeOfferCurrencyHandlerFactory(XMLEventWriter out, Currency currency) {
+    public ChangeOfferCurrencyHandlerFactory(XMLEventWriter out, Currency currency, double oldPrice) {
         this.out = out;
         this.currency = currency;
+        this.oldPrice = oldPrice;
     }
 
     @Override
@@ -31,6 +30,7 @@ public class ChangeOfferCurrencyHandlerFactory implements Factory<XmlEventHandle
 
         List<AggregatedXmlEventHandler> offersHandlers = new ArrayList<>();
         offersHandlers.add(new ChangeOfferCurrency(currency));
+        offersHandlers.add(new AddOldPRice(oldPrice));
         offersHandlers.add(new AggregatedXmlEventWriter(out, new TrueCondition<>()));
 
 

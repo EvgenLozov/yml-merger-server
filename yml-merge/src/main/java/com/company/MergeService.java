@@ -36,7 +36,7 @@ public class MergeService {
         ReplaceProcessing processing = new ReplaceProcessing(config.getEncoding(), config.getReplaces());
         bytes = processing.process(bytes);
 
-        new MergePostProcessor(config.getEncoding(), config.getCurrencies(), config.getOutputFile()).process(bytes);
+        new MergePostProcessor(config.getEncoding(), config.getCurrencies(), config.getOutputFile(), config.getOldPrice()).process(bytes);
     }
 
 }
