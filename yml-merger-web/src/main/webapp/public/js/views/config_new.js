@@ -4,18 +4,22 @@ APP.ConfigNewView = Backbone.View.extend({
 
   events: {
     "click button.save": "save",
-    "click button.addReplace": "addReplace"
+    "click button.addReplace": "addReplace",
+    "click button.addCategoryIdsPair": "addCategoryIdsPair"
   },
 
   initialize: function (options) {
     this.template = _.template($('#formTemplate').html());
 
-    this.config  = options.config;
+    this.config = options.config;
     this.configs = options.configs;
     this.config.bind('invalid', this.showErrors, this);
 
     this.replaces = new APP.ReplaceCollection();
-    this.replacesView = new APP.ReplaceViewCollection({collection : this.replaces});
+    this.replacesView = new APP.ReplaceViewCollection({collection: this.replaces});
+
+    this.parentIds = new APP.CategoryIdsPairCollection();
+    this.parentIdsView = new APP.CategoryIdsPairViewCollection({collection: this.parentIds});
   },
 
   showErrors: function (config, errors) {
@@ -32,7 +36,7 @@ APP.ConfigNewView = Backbone.View.extend({
     event.preventDefault();
 
     var currencies = [];
-    $.each($("input[name='currency']:checked"), function(){
+    $.each($("input[name='currency']:checked"), function () {
       currencies.push($(this).val());
     });
 
@@ -42,8 +46,9 @@ APP.ConfigNewView = Backbone.View.extend({
       psw: btoa(this.$el.find('#psw').val()),
       encoding: this.$el.find('#encoding').val(),
       currencies: currencies,
-      oldPrice: this.$el.find('#oldPrice').val()/100,
-      replaces: getReplaces(this.$el.find("#replacesTable").find('tbody').children())
+      oldPrice: this.$el.find('#oldPrice').val() / 100,
+      replaces: getReplaces(this.$el.find("#replacesTable").find('tbody').children()),
+      parentIds : getParentIds(this.$el.find("#parentIdsTable").find('tbody').children())
     });
 
     if (!this.$el.find('#urls').val() || !this.$el.find('#urls').val().trim())
@@ -91,19 +96,23 @@ APP.ConfigNewView = Backbone.View.extend({
       var configs = this.configs;
       this.config.save(null,
           {
-            success: function(model) {
-                        configs.add(model);
-                        window.location.hash = "configs/index";
-                      },
-            error: function(){
-                      alert("Ошибка при сохранении")
-                    },
-            wait: true});
+            success: function (model) {
+              configs.add(model);
+              window.location.hash = "configs/index";
+            },
+            error: function () {
+              alert("Ошибка при сохранении")
+            },
+            wait: true
+          });
     }
   },
 
   render: function () {
     this.$el.html(this.template(this.config.toJSON()));
+
+    this.$el.find("#parentIdsTable").append(this.parentIdsView.$el);
+    this.parentIdsView.render();
 
     this.$el.find("#replacesTable").append(this.replacesView.$el);
     this.replacesView.render();
@@ -111,18 +120,20 @@ APP.ConfigNewView = Backbone.View.extend({
     return this;
   },
 
-  addReplace: function(){
+  addReplace: function () {
     var replacement = this.$el.find('#replacement').val();
     var wordsToReplace = this.$el.find('#wordsToReplace').val().split(",");
-    wordsToReplace = wordsToReplace.filter(function(e){return e.trim()});
+    wordsToReplace = wordsToReplace.filter(function (e) {
+      return e.trim()
+    });
 
-    _.each(wordsToReplace, function(word){
+    _.each(wordsToReplace, function (word) {
       word.trim();
     });
 
     var replace = new APP.ReplaceModel();
-    replace.set({replacement : replacement, wordsToReplace: wordsToReplace});
-    if (!replace.isValid()){
+    replace.set({replacement: replacement, wordsToReplace: wordsToReplace});
+    if (!replace.isValid()) {
       this.showErrors(replace, replace.validationError);
       return;
     }
@@ -131,6 +142,23 @@ APP.ConfigNewView = Backbone.View.extend({
 
     this.$el.find('#replacement').val("");
     this.$el.find('#wordsToReplace').val("");
+  },
+
+  addCategoryIdsPair: function () {
+    var categoryId = this.$el.find("#categoryId").val().trim();
+    var parentId = this.$el.find("#parentId").val().trim();
+
+    var pair = new APP.CategoryIdsPair();
+    pair.set({ categoryId : categoryId, parentId : parentId});
+    if (!pair.isValid()){
+      this.showErrors(pair, pair.validationError);
+      return;
+    }
+
+    this.parentIds.add(pair);
+
+    this.$el.find('#categoryId').val("");
+    this.$el.find('#parentId').val("");
   }
 
 });

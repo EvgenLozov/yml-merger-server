@@ -3,6 +3,7 @@ package com.company.config;
 import company.Currency;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by user50 on 21.06.2015.
@@ -18,6 +19,7 @@ public class Config {
     private String encoding;
     private String outputFile;
     private List<String> categoryIds;
+    private List<CategoryIdsPair> parentIds;
     private List<Currency> currencies;
     private List<Replace> replaces;
     private double oldPrice;
@@ -88,6 +90,14 @@ public class Config {
 
     public void setCategoryIds(List<String> categoryIds) {
         this.categoryIds = categoryIds;
+    }
+
+    public List<CategoryIdsPair> getParentIds() {
+        return parentIds;
+    }
+
+    public void setParentIds(List<CategoryIdsPair> parentIds) {
+        this.parentIds = parentIds;
     }
 
     public List<Replace> getReplaces() {

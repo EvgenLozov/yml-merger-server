@@ -4,7 +4,8 @@ APP.ConfigEditView = Backbone.View.extend({
   // functions to fire on events
   events: {
     "click button.save": "save",
-    "click button.addReplace": "addReplace"
+    "click button.addReplace": "addReplace",
+    "click button.addCategoryIdsPair": "addCategoryIdsPair"
   },
 
   // the constructor
@@ -16,6 +17,9 @@ APP.ConfigEditView = Backbone.View.extend({
 
     this.replaces = new APP.ReplaceCollection(options.config.get('replaces'));
     this.replacesView = new APP.ReplaceViewCollection({collection : this.replaces});
+
+    this.parentIds = new APP.CategoryIdsPairCollection(options.config.get('parentIds'));
+    this.parentIdsView = new APP.CategoryIdsPairViewCollection({collection: this.parentIds});
   },
 
   showErrors: function (config, errors) {
@@ -44,7 +48,8 @@ APP.ConfigEditView = Backbone.View.extend({
       encoding: this.$el.find('#encoding').val(),
       currencies: currencies,
       oldPrice: this.$el.find('#oldPrice').val()/100,
-      replaces: getReplaces(this.$el.find("#replacesTable").find('tbody').children())
+      replaces: getReplaces(this.$el.find("#replacesTable").find('tbody').children()),
+      parentIds : getParentIds(this.$el.find("#parentIdsTable").find('tbody').children())
     });
 
     if (!this.$el.find('#urls').val() || !this.$el.find('#urls').val().trim())
@@ -104,6 +109,9 @@ APP.ConfigEditView = Backbone.View.extend({
   render: function () {
     $(this.el).html(this.template(this.config.toJSON()));
 
+    this.$el.find("#parentIdsTable").append(this.parentIdsView.$el);
+    this.parentIdsView.render();
+
     this.$el.find("#replacesTable").append(this.replacesView.$el);
     this.replacesView.render();
 
@@ -137,6 +145,23 @@ APP.ConfigEditView = Backbone.View.extend({
 
     this.$el.find('#replacement').val("");
     this.$el.find('#wordsToReplace').val("");
+  },
+
+  addCategoryIdsPair: function () {
+    var categoryId = this.$el.find("#categoryId").val().trim();
+    var parentId = this.$el.find("#parentId").val().trim();
+
+    var pair = new APP.CategoryIdsPair();
+    pair.set({ categoryId : categoryId, parentId : parentId});
+    if (!pair.isValid()){
+      this.showErrors(pair, pair.validationError);
+      return;
+    }
+
+    this.parentIds.add(pair);
+
+    this.$el.find('#categoryId').val("");
+    this.$el.find('#parentId').val("");
   }
 });
 
@@ -154,4 +179,17 @@ function getReplaces(rows){
   });
 
   return replaces;
+}
+
+function getParentIds(rows){
+  var parentIds = [];
+
+  _.each(rows, function(row){
+    var categoryId = row.children[0].textContent.trim();
+    var parentId = row.children[1].textContent.trim();
+
+    parentIds.push({categoryId: categoryId, parentId : parentId});
+  });
+
+  return parentIds;
 }
