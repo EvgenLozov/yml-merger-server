@@ -5,6 +5,8 @@ import com.merger.ConfigRepository;
 import com.merger.scheduler.SchedulerService;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,8 +58,9 @@ public class ConfigController {
 
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable String id) throws SchedulerException {
+    public ResponseEntity delete(@PathVariable String id) throws SchedulerException {
         schedulerService.deleteTask(configRepository.get(id));
         configRepository.delete(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }
