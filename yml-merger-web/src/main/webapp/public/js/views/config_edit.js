@@ -79,7 +79,7 @@ APP.ConfigEditView = Backbone.View.extend({
         categoryIds: this.$el.find('#categoryIds').val().split(',')
       });
 
-    var autoMerge = this.$el.find('#autoMerge').attr('checked');
+    var autoMerge = this.$el.find('#autoMerge').prop('checked');
 
     this.config.set({
       autoMerge: autoMerge
