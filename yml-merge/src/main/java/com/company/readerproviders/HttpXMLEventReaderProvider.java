@@ -6,8 +6,10 @@ import company.XMLEventReaderProvider;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * Created by user50 on 04.07.2015.
@@ -43,5 +45,11 @@ public class HttpXMLEventReaderProvider implements XMLEventReaderProvider {
     @Override
     public String toString() {
         return "URL: "+url;
+    }
+
+    public void removeTmpFile()
+    {
+        if (!new File(fileName).delete())
+            Logger.getLogger(HttpXMLEventReaderProvider.class.getName()).warning("Unable to delete file: "+fileName);
     }
 }

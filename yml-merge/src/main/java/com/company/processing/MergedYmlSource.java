@@ -25,29 +25,15 @@ import java.util.*;
 public class MergedYmlSource implements ByteArraySource {
 
     Config config;
+    List<XMLEventReaderProvider> readerProviders;
 
-    public MergedYmlSource(Config config) {
+    public MergedYmlSource(Config config, List<XMLEventReaderProvider> readerProviders) {
         this.config = config;
+        this.readerProviders = readerProviders;
     }
 
     @Override
     public byte[] provide() throws XMLStreamException, IOException {
-
-
-        List<XMLEventReaderProvider> readerProviders = new ArrayList<>();
-
-        if (!config.getUrls().isEmpty()) {
-            String psw = new String(Base64.getDecoder().decode(config.getPsw().getBytes()));
-            CloseableHttpClient httpClient = new HttpClientProvider(config.getUser(), psw).get();
-            HttpService httpService = new HttpService(httpClient);
-
-            for (String url : config.getUrls())
-                readerProviders.add(new HttpXMLEventReaderProvider(httpService, url, config.getEncoding()));
-        }
-
-        for (String fileName : config.getFiles())
-            readerProviders.add(new FileXMLEventReaderProvider(fileName, config.getEncoding()));
-
         if (readerProviders.isEmpty())
             throw new RuntimeException("Must be specified at least one price list source");
 

@@ -30,13 +30,38 @@ import java.util.*;
 public class MergeService {
 
     public void process(Config config) throws IOException, XMLStreamException {
-        byte[] bytes = new MergedYmlSource(config).provide();
+        List<XMLEventReaderProvider> readerProviders = new ArrayList<>();
+
+        List<HttpXMLEventReaderProvider> httpProviders = new ArrayList<>();
+
+        if (!config.getUrls().isEmpty()) {
+            String psw = new String(Base64.getDecoder().decode(config.getPsw().getBytes()));
+            CloseableHttpClient httpClient = new HttpClientProvider(config.getUser(), psw).get();
+            HttpService httpService = new HttpService(httpClient);
+
+            for (String url : config.getUrls()) {
+                HttpXMLEventReaderProvider provider = new HttpXMLEventReaderProvider(httpService, url, config.getEncoding());
+
+                readerProviders.add(provider);
+                httpProviders.add(provider);
+            }
+        }
+
+        for (String fileName : config.getFiles())
+            readerProviders.add(new FileXMLEventReaderProvider(fileName, config.getEncoding()));
+
+        byte[] bytes = new MergedYmlSource(config, readerProviders).provide();
 
 
         ReplaceProcessing processing = new ReplaceProcessing(config.getEncoding(), config.getReplaces());
         bytes = processing.process(bytes);
 
-        new MergePostProcessor(config.getEncoding(), config.getCurrencies(), config.getOutputFile(), config.getOldPrice()).process(bytes);
+        new MergePostProcessor(config.getEncoding(), config.getCurrencies(), config.getOutputFile()).process(bytes);
+
+        for (HttpXMLEventReaderProvider httpProvider : httpProviders) {
+            httpProvider.removeTmpFile();
+        }
     }
+
 
 }
