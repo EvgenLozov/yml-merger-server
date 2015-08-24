@@ -49,7 +49,7 @@ class PricelistController {
                                        @RequestParam Currency currency,
                                        HttpServletResponse response) throws IOException {
 
-        String fileName = configRepository.get(id).getOutputFile() + File.separator + currency.name();
+        String fileName = configRepository.get(id).getOutputFile() + File.separator + currency.getFileName();
         File file = new File(fileName);
 
         if (!file.exists()){

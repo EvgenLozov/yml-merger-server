@@ -16,4 +16,9 @@ public enum Currency {
     public String getElementName() {
         return elementName;
     }
+
+    public String getFileName()
+    {
+        return this.name()+".xml";
+    }
 }

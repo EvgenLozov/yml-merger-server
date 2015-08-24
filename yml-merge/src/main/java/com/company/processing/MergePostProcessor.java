@@ -30,7 +30,7 @@ public class MergePostProcessor implements ByteArrayPostProcessor {
         for (Currency currency : currencies) {
             byte[] processed = new ChangeCurrencyProcessor( encoding, currency, oldPrice ).process(bytes);
 
-            new RenamingSaveIntoFile(foulder+"/"+currency.name()).process(processed);
+            new RenamingSaveIntoFile(foulder+"/"+currency.getFileName()).process(processed);
         }
     }
 }
