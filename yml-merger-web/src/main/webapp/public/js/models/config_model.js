@@ -29,7 +29,7 @@ APP.ConfigModel = Backbone.Model.extend({
     if (!attrs.user || !attrs.user.trim()) errors.user = "Укажите логин для ApiShops";
     if (!attrs.psw || !attrs.psw.trim()) errors.psw = "Укажите пароль для ApiShops";
     if (!attrs.encoding || !attrs.encoding.trim()) errors.encoding = "Укажите кодировку";
-    if (!attrs.oldPrice || attrs.oldPrice <0 ) errors.oldPrice = "Наценка для старой цены должна быть больше 0";
+    if (attrs.oldPrice == null || attrs.oldPrice <0 ) errors.oldPrice = "Наценка для старой цены должна быть больше 0";
     if (!attrs.currencies || !attrs.currencies.length > 0) errors.currencies = "Укажите хотя бы одну валюту";
 
     if (attrs.autoMerge)
