@@ -1,5 +1,6 @@
 package com.company.processing;
 
+import com.company.config.CategoryIdsPair;
 import com.company.config.Replace;
 import company.bytearray.ByteArrayProcessor;
 
@@ -52,8 +53,9 @@ public class ReplaceProcessing implements ByteArrayProcessor {
     {
         String result = line;
         for (Replace replace : replaces)
-            for (String word : replace.getWordsToReplace())
+            for (String word : replace.getWordsToReplace()) {
                 result = result.replaceAll(word, replace.getReplacement());
+            }
 
         return result;
     }

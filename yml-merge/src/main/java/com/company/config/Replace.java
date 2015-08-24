@@ -10,6 +10,14 @@ public class Replace {
     private Set<String> wordsToReplace;
     private String replacement;
 
+    public Replace() {
+    }
+
+    public Replace(Set<String> wordsToReplace, String replacement) {
+        this.wordsToReplace = wordsToReplace;
+        this.replacement = replacement;
+    }
+
     public Set<String> getWordsToReplace() {
         return wordsToReplace;
     }

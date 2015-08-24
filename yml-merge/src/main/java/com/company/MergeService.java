@@ -1,7 +1,9 @@
 package com.company;
 
 import com.company.allowedcategories.IncludedCategoriesProvider;
+import com.company.config.CategoryIdsPair;
 import com.company.config.Config;
+import com.company.config.Replace;
 import com.company.factories.handler.*;
 import com.company.http.HttpClientProvider;
 import com.company.http.HttpService;
@@ -52,15 +54,30 @@ public class MergeService {
 
         byte[] bytes = new MergedYmlSource(config, readerProviders).provide();
 
-
-        ReplaceProcessing processing = new ReplaceProcessing(config.getEncoding(), config.getReplaces());
+        ReplaceProcessing processing = new ReplaceProcessing(config.getEncoding(), getReplaces(config));
         bytes = processing.process(bytes);
 
-        new MergePostProcessor(config.getEncoding(), config.getCurrencies(), config.getOutputFile()).process(bytes);
+        new MergePostProcessor(config.getEncoding(), config.getCurrencies(), config.getOutputFile(), config.getOldPrice()).process(bytes);
 
         for (HttpXMLEventReaderProvider httpProvider : httpProviders) {
             httpProvider.removeTmpFile();
         }
+    }
+
+    private List<Replace> getReplaces(Config config)
+    {
+        List<Replace> replaces = new ArrayList<>();
+
+        replaces.addAll(config.getReplaces());
+
+        for (CategoryIdsPair pair : config.getParentIds()) {
+            Set<String> words = new HashSet<>();
+            words.add("<category id=\""+pair.getCategoryId()+"\" parentId=\".*\">");
+
+            replaces.add(new Replace(words,"<category id=\""+pair.getCategoryId()+"\" parentId=\""+pair.getParentId()+"\">"));
+        }
+
+        return replaces;
     }
 
 
