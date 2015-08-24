@@ -30,7 +30,10 @@ public class ChangeOfferCurrencyHandlerFactory implements Factory<XmlEventHandle
 
         List<AggregatedXmlEventHandler> offersHandlers = new ArrayList<>();
         offersHandlers.add(new ChangeOfferCurrency(currency));
-        offersHandlers.add(new AddOldPRice(oldPrice));
+
+        if (oldPrice > 0)
+            offersHandlers.add(new AddOldPRice(oldPrice));
+
         offersHandlers.add(new AggregatedXmlEventWriter(out, new TrueCondition<>()));
 
 
