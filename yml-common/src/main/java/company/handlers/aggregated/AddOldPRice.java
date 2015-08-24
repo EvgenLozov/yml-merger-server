@@ -1,11 +1,9 @@
 package company.handlers.aggregated;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.Characters;
-import javax.xml.stream.events.EndElement;
-import javax.xml.stream.events.StartElement;
-import javax.xml.stream.events.XMLEvent;
+import javax.xml.stream.events.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,7 +19,7 @@ public class AddOldPRice implements AggregatedXmlEventHandler {
 
     @Override
     public void handle(List<XMLEvent> events) throws XMLStreamException {
-        if (isExistOldPRice(events))
+        if (!isAvailable(events) || isExistOldPRice(events))
             return;
 
         XMLEvent end = xmlEventFactory.createDTD("\n");
@@ -43,6 +41,16 @@ public class AddOldPRice implements AggregatedXmlEventHandler {
             }
 
     }
+
+    private boolean isAvailable(List<XMLEvent> offer) {
+        StartElement startElement = offer.get(0).asStartElement();
+
+        Attribute attribute = startElement.getAttributeByName(QName.valueOf("available"));
+
+        return attribute == null || !(attribute.getValue().isEmpty() || !Boolean.valueOf(attribute.getValue()));
+
+    }
+
 
     private boolean isExistOldPRice(List<XMLEvent> events)
     {
