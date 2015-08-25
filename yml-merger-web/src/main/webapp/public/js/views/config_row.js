@@ -7,6 +7,7 @@ APP.ConfigRowView = Backbone.View.extend({
   events: {
     "click a.merge": "merge",
     "click a.download": "download",
+    "click button.copy": "copy",
     "click a.delete": "destroy"
   },
 
@@ -21,6 +22,27 @@ APP.ConfigRowView = Backbone.View.extend({
   render: function () {
     this.$el.html(_.template($('#rowTemplate').html(), this.config.toJSON()));
     return this;
+  },
+
+  copy: function(){
+    var originName = this.config.get('name');
+
+    var copyConfig = this.config.clone();
+    copyConfig.unset('id');
+    copyConfig.set('name', originName + " (Копия)");
+
+    var configs = this.configs;
+    copyConfig.save(null,
+        {
+          success: function (model) {
+            configs.add(model);
+            window.location.hash = "configs/index";
+          },
+          error: function () {
+            alert("Ошибка при сохранении")
+          },
+          wait: true
+        });
   },
 
   // delete the model
