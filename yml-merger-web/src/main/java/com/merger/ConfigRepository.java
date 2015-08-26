@@ -55,7 +55,7 @@ public class ConfigRepository {
     public Config create(Config config) {
         String id = UUID.randomUUID().toString();
         config.setId(id);
-        config.setOutputFile("prices/"+id+".xml");
+        config.setOutputFile("prices/"+config.getName()+".xml");
 
         List<Config> configList = list();
         configList.add(config);
