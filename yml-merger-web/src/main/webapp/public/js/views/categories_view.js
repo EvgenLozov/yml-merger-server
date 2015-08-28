@@ -12,11 +12,15 @@ APP.ConfigEditCategoriesView = Backbone.View.extend({
         this.config = options.config;
         this.parentId = 0;
 
-        this.categories = new APP.CategoryCollection(getChildren(this.parentId),{configId : this.config.id, parentId : this.parentId});
+        this.categories = new APP.CategoryCollection([],{configId : this.config.id, parentId : this.parentId});
         this.categoriesView = new APP.CategoriesView({collection : this.categories});
+        this.categories.url = "/configs/" + this.config.id + "/categories/" + this.parentId +"/children";
+        this.categories.fetch({reset: true});
 
-        this.breadcrumbsCollection = new APP.BreadcrumbsCollection(getParents(this.parentId), {configId : this.configId, categoryId: this.parentId});
+        this.breadcrumbsCollection = new APP.BreadcrumbsCollection([], {configId : this.configId, categoryId: this.parentId});
         this.breadcrumbsView = new APP.BreadcrumbsView({collection : this.breadcrumbsCollection});
+        this.breadcrumbsCollection.url = "/configs/" + this.config.id  + "/categories/" + this.parentId + "/parents";
+        this.breadcrumbsCollection.fetch({reset: true});
     },
 
     // populate the html to the dom
@@ -35,11 +39,11 @@ APP.ConfigEditCategoriesView = Backbone.View.extend({
 
         this.parentId = e.currentTarget.getAttribute('myId');
 
-        this.categories.setParentId(this.parentId);
-        this.categories.reset(getChildren(this.parentId));
+        this.categories.url = "/configs/" + this.config.id + "/categories/" + this.parentId +"/children";
+        this.categories.fetch({reset: true});
 
-        this.breadcrumbsCollection.setCategoryId(this.parentId);
-        this.breadcrumbsCollection.reset(getParents(this.parentId));
+        this.breadcrumbsCollection.url = "/configs/" + this.config.id  + "/categories/" + this.parentId + "/parents";
+        this.breadcrumbsCollection.fetch({reset: true})
     }
 
 });

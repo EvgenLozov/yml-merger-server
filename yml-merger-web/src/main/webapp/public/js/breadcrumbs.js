@@ -11,14 +11,6 @@ APP.BreadcrumbsCollection = Backbone.Collection.extend({
         if (options.categoryId) {
             this.categoryId = options.categoryId;
         };
-    },
-
-    setCategoryId : function(categoryId){
-        this.categoryId = categoryId;
-    },
-
-    url: function(){
-        return "config/" + this.configId + "/categories/" + this.categoryId + "/parents";
     }
 
 });

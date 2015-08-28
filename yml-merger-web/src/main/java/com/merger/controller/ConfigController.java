@@ -1,6 +1,8 @@
 package com.merger.controller;
 
+import com.company.allowedcategories.Category;
 import com.company.config.Config;
+import com.google.common.collect.Sets;
 import com.merger.ConfigRepository;
 import com.merger.scheduler.SchedulerService;
 import org.quartz.SchedulerException;
@@ -9,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Yevhen on 2015-07-14.
@@ -62,5 +64,15 @@ public class ConfigController {
         schedulerService.deleteTask(configRepository.get(id));
         configRepository.delete(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @RequestMapping(value = "/{id}/categories/{categoryId}/children", method = RequestMethod.GET)
+    public Set<Category> children(@PathVariable String id, @PathVariable String categoryId){
+        return new HashSet<>();
+    }
+
+    @RequestMapping(value = "/{id}/categories/{categoryId}/parents", method = RequestMethod.GET)
+    public List<Category> parents(@PathVariable String id, @PathVariable String categoryId){
+        return new ArrayList<>();
     }
 }

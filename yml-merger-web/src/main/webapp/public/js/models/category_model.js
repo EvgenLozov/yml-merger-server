@@ -33,10 +33,6 @@ APP.CategoryCollection = Backbone.Collection.extend({
 
     setParentId : function(parentId){
         this.parentId = parentId;
-    },
-
-    url: function(){
-        return "config/" + this.configId + "/categories/" + this.parentId;
     }
 
 });
