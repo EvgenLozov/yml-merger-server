@@ -5,6 +5,7 @@ APP.ConfigRouter = Backbone.Router.extend({
     "config/new": "create",
     "configs/index": "index",
     "config/:id/edit": "edit",
+    "config/:id/categories": "categories",
     "config/:id/view": "show"
   },
 
@@ -24,6 +25,12 @@ APP.ConfigRouter = Backbone.Router.extend({
   edit: function (id) {
     var config = this.configs.get(id);
     this.currentView = new APP.ConfigEditView({config: config});
+    $('#primary-content').html(this.currentView.render().el);
+  },
+
+  categories: function (id) {
+    var config = this.configs.get(id);
+    this.currentView = new APP.ConfigEditCategoriesView({config: config});
     $('#primary-content').html(this.currentView.render().el);
   },
 

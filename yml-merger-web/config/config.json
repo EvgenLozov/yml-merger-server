@@ -8,6 +8,7 @@
   "encoding" : "utf-8",
   "outputFile" : "prices/b840c767-35e3-4479-b857-943a9b0c17c5.xml",
   "categoryIds" : [ ],
+  "parentIds" : null,
   "currencies" : [ "RUR", "UAH", "BYR", "KZT" ],
   "replaces" : [ ],
   "oldPrice" : 0.01,

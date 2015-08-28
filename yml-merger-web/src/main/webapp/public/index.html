@@ -20,11 +20,14 @@
   <script type="text/javascript" src="js/models/config_model.js"></script>
   <script type="text/javascript" src="js/models/categoryIdsPair_model.js"></script>
     <script type="text/javascript" src="js/models/replace_model.js"></script>
+    <script type="text/javascript" src="js/models/category_model.js"></script>
     <script type="text/javascript" src="js/views/config_index.js"></script>
     <script type="text/javascript" src="js/views/config_row.js"></script>
     <script type="text/javascript" src="js/views/config_new.js"></script>
     <script type="text/javascript" src="js/views/config_edit.js"></script>
     <script type="text/javascript" src="js/views/config_show.js"></script>
+    <script type="text/javascript" src="js/views/categories_view.js"></script>
+    <script type="text/javascript" src="js/breadcrumbs.js"></script>
   <script type="text/javascript" src="js/views/replace_view.js"></script>
   <script type="text/javascript" src="js/views/parentIds_view.js"></script>
 </head>
@@ -233,6 +236,28 @@
     </table>
   </script>
 
+  <!-- edit categories -->
+  <script type="text/template" id="editCategoriesTpl">
+      <ol class="breadcrumb">
+          <li class="active">Настрока категорий для конфига "<%= name %>"</li>
+      </ol>
+
+  </script>
+  <script type="text/template" id="breadcrumbs">
+          <% _.each(collection, function(model) { %>
+             <li><a class="checkParent" myId="<%= model.id %>" href="#"><%= model.name %></a></li>
+          <% }); %>
+  </script>
+
+  <script type="text/template" id="categoryTpl">
+      <td>
+          <input id="<%= id %>" type="checkbox" class="categoryCheck">
+      </td>
+      <td>
+          <a class="category" href="#" myId="<%=id%>"><%= name %></a>
+      </td>
+  </script>
+
   <!-- the row template, renders once for each item in the index -->
   <script type="text/template" id="rowTemplate">
     <td>
@@ -348,6 +373,12 @@
             <label for="files" class="col-md-4 control-label">Пути к прайсам на диске</label>
             <div class="col-md-8">
                 <textarea class="form-control" rows="2" id="files" name="files" disabled><%= files %></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="categories" class="col-md-4 control-label">Категории для прайса</label>
+            <div class="col-md-8">
+                <a id="categories" href="#config/<%= id %>/categories">Выбрать категории из списка</a>
             </div>
         </div>
         <div class="form-group">
