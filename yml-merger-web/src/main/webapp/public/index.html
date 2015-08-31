@@ -92,6 +92,12 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="categories" class="col-md-4 control-label">Категории для прайса</label>
+                    <div class="col-md-8">
+                        <a id="categories" href="#config/<%= id %>/categories">Выбрать категории из списка</a>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="categoryIds" class="col-md-4 control-label">ID категорий для прайса</label>
                     <div class="col-md-8">
                         <textarea class="form-control" rows="2" id="categoryIds" name="categoryIds"><%= categoryIds %></textarea>
@@ -241,7 +247,7 @@
       <ol class="breadcrumb">
           <li class="active">Настрока категорий для конфига "<%= name %>"</li>
       </ol>
-
+      <div class="well well-sm"><a href="#" class="backToConfig">Вернуться к редактированию конфига</a></div>
   </script>
   <script type="text/template" id="breadcrumbs">
           <% _.each(collection, function(model) { %>
@@ -373,12 +379,6 @@
             <label for="files" class="col-md-4 control-label">Пути к прайсам на диске</label>
             <div class="col-md-8">
                 <textarea class="form-control" rows="2" id="files" name="files" disabled><%= files %></textarea>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="categories" class="col-md-4 control-label">Категории для прайса</label>
-            <div class="col-md-8">
-                <a id="categories" href="#config/<%= id %>/categories">Выбрать категории из списка</a>
             </div>
         </div>
         <div class="form-group">

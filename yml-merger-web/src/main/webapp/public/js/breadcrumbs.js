@@ -5,7 +5,7 @@ APP.BreadcrumbsView = Backbone.View.extend({
     className : 'breadcrumb',
 
     events : {
-        'click .parentLink' : 'back'
+        'click .checkParent' : 'back'
     },
 
     initialize: function(){
@@ -16,7 +16,13 @@ APP.BreadcrumbsView = Backbone.View.extend({
 
     back : function(e){
         e.preventDefault();
+        var parentId = $(e.currentTarget).attr('myId');
 
+        while(_.last(this.collection.models).id != parentId){
+            this.collection.pop();
+        }
+
+        this.trigger('select', this.collection.get(parentId));
     },
 
     render : function(){
