@@ -3,8 +3,7 @@
 APP.ConfigEditCategoriesView = Backbone.View.extend({
     // functions to fire on events
     events: {
-        "click a.category" : "fetchChildrenAndParents",
-        "click a.checkParent" : "fetchChildrenAndParents"
+        "click a.parentLink" : "fetchChildrenAndParents"
     },
 
     // the constructor
@@ -17,33 +16,49 @@ APP.ConfigEditCategoriesView = Backbone.View.extend({
         this.categories.url = "/configs/" + this.config.id + "/categories/" + this.parentId +"/children";
         this.categories.fetch({reset: true});
 
-        this.breadcrumbsCollection = new APP.BreadcrumbsCollection([], {configId : this.configId, categoryId: this.parentId});
-        this.breadcrumbsView = new APP.BreadcrumbsView({collection : this.breadcrumbsCollection});
-        this.breadcrumbsCollection.url = "/configs/" + this.config.id  + "/categories/" + this.parentId + "/parents";
-        this.breadcrumbsCollection.fetch({reset: true});
+        this.breadcrumbsCollection = new APP.CategoryCollection({id : '0', 'name' : 'Root'});
+        this.breadcrumbs = new APP.BreadcrumbsView({ collection : this.breadcrumbsCollection });
+
+        this.listenTo(this.categories, 'change', this.saveConfig);
+        this.listenTo(this.categories, 'select', this.fetchChildren);
+        this.listenTo(this.breadcrumbsCollection, 'select', this.fetchChildren)
     },
 
     // populate the html to the dom
     render: function () {
         this.$el.html(_.template($('#editCategoriesTpl').html(), this.config.toJSON()));
-        this.$el.append(this.breadcrumbsView.$el);
+        this.$el.append(this.breadcrumbs.$el);
         this.$el.append(this.categoriesView.$el);
-        this.breadcrumbsView.render();
+        this.breadcrumbs.render();
         this.categoriesView.render();
 
         return this;
     },
 
-    fetchChildrenAndParents: function(e){
-        e.preventDefault();
-
-        this.parentId = e.currentTarget.getAttribute('myId');
-
-        this.categories.url = "/configs/" + this.config.id + "/categories/" + this.parentId +"/children";
+    fetchChildren: function(category){
+        this.categories.url = "/configs/" + this.config.id + "/categories/" + category.id +"/children";
         this.categories.fetch({reset: true});
 
-        this.breadcrumbsCollection.url = "/configs/" + this.config.id  + "/categories/" + this.parentId + "/parents";
-        this.breadcrumbsCollection.fetch({reset: true})
+        this.breadcrumbsCollection.push(category);
+    },
+
+    showParentCategory : function(category){
+        this.categories.url = "/configs/" + this.config.id + "/categories/" + categoryId +"/children";
+        this.categories.fetch({reset: true});
+
+
+    },
+
+    saveConfig: function(model){
+        if (model.get('checked') == true){
+            this.config.get('categoryIds').push(model.id);
+        } else {
+            var indexToRemove = this.config.get('categoryIds').indexOf(model.id);
+            if (indexToRemove > -1) {
+                this.config.get('categoryIds').splice(indexToRemove, 1);
+            }
+        }
+        this.config.save();
     }
 
 });
@@ -52,7 +67,8 @@ APP.CategoryView = Backbone.View.extend({
     tagName : "tr",
 
     events : {
-        'change .categoryCheck' : 'categoryCheck'
+        'change .categoryCheck' : 'categoryCheck',
+        'click .category' : function(e){e.preventDefault(); this.model.trigger('select', this.model)}
     },
 
     render: function () {

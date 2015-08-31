@@ -39,6 +39,14 @@ public class Category {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
     public boolean isChecked() {
         return checked;
     }
@@ -61,5 +69,14 @@ public class Category {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (parentId != null ? parentId.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id='" + id + '\'' +
+                ", parentId='" + parentId + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

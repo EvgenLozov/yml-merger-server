@@ -31,6 +31,11 @@ public class Application {
     }
 
     @Bean
+    public CategoryRepository categoryRepository(){
+        return new CategoryRepositoryImpl(configRepository());
+    }
+
+    @Bean
     public MergeService mergeService(){
         return new MergeService();
     }

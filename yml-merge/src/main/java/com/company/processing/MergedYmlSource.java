@@ -1,5 +1,6 @@
 package com.company.processing;
 
+import com.company.allowedcategories.AllCategoriesProvider;
 import com.company.allowedcategories.IncludedCategoriesProvider;
 import com.company.config.Config;
 import com.company.factories.handler.*;
@@ -48,7 +49,8 @@ public class MergedYmlSource implements ByteArraySource {
         List<Factory<XmlEventHandler>> factories = new ArrayList<>();
         factories.add(new ConditionalCopierXmlEventHandlerFactory(mergedOut, Arrays.asList("categories", "offers")));
 
-        Set<String> allowedCategories = new IncludedCategoriesProvider(readerProviders, new TreeSet<>(config.getCategoryIds())).get();
+        AllCategoriesProvider allCategoriesProvider = new AllCategoriesProvider(readerProviders);
+        Set<String> allowedCategories = new IncludedCategoriesProvider(allCategoriesProvider, new TreeSet<>(config.getCategoryIds())).get();
         factories.add(new ElementWriterHandlerFactory(readerProviders, "offers", new OfferHandlerFactory( mergedOut, allowedCategories)));
         factories.add(new ElementWriterHandlerFactory(readerProviders, "categories", new CategoryHandlerFactory(mergedOut, allowedCategories)));
 

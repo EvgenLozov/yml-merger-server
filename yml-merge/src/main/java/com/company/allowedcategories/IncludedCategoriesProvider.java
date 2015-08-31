@@ -10,33 +10,27 @@ import java.io.FileNotFoundException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by user50 on 11.07.2015.
  */
 public class IncludedCategoriesProvider {
 
-    private List<XMLEventReaderProvider> readerProviders;
+    private AllCategoriesProvider allCategoriesProvider;
     private Set<String> categoryIds;
 
-    public IncludedCategoriesProvider(List<XMLEventReaderProvider> readerProviders, Set<String> categoryIds) {
-        this.readerProviders = readerProviders;
+    public IncludedCategoriesProvider(AllCategoriesProvider allCategoriesProvider, Set<String> categoryIds) {
+        this.allCategoriesProvider = allCategoriesProvider;
         this.categoryIds = categoryIds;
     }
 
     public Set<String> get() throws FileNotFoundException, XMLStreamException {
-        Set<Category> allCategories = new HashSet<>();
-        CategoriesCollector categoriesCollector = new CategoriesCollector(allCategories);
-        for (XMLEventReaderProvider readerProvider : readerProviders) {
-            StAXService stAXService = new StAXService(readerProvider);
-            stAXService.process(categoriesCollector);
-        }
+        Set<Category> allCategories = allCategoriesProvider.get();
 
-        Set<Category> categoriesFromConfig = new HashSet<>();
-        for (Category category : allCategories) {
-            if (categoryIds.isEmpty() || categoryIds.contains(category.getId()))
-                categoriesFromConfig.add(category);
-        }
+        Set<Category> categoriesFromConfig = allCategories.stream()
+                .filter(category -> categoryIds.isEmpty() || categoryIds.contains(category.getId()))
+                .collect(Collectors.toSet());
 
         ListMultimap<String, Category> multimap = ArrayListMultimap.create();
 
@@ -45,11 +39,7 @@ public class IncludedCategoriesProvider {
         }
 
         Set<Category> categoriesToInclude = new Util(multimap).getDescendants(categoriesFromConfig);
-        Set<String> categoryIdsToInclude = new HashSet<>();
-        for (Category category : categoriesToInclude) {
-            categoryIdsToInclude.add(category.getId());
-        }
 
-        return categoryIdsToInclude;
+        return categoriesToInclude.stream().map(Category::getId).collect(Collectors.toSet());
     }
 }

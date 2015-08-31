@@ -4,6 +4,7 @@ import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Sets;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -39,5 +40,9 @@ public class Util {
         }
 
         return results;
+    }
+
+    public List<Category> getChildren(Category parentCategory){
+        return map.get(parentCategory.getId());
     }
 }

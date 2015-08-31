@@ -1,29 +1,22 @@
 "use strict";
-APP.BreadcrumbsCollection = Backbone.Collection.extend({
-
-    model: APP.CategoryModel,
-
-    initialize: function(models, options) {
-        options || (options = {});
-        if (options.configId) {
-            this.configId = options.configId;
-        };
-        if (options.categoryId) {
-            this.categoryId = options.categoryId;
-        };
-    }
-
-});
-
 APP.BreadcrumbsView = Backbone.View.extend({
 
     tagName: 'ol',
     className : 'breadcrumb',
 
+    events : {
+        'click .parentLink' : 'back'
+    },
+
     initialize: function(){
         this.template = _.template($('#breadcrumbs').html());
 
-        this.collection.bind('reset', this.render, this);
+        this.collection.bind('all', this.render, this);
+    },
+
+    back : function(e){
+        e.preventDefault();
+
     },
 
     render : function(){
