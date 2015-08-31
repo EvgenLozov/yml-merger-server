@@ -4,6 +4,7 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
 import company.StAXService;
 import company.XMLEventReaderProvider;
+import company.handlers.xml.AggregatedXmlEventNotifier;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.FileNotFoundException;
@@ -26,10 +27,11 @@ public class IncludedCategoriesProvider {
 
     public Set<String> get() throws FileNotFoundException, XMLStreamException {
         Set<Category> allCategories = new HashSet<>();
-        CategoriesCollector categoriesCollector = new CategoriesCollector(allCategories);
+
+        AggregatedXmlEventNotifier aggregatedXmlEventNotifier = new AggregatedXmlEventNotifier(new CategoriesCollectorV2(allCategories), "category");
         for (XMLEventReaderProvider readerProvider : readerProviders) {
             StAXService stAXService = new StAXService(readerProvider);
-            stAXService.process(categoriesCollector);
+            stAXService.process(aggregatedXmlEventNotifier);
         }
 
         Set<Category> categoriesFromConfig = new HashSet<>();

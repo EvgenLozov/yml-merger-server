@@ -6,8 +6,14 @@ package com.company.allowedcategories;
 public class Category {
     private String id;
     private String parentId;
+    private String name;
 
     public Category(String id, String parentId) {
+        this.id = id;
+        this.parentId = parentId;
+    }
+
+    public Category(String id, String parentId, String name) {
         this.id = id;
         this.parentId = parentId;
     }
@@ -19,6 +25,11 @@ public class Category {
     public String getParentId() {
         return parentId;
     }
+
+    public String getName() {
+        return name;
+    }
+
 
     @Override
     public boolean equals(Object o) {
