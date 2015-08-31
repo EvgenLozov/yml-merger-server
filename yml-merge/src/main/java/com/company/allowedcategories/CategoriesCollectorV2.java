@@ -32,9 +32,21 @@ public class CategoriesCollectorV2 implements AggregatedXmlEventHandler {
                 parentId = attribute.getValue();
         }
 
-        String name = events.get(1).asCharacters().getData();
+        String name = getName(events);
 
 
         categories.add(new Category(id, parentId, name));
+    }
+
+    private String getName(List<XMLEvent> events)
+    {
+        String name = "";
+
+        for (XMLEvent event : events) {
+            if (event.isCharacters())
+                name +=  event.asCharacters().getData();
+        }
+
+        return name;
     }
 }
