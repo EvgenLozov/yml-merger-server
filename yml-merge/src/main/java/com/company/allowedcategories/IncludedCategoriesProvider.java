@@ -10,7 +10,6 @@ import java.io.FileNotFoundException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Created by user50 on 11.07.2015.
@@ -26,7 +25,13 @@ public class IncludedCategoriesProvider {
     }
 
     public Set<String> get() throws FileNotFoundException, XMLStreamException {
-        Set<Category> allCategories = allCategoriesProvider.get();
+        Set<Category> allCategories = new HashSet<>();
+
+        AggregatedXmlEventNotifier aggregatedXmlEventNotifier = new AggregatedXmlEventNotifier(new CategoriesCollectorV2(allCategories), "category");
+        for (XMLEventReaderProvider readerProvider : readerProviders) {
+            StAXService stAXService = new StAXService(readerProvider);
+            stAXService.process(aggregatedXmlEventNotifier);
+        }
 
         Set<Category> categoriesFromConfig = allCategories.stream()
                 .filter(category -> categoryIds.isEmpty() || categoryIds.contains(category.getId()))
@@ -39,6 +44,10 @@ public class IncludedCategoriesProvider {
         }
 
         Set<Category> categoriesToInclude = new Util(multimap).getDescendants(categoriesFromConfig);
+        Set<String> categoryIdsToInclude = new HashSet<>();
+        for (Category category : categoriesToInclude) {
+            categoryIdsToInclude.add(category.getId());
+        }
 
         return categoriesToInclude.stream().map(Category::getId).collect(Collectors.toSet());
     }

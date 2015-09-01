@@ -17,14 +17,6 @@ public class Category {
     public Category(String id, String parentId, String name) {
         this.id = id;
         this.parentId = parentId;
-        this.name = name;
-    }
-
-    public Category(String id, String parentId, String name, boolean checked) {
-        this.id = id;
-        this.parentId = parentId;
-        this.name = name;
-        this.checked = checked;
     }
 
     public String getId() {
