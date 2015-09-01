@@ -2,6 +2,7 @@ package com.company.allowedcategories;
 
 import company.StAXService;
 import company.XMLEventReaderProvider;
+import company.handlers.xml.AggregatedXmlEventNotifier;
 
 import javax.xml.stream.XMLStreamException;
 import java.util.HashSet;
@@ -21,10 +22,10 @@ public class AllCategoriesProvider {
 
     public Set<Category> get() throws XMLStreamException {
         Set<Category> allCategories = new HashSet<>();
-        CategoriesCollector categoriesCollector = new CategoriesCollector(allCategories);
+        AggregatedXmlEventNotifier aggregatedXmlEventNotifier = new AggregatedXmlEventNotifier(new CategoriesCollectorV2(allCategories), "category");
         for (XMLEventReaderProvider readerProvider : readerProviders) {
             StAXService stAXService = new StAXService(readerProvider);
-            stAXService.process(categoriesCollector);
+            stAXService.process(aggregatedXmlEventNotifier);
         }
 
         return allCategories;

@@ -76,15 +76,9 @@ public class ConfigController {
         Config config = configRepository.get(id);
 
         Set<Category> categories = categoryRepository.children(id, categoryId);
-        categories.forEach(category -> category.setName("Категория " + category.getId()));
 
         categories.forEach(category -> category.setChecked(config.getCategoryIds().contains(category.getId())));
 
         return categories;
-    }
-
-    @RequestMapping(value = "/{id}/categories/{categoryId}/parents", method = RequestMethod.GET)
-    public List<Category> parents(@PathVariable String id, @PathVariable String categoryId){
-        return new ArrayList<>();
     }
 }

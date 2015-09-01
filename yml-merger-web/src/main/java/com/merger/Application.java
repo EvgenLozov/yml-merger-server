@@ -32,7 +32,7 @@ public class Application {
 
     @Bean
     public CategoryRepository categoryRepository(){
-        return new CategoryRepositoryImpl(configRepository());
+        return new CategoryRepository(configRepository());
     }
 
     @Bean

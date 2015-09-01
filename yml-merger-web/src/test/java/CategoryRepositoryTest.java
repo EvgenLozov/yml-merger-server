@@ -1,6 +1,6 @@
 import com.company.allowedcategories.Category;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.merger.CategoryRepositoryImpl;
+import com.merger.CategoryRepository;
 import com.merger.ConfigRepository;
 import org.junit.Test;
 
@@ -11,7 +11,7 @@ import java.util.Set;
  */
 public class CategoryRepositoryTest {
 
-    CategoryRepositoryImpl repository = new CategoryRepositoryImpl(new ConfigRepository(new ObjectMapper()));
+    CategoryRepository repository = new CategoryRepository(new ConfigRepository(new ObjectMapper()));
 
     @Test
     public void testChildren() throws Exception {
