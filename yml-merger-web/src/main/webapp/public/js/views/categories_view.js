@@ -3,7 +3,8 @@
 APP.ConfigEditCategoriesView = Backbone.View.extend({
     // functions to fire on events
     events: {
-        "click .backToConfig" : function(e){e.preventDefault(); window.history.back();}
+        "click .backToConfig" : function(e){e.preventDefault(); window.history.back();},
+        "click .updateCache" : function(e){e.preventDefault(); }
     },
 
     // the constructor
@@ -55,7 +56,6 @@ APP.ConfigEditCategoriesView = Backbone.View.extend({
                 this.config.get('categoryIds').splice(indexToRemove, 1);
             }
         }
-        this.config.save();
     }
 
 });
