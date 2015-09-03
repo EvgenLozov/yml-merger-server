@@ -17,6 +17,7 @@ public class Category {
     public Category(String id, String parentId, String name) {
         this.id = id;
         this.parentId = parentId;
+        this.name = name;
     }
 
     public String getId() {

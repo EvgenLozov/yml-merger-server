@@ -34,16 +34,13 @@ public class CategoryRepository {
     public Set<Category> children(String configId, String parentId) throws XMLStreamException {
         Set<Category> allCategories = getAll(configId);
 
-        ListMultimap<String, Category> multimap = ArrayListMultimap.create();
-
+        Set<Category> children = new HashSet<>();
         for (Category category : allCategories) {
-            multimap.get(category.getParentId()).add(category);
+            if (category.getParentId() != null && category.getParentId().equals(parentId))
+                children.add(category);
         }
 
-        if (parentId.equals(ROOT_CATEGORY_ID))
-            return new HashSet<>(multimap.get(ROOT_CATEGORY_ID));
-
-        return new HashSet<>(multimap.get(parentId));
+        return children;
     }
 
     private Set<Category> getAll(String configId) throws XMLStreamException {
@@ -76,6 +73,8 @@ public class CategoryRepository {
         Set<Category> categories = new AllCategoriesProvider(readerProviders).get();
 
         httpProviders.forEach(com.company.readerproviders.HttpXMLEventReaderProvider::removeTmpFile);
+
+        categoriesCache.put(configId, categories);
 
         return categories;
     }

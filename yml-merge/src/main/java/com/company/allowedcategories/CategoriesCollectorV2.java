@@ -22,7 +22,7 @@ public class CategoriesCollectorV2 implements AggregatedXmlEventHandler {
         Iterator<Attribute> attributesIterator = events.get(0).asStartElement().getAttributes();
 
         String id = null;
-        String parentId = null;
+        String parentId = "0";
 
         while (attributesIterator.hasNext()){
             Attribute attribute = attributesIterator.next();
