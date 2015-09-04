@@ -4,7 +4,7 @@ APP.ConfigEditCategoriesView = Backbone.View.extend({
     // functions to fire on events
     events: {
         "click .backToConfig" : function(e){e.preventDefault(); window.history.back();},
-        "click .updateCache" : function(e){e.preventDefault(); }
+        "click .updateCache" : "updateCache"
     },
 
     // the constructor
@@ -56,6 +56,20 @@ APP.ConfigEditCategoriesView = Backbone.View.extend({
                 this.config.get('categoryIds').splice(indexToRemove, 1);
             }
         }
+    },
+
+    updateCache : function(e){
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "/configs/" + this.config.id + "/categories",
+            success: function(){
+                alert("Процес обновления кеша запущен");
+            },
+            error: function(){
+                alert("Произошла ошибка");
+            }
+        });
     }
 
 });

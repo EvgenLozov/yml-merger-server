@@ -81,4 +81,10 @@ public class ConfigController {
 
         return categories;
     }
+
+    @RequestMapping(value = "/{id}/categories", method = RequestMethod.POST)
+    public void updateCache(@PathVariable String id) throws SchedulerException, XMLStreamException {
+        categoryRepository.addOrUpdateCache(id);
+    }
+
 }
