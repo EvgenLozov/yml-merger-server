@@ -4,7 +4,8 @@ APP.ConfigEditCategoriesView = Backbone.View.extend({
     // functions to fire on events
     events: {
         "click .backToConfig" : function(e){e.preventDefault(); window.history.back();},
-        "click .updateCache" : "updateCache"
+        "click .updateCache" : "updateCache",
+        "click .showCategory" : "showCategory"
     },
 
     // the constructor
@@ -14,8 +15,6 @@ APP.ConfigEditCategoriesView = Backbone.View.extend({
 
         this.categories = new APP.CategoryCollection([],{configId : this.config.id, parentId : this.parentId});
         this.categoriesView = new APP.CategoriesView({collection : this.categories});
-        this.categories.url = "/configs/" + this.config.id + "/categories/" + this.parentId +"/children";
-        this.categories.fetch({reset: true});
 
         this.breadcrumbsCollection = new APP.CategoryCollection({id : '0', 'name' : 'Корневые категории'});
         this.breadcrumbs = new APP.BreadcrumbsView({ collection : this.breadcrumbsCollection });
@@ -27,14 +26,18 @@ APP.ConfigEditCategoriesView = Backbone.View.extend({
         this.listenTo(this.breadcrumbs, 'select', this.fetchChildren)
     },
 
-    // populate the html to the dom
-    render: function () {
-        this.$el.html(_.template($('#editCategoriesTpl').html(), this.config.toJSON()));
+    showCategory: function(){
         this.$el.append(this.breadcrumbs.$el);
         this.$el.append(this.categoriesView.$el);
         this.breadcrumbs.render();
         this.categoriesView.render();
 
+        this.categories.url = "/configs/" + this.config.id + "/categories/" + this.parentId +"/children";
+        this.categories.fetch({reset: true});
+    },
+
+    render: function () {
+        this.$el.html(_.template($('#editCategoriesTpl').html(), this.config.toJSON()));
         return this;
     },
 
