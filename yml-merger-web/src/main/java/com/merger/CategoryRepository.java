@@ -22,12 +22,13 @@ public class CategoryRepository {
     }
 
     public Set<Category> children(String configId, String parentId) throws XMLStreamException {
-        if (!categoriesCache.containsKey(configId))
-            categoriesCache.put(configId, categorySource.get(configId));
-
         Set<Category> allCategories = categoriesCache.get(configId);
 
         Set<Category> children = new HashSet<>();
+
+        if (allCategories == null)
+            return children;
+
         for (Category category : allCategories) {
             if (category.getParentId() != null && category.getParentId().equals(parentId))
                 children.add(category);
