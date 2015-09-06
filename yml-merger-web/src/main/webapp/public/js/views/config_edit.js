@@ -5,7 +5,8 @@ APP.ConfigEditView = Backbone.View.extend({
   events: {
     "click button.save": "save",
     "click button.addReplace": "addReplace",
-    "click button.addCategoryIdsPair": "addCategoryIdsPair"
+    "click button.addCategoryIdsPair": "addCategoryIdsPair",
+    "click #categories": "showCategories"
   },
 
   // the constructor
@@ -31,11 +32,66 @@ APP.ConfigEditView = Backbone.View.extend({
     }, this));
   },
 
+  showCategories : function(e){
+    e.preventDefault();
+
+    this.fillConfigByFormData();
+
+    var self = this;
+
+    if (this.config.isValid()){
+      this.config.save(null,
+          {
+            success: function() {
+              router.navigate("config/" + self.config.id + "/categories", {trigger: true});
+            },
+            error: function(){
+              alert("Ошибка при сохранении")
+            }}
+      )}
+  },
+
   save: function (event) {
     // this keeps the form from submitting
     event.stopPropagation();
     event.preventDefault();
 
+    this.fillConfigByFormData();
+
+    if (this.config.isValid()){
+      this.config.save(null,
+          {
+            success: function() {
+                         window.location.hash = "configs/index"
+                      },
+            error: function(){
+                      alert("Ошибка при сохранении")
+                    }}
+          );
+    }
+  },
+
+  // populate the html to the dom
+  render: function () {
+    $(this.el).html(this.template(this.config.toJSON()));
+
+    this.$el.find("#parentIdsTable").append(this.parentIdsView.$el);
+    this.parentIdsView.render();
+
+    this.$el.find("#replacesTable").append(this.replacesView.$el);
+    this.replacesView.render();
+
+    var currencies = this.config.get('currencies');
+    $.each(this.$el.find("input[name='currency']"), function(){
+      if (_.contains(currencies, $(this).val())){
+        $(this).prop('checked', true);
+      }
+    });
+
+    return this;
+  },
+
+  fillConfigByFormData : function(){
     var currencies = [];
     $.each($("input[name='currency']:checked"), function(){
       currencies.push($(this).val());
@@ -91,38 +147,6 @@ APP.ConfigEditView = Backbone.View.extend({
         time: this.$el.find('#time').val()
       });
     }
-
-    if (this.config.isValid()){
-      this.config.save(null,
-          {
-            success: function() {
-                         window.location.hash = "configs/index"
-                      },
-            error: function(){
-                      alert("Ошибка при сохранении")
-                    }}
-          );
-    }
-  },
-
-  // populate the html to the dom
-  render: function () {
-    $(this.el).html(this.template(this.config.toJSON()));
-
-    this.$el.find("#parentIdsTable").append(this.parentIdsView.$el);
-    this.parentIdsView.render();
-
-    this.$el.find("#replacesTable").append(this.replacesView.$el);
-    this.replacesView.render();
-
-    var currencies = this.config.get('currencies');
-    $.each(this.$el.find("input[name='currency']"), function(){
-      if (_.contains(currencies, $(this).val())){
-        $(this).prop('checked', true);
-      }
-    });
-
-    return this;
   },
 
   addReplace: function(){
