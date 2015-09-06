@@ -27,6 +27,8 @@ APP.ConfigEditCategoriesView = Backbone.View.extend({
     },
 
     showCategory: function(){
+        this.breadcrumbsCollection.reset({id : '0', 'name' : 'Корневые категории'});
+
         this.$el.append(this.breadcrumbs.$el);
         this.$el.append(this.categoriesView.$el);
         this.breadcrumbs.render();
