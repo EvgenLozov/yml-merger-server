@@ -1,12 +1,14 @@
 {
     "user" : "user50",
     "psw" : "bmV1c2VyNTA=",
-    "urls" : ["/websiteAction?action=getPriceTiu&id=462382&addPictures=2"],
-    "files":["D:/projects/yml-merger-server/files/shop.yml"],
+    "urls" : ["/websiteAction?action=getPriceTiu&id=462382&addPictures=2","/websiteAction?action=getPriceTiu&id=462401&addPictures=2"],
+    "files":[],
     "encoding" : "Windows-1251",
     "outputFile":"files",
     "categoryIds" : [],
     "currencies":["BYR","RUR"],
+    "oldPrice":30,
+    "parentIds":[],
     "replaces":[
         {"wordsToReplace":["Средство"], "replacement":"Средства" },
         {"wordsToReplace":["Антенны"], "replacement":"пиписьки" },
