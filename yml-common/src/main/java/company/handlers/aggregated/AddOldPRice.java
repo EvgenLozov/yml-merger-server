@@ -28,7 +28,7 @@ public class AddOldPRice implements AggregatedXmlEventHandler {
         StartElement startElement = xmlEventFactory.createStartElement("", "", "oldPrice");
 
         double price = getPrice(events);
-        price = (int)(price * (1 + oldPrice/100));
+        price = (int)(price * (1 + oldPrice));
         Characters textElement = xmlEventFactory.createCharacters(String.valueOf(price));
 
         EndElement endElement = xmlEventFactory.createEndElement("", "", "oldPrice");
