@@ -6,10 +6,7 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 
 import java.io.*;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by lozov on 15.07.15.
@@ -17,6 +14,7 @@ import java.util.UUID;
 public class ConfigRepository {
     public static final String CONFIG_FILE = "config" + File.separator + "config.json";
     private ObjectMapper objectMapper;
+    private PswSecurity pswSecurity = new PswSecurity();
 
     public ConfigRepository(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
@@ -27,7 +25,11 @@ public class ConfigRepository {
         try(InputStream inputStream = new FileInputStream(CONFIG_FILE)) {
             CollectionType listType = objectMapper.getTypeFactory().constructCollectionType(List.class, Config.class);
 
-            return objectMapper.readValue(inputStream, listType);
+            List<Config> configs = objectMapper.readValue(inputStream, listType);
+
+            configs.forEach(pswSecurity::decodePsw);
+
+            return configs;
         } catch (FileNotFoundException e) {
             return new ArrayList<>();
         } catch (IOException e) {
@@ -38,6 +40,9 @@ public class ConfigRepository {
 
     public void save(Config config){
         List<Config> configList = list();
+        pswSecurity.encodePsw(config);
+
+        config.setOutputFile("prices/" + config.getName().replaceAll("/", "-").replaceAll(":", "-")+".xml");
 
         int index = -1;
 
@@ -55,6 +60,7 @@ public class ConfigRepository {
 
     public Config create(Config config) {
         String id = UUID.randomUUID().toString();
+        pswSecurity.encodePsw(config);
         config.setId(id);
         config.setOutputFile("prices/"+ config.getName().replaceAll("/","-").replaceAll(":","-")+".xml");
 
@@ -101,4 +107,5 @@ public class ConfigRepository {
             throw new RuntimeException("Unable to write " + CONFIG_FILE);
         }
     }
+
 }

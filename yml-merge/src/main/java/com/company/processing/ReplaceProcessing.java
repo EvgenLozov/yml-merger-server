@@ -55,8 +55,16 @@ public class ReplaceProcessing implements ByteArrayProcessor {
         for (Replace replace : replaces)
             for (String word : replace.getWordsToReplace()) {
                 result = result.replaceAll(word, replace.getReplacement());
+                result = result.replaceAll(firstCharToUpperCase(word), replace.getReplacement());
+                result = result.replaceAll(word.toUpperCase(), replace.getReplacement());
             }
 
         return result;
+    }
+
+    private String firstCharToUpperCase(String line)
+    {
+        char first = Character.toUpperCase(line.charAt(0));
+        return first + line.substring(1);
     }
 }
