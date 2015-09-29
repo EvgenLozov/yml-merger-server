@@ -27,6 +27,8 @@ APP.ConfigEditCategoriesView = Backbone.View.extend({
     },
 
     showCategory: function(){
+        this.breadcrumbsCollection.reset({id : '0', 'name' : 'Корневые категории'});
+
         this.$el.append(this.breadcrumbs.$el);
         this.$el.append(this.categoriesView.$el);
         this.breadcrumbs.render();
@@ -53,10 +55,12 @@ APP.ConfigEditCategoriesView = Backbone.View.extend({
     saveConfig: function(model){
         if (model.get('checked') == true){
             this.config.get('categoryIds').push(model.id);
+            this.config.save();
         } else {
             var indexToRemove = this.config.get('categoryIds').indexOf(model.id);
             if (indexToRemove > -1) {
                 this.config.get('categoryIds').splice(indexToRemove, 1);
+                this.config.save();
             }
         }
     },
