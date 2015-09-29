@@ -25,13 +25,13 @@ public class AddOldPRice implements AggregatedXmlEventHandler {
         XMLEvent end = xmlEventFactory.createDTD("\n");
         XMLEvent tab = xmlEventFactory.createDTD("\t");
 
-        StartElement startElement = xmlEventFactory.createStartElement("", "", "oldPrice");
+        StartElement startElement = xmlEventFactory.createStartElement("", "", "oldprice");
 
         double price = getPrice(events);
         price = (int)(price * (1 + oldPrice));
         Characters textElement = xmlEventFactory.createCharacters(String.valueOf(price));
 
-        EndElement endElement = xmlEventFactory.createEndElement("", "", "oldPrice");
+        EndElement endElement = xmlEventFactory.createEndElement("", "", "oldprice");
 
         for (int i=0;i<events.size();i++)
             if (events.get(i).isEndElement() &&  events.get(i).asEndElement().getName().getLocalPart().equals("price")) {
@@ -55,7 +55,7 @@ public class AddOldPRice implements AggregatedXmlEventHandler {
     private boolean isExistOldPRice(List<XMLEvent> events)
     {
         for (XMLEvent event : events) {
-            if (event.isStartElement() &&  event.asStartElement().getName().getLocalPart().equals("OldPrice"))
+            if (event.isStartElement() &&  event.asStartElement().getName().getLocalPart().equals("oldprice"))
                 return true;
         }
 
