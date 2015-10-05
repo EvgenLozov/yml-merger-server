@@ -10,17 +10,17 @@ public class PswSecurity {
 
     public void encodePsw(Config config)
     {
-        byte[] pswBytes = Base64.getEncoder().encode((config.getPsw() + randomString).getBytes());
-        config.setPsw(new String(pswBytes));
+//        byte[] pswBytes = Base64.getEncoder().encode((config.getPsw() + randomString).getBytes());
+//        config.setPsw(new String(pswBytes));
     }
 
     public void decodePsw(Config config)
     {
-        byte[] pswBytes = Base64.getDecoder().decode(config.getPsw());
-
-        String psw = new String(pswBytes).replace(randomString, "");
-
-        config.setPsw(psw);
+//        byte[] pswBytes = Base64.getDecoder().decode(config.getPsw());
+//
+//        String psw = new String(pswBytes).replace(randomString, "");
+//
+//        config.setPsw(psw);
     }
 
 }
