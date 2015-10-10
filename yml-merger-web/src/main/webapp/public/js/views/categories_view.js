@@ -5,7 +5,8 @@ APP.ConfigEditCategoriesView = Backbone.View.extend({
     events: {
         "click .backToConfig" : function(e){e.preventDefault(); window.history.back();},
         "click .updateCache" : "updateCache",
-        "click .showCategory" : "showCategory"
+        "click .showCategory" : "showCategory",
+        "click .moveCategories" : "moveCategories"
     },
 
     // the constructor
@@ -18,6 +19,9 @@ APP.ConfigEditCategoriesView = Backbone.View.extend({
 
         this.breadcrumbsCollection = new APP.CategoryCollection({id : '0', 'name' : 'Корневые категории'});
         this.breadcrumbs = new APP.BreadcrumbsView({ collection : this.breadcrumbsCollection });
+
+        this.newParentsCategories = new APP.CategoryCollection();
+        this.newParentsSelectView = new APP.NewParentsCategoriesView({collection : this.newParentsCategories});
 
         this.listenTo(this.categories, 'change', this.saveConfig);
         this.listenTo(this.categories, 'select', this.fetchChildren);
@@ -34,8 +38,14 @@ APP.ConfigEditCategoriesView = Backbone.View.extend({
         this.breadcrumbs.render();
         this.categoriesView.render();
 
+        this.$el.find('#newparents').append(this.newParentsSelectView.$el);
+        this.newParentsSelectView.render();
+
         this.categories.url = "/configs/" + this.config.id + "/categories/" + this.parentId +"/children";
         this.categories.fetch({reset: true});
+
+        this.newParentsCategories.url = "/configs/" + this.config.id + "/categories/0/children";
+        this.newParentsCategories.fetch({reset: true});
     },
 
     render: function () {
@@ -77,6 +87,26 @@ APP.ConfigEditCategoriesView = Backbone.View.extend({
                 alert("Произошла ошибка");
             }
         });
+    },
+
+    moveCategories: function(){
+        var newParentId = this.$el.find(".newparents option:selected").attr('myId');
+
+        var selectedCategories = [];
+
+        var that = this;
+
+        _.each(that.categories.models, function(category){
+            if (category.get('isSelectedToMove') == true)
+                selectedCategories.push(category);
+        });
+
+        _.each(selectedCategories, function(selectedCategory){
+            that.config.get('parentIds').push({categoryId: selectedCategory.id, parentId : newParentId});
+        });
+
+        this.parentId = 0;
+        this.showCategory();
     }
 
 });
@@ -86,6 +116,7 @@ APP.CategoryView = Backbone.View.extend({
 
     events : {
         'change .categoryCheck' : 'categoryCheck',
+        'change .selectToMove' : 'selectToMove',
         'click .category' : function(e){e.preventDefault(); this.model.trigger('select', this.model)}
     },
 
@@ -98,6 +129,11 @@ APP.CategoryView = Backbone.View.extend({
     categoryCheck : function(e){
         var isChecked = $(e.currentTarget).prop('checked');
         this.model.checked(isChecked);
+    },
+
+    selectToMove : function(e){
+        var isSelected = $(e.currentTarget).prop('checked');
+        this.model.selectToMove(isSelected);
     }
 });
 

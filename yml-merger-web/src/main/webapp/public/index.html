@@ -27,6 +27,7 @@
     <script type="text/javascript" src="js/views/config_edit.js"></script>
     <script type="text/javascript" src="js/views/config_show.js"></script>
     <script type="text/javascript" src="js/views/categories_view.js"></script>
+    <script type="text/javascript" src="js/views/newparentsview.js"></script>
     <script type="text/javascript" src="js/breadcrumbs.js"></script>
   <script type="text/javascript" src="js/views/replace_view.js"></script>
   <script type="text/javascript" src="js/views/parentIds_view.js"></script>
@@ -260,6 +261,17 @@
               <button type="button" class="showCategory btn btn-default">Показать категории</button>
           </div>
       </div>
+      <div class="panel panel-default">
+          <div class="panel-body">
+              <div class="form-group">
+                  <div class="col-md-4">
+                    <button type="button" class="moveCategories btn btn-default">Переместить выбранные в :</button>
+                  </div>
+                  <div class="col-md-8" id="newparents">
+                  </div>
+              </div>
+          </div>
+      </div>
   </script>
   <script type="text/template" id="breadcrumbs">
           <% _.each(collection, function(model) { %>
@@ -267,9 +279,18 @@
           <% }); %>
   </script>
 
+  <script type="text/template" id="newParentsTpl">
+      <% _.each(collection, function(model) { %>
+      <option myId="<%= model.id %>"><%= model.name %></option>
+      <% }); %>
+  </script>
+
   <script type="text/template" id="categoryTpl">
       <td>
           <input id="<%= id %>" type="checkbox" class="categoryCheck">
+      </td>
+      <td>
+          <input type="checkbox" class="selectToMove">
       </td>
       <td>
           <a class="category" href="#" myId="<%=id%>"><%= name %></a>

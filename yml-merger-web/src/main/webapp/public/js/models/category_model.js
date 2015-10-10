@@ -3,7 +3,8 @@
 APP.CategoryModel = Backbone.Model.extend({
 
     defaults: {
-        checked : false
+        checked : false,
+        isSelectedToMove : false
     },
 
     checked: function(checked){
@@ -14,6 +15,15 @@ APP.CategoryModel = Backbone.Model.extend({
             this.set('checked', false);
         }
         console.log("Category with id " + this.attributes.id + " checked as " + checked);
+    },
+
+    selectToMove: function(selected){
+        if (selected == true && this.attributes.isSelectedToMove != true) {
+            this.set('isSelectedToMove', true);
+        }
+        if (selected == false && this.attributes.isSelectedToMove != false) {
+            this.set('isSelectedToMove', false);
+        }
     }
 });
 
