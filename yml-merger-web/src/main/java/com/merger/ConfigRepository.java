@@ -20,7 +20,7 @@ public class ConfigRepository {
         this.objectMapper = objectMapper;
     }
 
-    public List<Config> list(){
+    public synchronized List<Config> list(){
 
         try(InputStream inputStream = new FileInputStream(CONFIG_FILE)) {
             CollectionType listType = objectMapper.getTypeFactory().constructCollectionType(List.class, Config.class);
@@ -38,7 +38,7 @@ public class ConfigRepository {
         }
     }
 
-    public void save(Config config){
+    public synchronized void save(Config config){
         List<Config> configList = list();
         pswSecurity.encodePsw(config);
 
@@ -82,7 +82,7 @@ public class ConfigRepository {
         updateStorageFile(configList);
     }
 
-    public Config get(String id) {
+    public synchronized Config get(String id) {
         for (Config config : list()) {
             if (config.getId().equals(id))
                 return config;
