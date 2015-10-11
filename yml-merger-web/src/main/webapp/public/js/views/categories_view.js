@@ -170,11 +170,21 @@ APP.CategoriesView = Backbone.View.extend({
     addAll: function () {
         // clear out the container each time you render index
         this.$el.children().remove();
+        this.renderHeader();
         _.each(this.collection.models, $.proxy(this, 'addOne'));
     },
 
     addOne: function (model) {
         var view = new APP.CategoryView({model : model});
         this.$el.append(view.render().el);
+    },
+
+    renderHeader: function(){
+        var thead = $('<thead/>');
+        var tr = $('<tr/>');
+        tr.append('<th  class="col-md-2">Для прайса</th>');
+        tr.append('<th class="col-md-2">Для перемещ.</th>');
+        tr.append('<th class="col-md-8">Название категории</th>');
+        this.$el.append(tr);
     }
 });
