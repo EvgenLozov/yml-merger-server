@@ -1,6 +1,8 @@
 package com.merger;
 
 import com.company.allowedcategories.Category;
+import com.company.config.CategoryIdsPair;
+import com.company.config.Config;
 
 import javax.xml.stream.XMLStreamException;
 import java.util.*;
@@ -37,8 +39,28 @@ public class CategoryRepository {
         return children;
     }
 
-    public void addOrUpdateCache(String configId) throws XMLStreamException {
-        categoriesCache.put(configId, categorySource.get(configId));
-        logger.info("Categories cache for config #" + configId + " was updated");
+    public void addOrUpdateCache(Config config) throws XMLStreamException {
+        Set<Category> categories = categorySource.get(config.getId());
+
+        for (CategoryIdsPair pair : config.getParentIds()) {
+            categories.stream().filter(category -> category.getId().equals(pair.getCategoryId()))
+                               .forEach(category -> category.setParentId(pair.getParentId()));
+        }
+        categoriesCache.put(config.getId(), categories);
+
+        logger.info("Categories cache for config #" + config + " was updated");
+    }
+
+    public Category setParent(Config config, String categoryId, String parentId) {
+        Set<Category> categories = categoriesCache.get(config.getId());
+
+        for (Category category : categories) {
+                if (category.getId().equals(categoryId)){
+                    category.setParentId(parentId);
+                    return category;
+                }
+        }
+
+        return null;
     }
 }

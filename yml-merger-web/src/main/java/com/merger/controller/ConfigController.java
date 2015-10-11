@@ -28,9 +28,6 @@ public class ConfigController {
     @Autowired
     private ConfigRepository configRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
-
     @RequestMapping(method = RequestMethod.GET)
     public List<Config> list() {
         return configRepository.list();
@@ -69,28 +66,6 @@ public class ConfigController {
         schedulerService.deleteTask(configRepository.get(id));
         configRepository.delete(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
-    }
-
-    @RequestMapping(value = "/{id}/categories/{categoryId}/children", method = RequestMethod.GET)
-    public Set<Category> children(@PathVariable String id, @PathVariable String categoryId) throws XMLStreamException {
-        Config config = configRepository.get(id);
-
-        Set<Category> categories = categoryRepository.children(id, categoryId);
-
-        categories.forEach(category -> category.setChecked(config.getCategoryIds().contains(category.getId())));
-
-        return categories;
-    }
-
-    @RequestMapping(value = "/{id}/categories", method = RequestMethod.POST)
-    public void updateCache(@PathVariable String id) {
-        new Thread(() -> {
-            try {
-                categoryRepository.addOrUpdateCache(id);
-            } catch (XMLStreamException e) {
-                e.printStackTrace();
-            }
-        }).start();
     }
 
 }

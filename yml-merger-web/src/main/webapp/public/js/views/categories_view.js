@@ -102,7 +102,22 @@ APP.ConfigEditCategoriesView = Backbone.View.extend({
         });
 
         _.each(selectedCategories, function(selectedCategory){
-            that.config.get('parentIds').push({categoryId: selectedCategory.id, parentId : newParentId});
+
+            $.ajax({
+                type: "POST",
+                url: "/configs/" + that.config.id + "/categories/" + selectedCategory.id + "?parentId=" + newParentId,
+                statusCode: {
+                    201: function() {
+                        that.config.get('parentIds').push({categoryId: selectedCategory.id, parentId : newParentId});
+                    },
+                    200 : function(){
+                        _.each(that.config.get('parentIds'), function(pair){
+                           if (pair.categoryId == selectedCategory.id)
+                                pair.parentId = newParentId;
+                        });
+                    }
+                }
+            });
         });
 
         this.parentId = 0;

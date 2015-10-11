@@ -7,6 +7,14 @@ public class CategoryIdsPair {
     private String categoryId;
     private String parentId;
 
+    public CategoryIdsPair() {
+    }
+
+    public CategoryIdsPair(String categoryId, String parentId) {
+        this.categoryId = categoryId;
+        this.parentId = parentId;
+    }
+
     public String getCategoryId() {
         return categoryId;
     }
