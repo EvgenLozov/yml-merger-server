@@ -31,30 +31,7 @@ public class CategorySource {
     public Set<Category> get(String configId) throws XMLStreamException {
         Config config = configRepository.get(configId);
 
-        List<XMLEventReaderProvider> readerProviders = new ArrayList<>();
-
-        List<HttpXMLEventReaderProvider> httpProviders = new ArrayList<>();
-
-        if (!config.getUrls().isEmpty()) {
-            String psw = new String(Base64.getDecoder().decode(config.getPsw().getBytes()));
-            CloseableHttpClient httpClient = new HttpClientProvider(config.getUser(), psw).get();
-            HttpService httpService = new HttpService(httpClient);
-
-            for (String url : config.getUrls()) {
-                HttpXMLEventReaderProvider provider = new HttpXMLEventReaderProvider(httpService, url, config.getEncoding());
-
-                readerProviders.add(provider);
-                httpProviders.add(provider);
-            }
-        }
-
-        readerProviders.addAll(config.getFiles().stream()
-                .map(fileName -> new FileXMLEventReaderProvider(fileName, config.getEncoding()))
-                .collect(Collectors.toList()));
-
-        Set<Category> categories = new AllCategoriesProvider(readerProviders).get();
-
-        httpProviders.forEach(com.company.readerproviders.HttpXMLEventReaderProvider::removeTmpFile);
+        Set<Category> categories = new AllCategoriesProvider(config).get();
 
         return categories;
     }

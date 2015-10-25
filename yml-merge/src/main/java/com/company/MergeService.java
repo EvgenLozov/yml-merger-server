@@ -26,9 +26,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 
-/**
- * Created by user50 on 28.07.2015.
- */
 public class MergeService {
 
     public void process(Config config) throws IOException, XMLStreamException {
