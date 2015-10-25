@@ -52,7 +52,7 @@ public class CategorySource {
                 .map(fileName -> new FileXMLEventReaderProvider(fileName, config.getEncoding()))
                 .collect(Collectors.toList()));
 
-        Set<Category> categories = new AllCategoriesProvider(readerProviders).get();
+        Set<Category> categories = new AllCategoriesProvider(config).get();
 
         httpProviders.forEach(com.company.readerproviders.HttpXMLEventReaderProvider::removeTmpFile);
 

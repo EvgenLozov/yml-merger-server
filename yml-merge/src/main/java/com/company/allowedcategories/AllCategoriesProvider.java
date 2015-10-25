@@ -1,10 +1,19 @@
 package com.company.allowedcategories;
 
+import com.company.config.Config;
+import com.company.config.ConfigProvider;
+import com.company.http.HttpClientProvider;
+import com.company.http.HttpService;
+import com.company.readerproviders.DownloadPriceListRequest;
+import com.company.readerproviders.ExtractCategory;
 import company.StAXService;
 import company.XMLEventReaderProvider;
 import company.handlers.xml.AggregatedXmlEventNotifier;
+import org.apache.http.impl.client.CloseableHttpClient;
 
 import javax.xml.stream.XMLStreamException;
+import java.io.IOException;
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,20 +23,27 @@ import java.util.Set;
  */
 public class AllCategoriesProvider {
 
-    private List<XMLEventReaderProvider> readerProviders;
+    private Config config;
 
-    public AllCategoriesProvider(List<XMLEventReaderProvider> readerProviders) {
-        this.readerProviders = readerProviders;
+    public AllCategoriesProvider(Config config) {
+        this.config = config;
     }
 
     public Set<Category> get() throws XMLStreamException {
-        Set<Category> allCategories = new HashSet<>();
-        AggregatedXmlEventNotifier aggregatedXmlEventNotifier = new AggregatedXmlEventNotifier(new CategoriesCollectorV2(allCategories), "category");
-        for (XMLEventReaderProvider readerProvider : readerProviders) {
-            StAXService stAXService = new StAXService(readerProvider);
-            stAXService.process(aggregatedXmlEventNotifier);
-        }
+        String psw = new String(Base64.getDecoder().decode(config.getPsw().getBytes()));
+        CloseableHttpClient httpClient = new HttpClientProvider(config.getUser(), psw).get();
 
-        return allCategories;
+
+        HttpService httpService = new HttpService(httpClient);
+
+        Set<Category> categories = new HashSet<>();
+        for (String url : config.getUrls())
+            try {
+                categories.addAll(httpService.execute(new DownloadPriceListRequest(url), new ExtractCategory(config.getEncoding())));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        return categories;
     }
 }
