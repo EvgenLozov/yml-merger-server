@@ -60,7 +60,7 @@ class PricelistController {
             return null;
         }
 
-        response.setHeader("Content-Disposition", String.format("attachment; filename=%s.xml", file.getName()));
+        response.setHeader("Content-Disposition", String.format("attachment; filename=%s", file.getName()));
         return new FileSystemResource(file);
     }
 }
