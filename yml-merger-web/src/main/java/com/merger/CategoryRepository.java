@@ -48,7 +48,7 @@ public class CategoryRepository {
         }
         categoriesCache.put(config.getId(), categories);
 
-        logger.info("Categories cache for config #" + config + " was updated");
+        logger.info("Categories cache for config \"" + config.getName() + "\" was updated");
     }
 
     public Category setParent(Config config, String categoryId, String parentId) {
