@@ -2,7 +2,6 @@ package com.company.factories.handler;
 
 import company.Currency;
 import company.Factory;
-import company.conditions.TrueCondition;
 import company.handlers.aggregated.*;
 import company.handlers.xml.AggregatedXmlEventNotifier;
 import company.handlers.xml.SuccessiveXmlEventHandler;
@@ -34,7 +33,7 @@ public class ChangeOfferCurrencyHandlerFactory implements Factory<XmlEventHandle
         if (oldPrice > 0)
             offersHandlers.add(new AddOldPRice(oldPrice));
 
-        offersHandlers.add(new AggregatedXmlEventWriter(out, new TrueCondition<>()));
+        offersHandlers.add(new AggregatedXmlEventWriter(out, xmlEvents -> true));
 
 
         handlers.add(new AggregatedXmlEventNotifier(new SuccessiveAggregatedEventHandler(offersHandlers), "offer"));

@@ -1,30 +1,23 @@
 package company.conditions;
 
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.XMLEvent;
 import java.util.List;
+import java.util.function.Predicate;
 
-/**
- * Created by user50 on 19.07.2015.
- */
-public class AndCondition<T> implements EventCondition<T> {
+public class AndCondition<T> implements Predicate<T> {
 
-    List<EventCondition<T>> conditions;
+    List<Predicate<T>> predicates;
 
-    public AndCondition(List<EventCondition<T>> conditions) {
-        this.conditions = conditions;
+    public AndCondition(List<Predicate<T>> predicates) {
+        this.predicates = predicates;
     }
 
     @Override
-    public boolean isSuitable(T event) throws XMLStreamException {
-
-        for (EventCondition<T> condition : conditions) {
-            if (!condition.isSuitable(event))
+    public boolean test(T t) {
+        for (Predicate<T> predicate : predicates) {
+            if (!predicate.test(t))
                 return false;
         }
 
         return true;
     }
-
-
 }

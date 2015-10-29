@@ -6,11 +6,12 @@ import javax.xml.stream.events.XMLEvent;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * Повертає true якщо категорія зустрічається вперше вперше, інкаше false
  */
-public class FirstTimeFindCategory implements EventCondition<List<XMLEvent>> {
+public class FirstTimeFindCategory implements Predicate<List<XMLEvent>> {
 
     Set<String> foundCategories;
 
@@ -19,7 +20,7 @@ public class FirstTimeFindCategory implements EventCondition<List<XMLEvent>> {
     }
 
     @Override
-    public boolean isSuitable(List<XMLEvent> category) throws XMLStreamException {
+    public boolean test(List<XMLEvent> category)  {
         String categoryId =  getCategoryId(category);
         
         boolean result = !foundCategories.contains(categoryId);

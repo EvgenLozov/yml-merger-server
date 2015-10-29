@@ -1,12 +1,11 @@
 package company;
 
-import company.conditions.EventCondition;
-import company.conditions.FalseCondition;
 import company.handlers.xml.XmlEventHandler;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.XMLEvent;
+import java.util.function.Predicate;
 
 public class StAXService {
 
@@ -16,19 +15,19 @@ public class StAXService {
         this.readerProvider = readerProvider;
     }
 
-    public void process(XmlEventHandler eventHandler, EventCondition<XMLEvent> stopConditions) throws XMLStreamException {
+    public void process(XmlEventHandler eventHandler, Predicate<XMLEvent> stopConditions) throws XMLStreamException {
         XMLEventReader in = readerProvider.get();
 
         while(in.hasNext()){
             XMLEvent e = in.nextEvent();
             eventHandler.handle(e);
 
-            if (stopConditions.isSuitable(e))
+            if (stopConditions.test(e))
                 break;
         }
     }
 
     public void process(XmlEventHandler eventHandler) throws XMLStreamException {
-        process(eventHandler, new FalseCondition<XMLEvent>());
+        process(eventHandler, xmlEvent -> false);
     }
 }

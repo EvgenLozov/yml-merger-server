@@ -3,7 +3,6 @@ package com.company.factories.handler;
 import company.Factory;
 import company.conditions.AllowedCategory;
 import company.conditions.AndCondition;
-import company.conditions.EventCondition;
 import company.conditions.FirstTimeFindCategory;
 import company.handlers.aggregated.AggregatedXmlEventWriter;
 import company.handlers.xml.AggregatedXmlEventNotifier;
@@ -15,10 +14,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
-/**
- * Created by user50 on 26.07.2015.
- */
 public class CategoryHandlerFactory implements Factory<XmlEventHandler> {
 
     XMLEventWriter out;
@@ -32,7 +29,7 @@ public class CategoryHandlerFactory implements Factory<XmlEventHandler> {
 
     @Override
     public XmlEventHandler get() {
-        List<EventCondition<List<XMLEvent>>> conditions = new ArrayList<>();
+        List<Predicate<List<XMLEvent>>> conditions = new ArrayList<>();
         conditions.add(new FirstTimeFindCategory(addedCategories));
         conditions.add(new AllowedCategory(allowedCategories));
 

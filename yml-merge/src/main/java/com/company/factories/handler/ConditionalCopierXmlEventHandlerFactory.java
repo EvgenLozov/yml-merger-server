@@ -2,9 +2,7 @@ package com.company.factories.handler;
 
 import company.Factory;
 import company.conditions.AndCondition;
-import company.conditions.EventCondition;
 import company.conditions.InElementCondition;
-import company.conditions.NotCondition;
 import company.handlers.xml.ConditionalXmlEventWriter;
 import company.handlers.xml.XmlEventHandler;
 
@@ -12,6 +10,7 @@ import javax.xml.stream.events.XMLEvent;
 import javax.xml.stream.util.XMLEventConsumer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * the factory construct XmlEventHandler that copy all events excluding elements offer and categories
@@ -28,12 +27,12 @@ public class ConditionalCopierXmlEventHandlerFactory implements Factory<XmlEvent
 
     @Override
     public XmlEventHandler get() {
-        List<EventCondition<XMLEvent>> conditions = new ArrayList<>();
+        List<Predicate<XMLEvent>> conditions = new ArrayList<>();
 
         for (String element : elementsToExclude)
-            conditions.add(new NotCondition(new InElementCondition(element)));
+            conditions.add(new InElementCondition(element).negate());
 
-        EventCondition<XMLEvent> condition = new AndCondition(conditions);
+        Predicate<XMLEvent> condition = new AndCondition(conditions);
 
         return new ConditionalXmlEventWriter(out, condition);
     }

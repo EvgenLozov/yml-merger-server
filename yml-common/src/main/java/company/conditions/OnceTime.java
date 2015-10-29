@@ -1,26 +1,25 @@
 package company.conditions;
 
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.XMLEvent;
+import java.util.function.Predicate;
 
 /**
  * повертає true лише один раз і при першому виконанні умов описаних в eventCondition
  */
-public class OnceTime<T> implements EventCondition<T> {
+public class OnceTime<T> implements Predicate<T> {
 
-    EventCondition<T> eventCondition;
+    Predicate<T> eventCondition;
 
     boolean onceSuitable;
 
-    public OnceTime(EventCondition<T> eventCondition) {
+    public OnceTime(Predicate<T> eventCondition) {
         this.eventCondition = eventCondition;
     }
 
     @Override
-    public boolean isSuitable(T event) throws XMLStreamException {
+    public boolean test(T event)  {
         if (!onceSuitable )
         {
-            boolean result = eventCondition.isSuitable(event);
+            boolean result = eventCondition.test(event);
 
             if (result)
                 onceSuitable = true;

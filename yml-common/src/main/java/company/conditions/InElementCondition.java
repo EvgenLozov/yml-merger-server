@@ -2,11 +2,12 @@ package company.conditions;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.XMLEvent;
+import java.util.function.Predicate;
 
 /**
  * Created by user50 on 26.07.2015.
  */
-public class InElementCondition implements XmlEventCondition {
+public class InElementCondition implements Predicate<XMLEvent> {
     String elementName;
 
     boolean isInElement;
@@ -16,7 +17,7 @@ public class InElementCondition implements XmlEventCondition {
     }
 
     @Override
-    public boolean isSuitable(XMLEvent xmlEvent) throws XMLStreamException {
+    public boolean test(XMLEvent xmlEvent)  {
         if (xmlEvent.isStartElement() && xmlEvent.asStartElement().getName().getLocalPart().equals(elementName))
         {
             isInElement = true;

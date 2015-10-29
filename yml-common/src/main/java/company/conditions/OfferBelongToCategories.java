@@ -4,11 +4,12 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.XMLEvent;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * Created by user50 on 26.07.2015.
  */
-public class OfferBelongToCategories implements EventCondition<List<XMLEvent>> {
+public class OfferBelongToCategories implements Predicate<List<XMLEvent>> {
 
     Set<String> categories;
 
@@ -17,7 +18,7 @@ public class OfferBelongToCategories implements EventCondition<List<XMLEvent>> {
     }
 
     @Override
-    public boolean isSuitable(List<XMLEvent> event) throws XMLStreamException {
+    public boolean test(List<XMLEvent> event)  {
         return categories.contains(getCategoryId(event));
     }
 

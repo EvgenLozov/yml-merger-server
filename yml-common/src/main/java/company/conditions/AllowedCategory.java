@@ -6,11 +6,12 @@ import javax.xml.stream.events.XMLEvent;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * Created by user50 on 26.07.2015.
  */
-public class AllowedCategory implements EventCondition<List<XMLEvent>> {
+public class AllowedCategory implements Predicate<List<XMLEvent>> {
     Set<String> allowedCategories;
 
     public AllowedCategory(Set<String> allowedCategories) {
@@ -18,7 +19,7 @@ public class AllowedCategory implements EventCondition<List<XMLEvent>> {
     }
 
     @Override
-    public boolean isSuitable(List<XMLEvent> event) throws XMLStreamException {
+    public boolean test(List<XMLEvent> event)  {
         return allowedCategories.contains(getCategoryId(event));
     }
 
