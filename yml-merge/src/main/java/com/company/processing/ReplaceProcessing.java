@@ -1,6 +1,5 @@
 package com.company.processing;
 
-import com.company.config.CategoryIdsPair;
 import com.company.config.Replace;
 import company.bytearray.ByteArrayProcessor;
 

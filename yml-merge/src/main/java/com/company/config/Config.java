@@ -3,7 +3,6 @@ package com.company.config;
 import company.Currency;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by user50 on 21.06.2015.

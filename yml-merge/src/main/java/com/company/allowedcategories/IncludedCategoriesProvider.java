@@ -2,14 +2,9 @@ package com.company.allowedcategories;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
-import company.StAXService;
-import company.XMLEventReaderProvider;
-import company.handlers.xml.AggregatedXmlEventNotifier;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.FileNotFoundException;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 

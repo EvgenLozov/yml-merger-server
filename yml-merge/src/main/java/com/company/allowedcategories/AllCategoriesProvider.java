@@ -1,21 +1,16 @@
 package com.company.allowedcategories;
 
 import com.company.config.Config;
-import com.company.config.ConfigProvider;
 import com.company.http.HttpClientProvider;
 import com.company.http.HttpService;
 import com.company.readerproviders.DownloadPriceListRequest;
 import com.company.readerproviders.ExtractCategory;
-import company.StAXService;
-import company.XMLEventReaderProvider;
-import company.handlers.xml.AggregatedXmlEventNotifier;
 import org.apache.http.impl.client.CloseableHttpClient;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**

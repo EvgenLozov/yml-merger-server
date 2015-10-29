@@ -1,7 +1,10 @@
 package com.company.factories.handler;
 
 import company.Factory;
-import company.conditions.*;
+import company.conditions.AllowedCategory;
+import company.conditions.AndCondition;
+import company.conditions.EventCondition;
+import company.conditions.FirstTimeFindCategory;
 import company.handlers.aggregated.AggregatedXmlEventWriter;
 import company.handlers.xml.AggregatedXmlEventNotifier;
 import company.handlers.xml.XmlEventHandler;

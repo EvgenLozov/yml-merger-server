@@ -1,7 +1,10 @@
 package com.company.factories.handler;
 
 import company.Factory;
-import company.conditions.*;
+import company.conditions.AndCondition;
+import company.conditions.EventCondition;
+import company.conditions.InElementCondition;
+import company.conditions.NotCondition;
 import company.handlers.xml.ConditionalXmlEventWriter;
 import company.handlers.xml.XmlEventHandler;
 

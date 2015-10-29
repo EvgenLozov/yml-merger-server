@@ -4,22 +4,16 @@ import com.company.allowedcategories.AllCategoriesProvider;
 import com.company.allowedcategories.IncludedCategoriesProvider;
 import com.company.config.Config;
 import com.company.factories.handler.*;
-import com.company.http.HttpClientProvider;
-import com.company.http.HttpService;
-import com.company.readerproviders.FileXMLEventReaderProvider;
-import com.company.readerproviders.HttpXMLEventReaderProvider;
 import company.Factory;
 import company.StAXService;
 import company.XMLEventReaderProvider;
 import company.bytearray.ByteArraySource;
 import company.handlers.xml.XmlEventHandler;
-import org.apache.http.impl.client.CloseableHttpClient;
 
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 

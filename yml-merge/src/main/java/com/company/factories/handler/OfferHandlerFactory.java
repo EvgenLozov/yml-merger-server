@@ -2,7 +2,9 @@ package com.company.factories.handler;
 
 import company.Factory;
 import company.conditions.OfferBelongToCategories;
-import company.handlers.aggregated.*;
+import company.handlers.aggregated.AggregatedXmlEventHandler;
+import company.handlers.aggregated.AggregatedXmlEventWriter;
+import company.handlers.aggregated.SuccessiveAggregatedEventHandler;
 import company.handlers.xml.AggregatedXmlEventNotifier;
 import company.handlers.xml.SuccessiveXmlEventHandler;
 import company.handlers.xml.XmlEventHandler;
