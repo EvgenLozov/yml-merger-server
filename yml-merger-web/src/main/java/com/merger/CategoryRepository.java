@@ -40,6 +40,8 @@ public class CategoryRepository {
     }
 
     public void addOrUpdateCache(Config config) throws XMLStreamException {
+        logger.info("Updating categories cache for config : " + config.getName() + " is started.");
+
         Set<Category> categories = categorySource.get(config.getId());
 
         for (CategoryIdsPair pair : config.getParentIds()) {

@@ -6,6 +6,7 @@ import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.XMLEvent;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class StAXService {
 

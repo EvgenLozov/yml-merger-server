@@ -6,6 +6,7 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * Created by user50 on 26.05.2015.

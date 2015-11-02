@@ -1,6 +1,7 @@
 package com.merger.scheduler;
 
-import com.company.MergeService;
+import com.company.service.MergeService;
+import com.company.service.MergeServiceImpl;
 import org.quartz.Job;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;

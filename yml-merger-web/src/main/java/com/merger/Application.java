@@ -1,6 +1,8 @@
 package com.merger;
 
-import com.company.MergeService;
+import com.company.service.MergeService;
+import com.company.service.MergeServiceImpl;
+import com.company.service.SingleProcessMergeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.merger.scheduler.*;
@@ -37,7 +39,7 @@ public class Application {
 
     @Bean
     public MergeService mergeService(){
-        return new MergeService();
+        return new SingleProcessMergeService(new MergeServiceImpl());
     }
     @Bean
     public SchedulerService schedulerService() throws SchedulerException {

@@ -15,6 +15,8 @@ import java.util.logging.Logger;
  * Created by user50 on 04.07.2015.
  */
 public class HttpXMLEventReaderProvider implements XMLEventReaderProvider {
+    private static final Logger logger = Logger.getLogger(HttpXMLEventReaderProvider.class.getSimpleName());
+
     HttpService httpService;
     String url;
     String encoding;
@@ -30,8 +32,12 @@ public class HttpXMLEventReaderProvider implements XMLEventReaderProvider {
     @Override
     public XMLEventReader get() {
         try {
-            if (fileName == null)
+            if (fileName == null){
+
+                logger.info("Downloading " + url);
                 fileName = httpService.execute(new DownloadPriceListRequest(url), new SaveIntoFileHttpResponseHandler(encoding));
+                logger.info("Downloading " + url + " is completed");
+            }
 
             XMLInputFactory ifactory = XMLInputFactory.newFactory();
             ifactory.setProperty(XMLInputFactory.IS_VALIDATING, false);

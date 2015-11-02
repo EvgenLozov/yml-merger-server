@@ -42,7 +42,7 @@ public class ConfigRepository {
         List<Config> configList = list();
         pswSecurity.encodePsw(config);
 
-        config.setOutputFile("prices/" + config.getName().replaceAll("/", "-").replaceAll(":", "-")+".xml");
+        config.setOutputFile("prices/" + config.getName().replaceAll("/", "-").replaceAll(":", "-"));
 
         int index = -1;
 
@@ -62,7 +62,7 @@ public class ConfigRepository {
         String id = UUID.randomUUID().toString();
         pswSecurity.encodePsw(config);
         config.setId(id);
-        config.setOutputFile("prices/"+ config.getName().replaceAll("/","-").replaceAll(":","-")+".xml");
+        config.setOutputFile("prices/"+ config.getName().replaceAll("/","-").replaceAll(":","-"));
 
         List<Config> configList = list();
         configList.add(config);

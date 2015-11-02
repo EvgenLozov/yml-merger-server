@@ -1,4 +1,4 @@
-package com.company;
+package com.company.service;
 
 import com.company.config.CategoryIdsPair;
 import com.company.config.Config;
@@ -10,6 +10,7 @@ import com.company.processing.MergedYmlSource;
 import com.company.processing.ReplaceProcessing;
 import com.company.readerproviders.FileXMLEventReaderProvider;
 import com.company.readerproviders.HttpXMLEventReaderProvider;
+import com.company.service.MergeService;
 import company.XMLEventReaderProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 
@@ -17,7 +18,7 @@ import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
 import java.util.*;
 
-public class MergeService {
+public class MergeServiceImpl implements MergeService {
 
     public void process(Config config) throws IOException, XMLStreamException {
         List<XMLEventReaderProvider> readerProviders = new ArrayList<>();

@@ -7,11 +7,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 /**
  * Created by user50 on 28.07.2015.
  */
 public class SaveIntoFileHttpResponseHandler implements HttpResponseHandler<String> {
+
     String encoding;
 
     public SaveIntoFileHttpResponseHandler(String encoding) {
@@ -33,7 +35,7 @@ public class SaveIntoFileHttpResponseHandler implements HttpResponseHandler<Stri
             scanner.close();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         return fileName;

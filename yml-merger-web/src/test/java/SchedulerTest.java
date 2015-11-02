@@ -1,4 +1,4 @@
-import com.company.MergeService;
+import com.company.service.MergeServiceImpl;
 import com.company.config.Config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.merger.ConfigRepository;
@@ -16,7 +16,7 @@ public class SchedulerTest {
 
     @Test
     public void testName() throws Exception {
-        MergeService mergeService = new MergeService();
+        MergeServiceImpl mergeService = new MergeServiceImpl();
 
         JobKeyFactory jobKeyFactory = new JobKeyFactory();
         JobDetailFactory jobDetailFactory = new JobDetailFactory(jobKeyFactory);

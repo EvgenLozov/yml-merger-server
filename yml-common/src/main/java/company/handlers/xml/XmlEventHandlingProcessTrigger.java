@@ -1,8 +1,6 @@
 package company.handlers.xml;
 
 import company.StAXService;
-import company.conditions.EventCondition;
-import company.conditions.XmlEventCondition;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.XMLEvent;

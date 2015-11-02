@@ -1,6 +1,7 @@
 package com.merger.controller;
 
-import com.company.MergeService;
+import com.company.service.MergeService;
+import com.company.service.MergeServiceImpl;
 import com.company.config.Config;
 import com.merger.ConfigRepository;
 import company.Currency;

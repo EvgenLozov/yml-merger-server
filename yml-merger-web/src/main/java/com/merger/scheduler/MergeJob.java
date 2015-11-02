@@ -1,6 +1,7 @@
 package com.merger.scheduler;
 
-import com.company.MergeService;
+import com.company.service.MergeService;
+import com.company.service.MergeServiceImpl;
 import com.company.config.Config;
 import com.google.gson.Gson;
 import org.quartz.Job;
@@ -9,7 +10,6 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import javax.xml.stream.XMLStreamException;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Logger;
 
