@@ -62,6 +62,7 @@ public class MergeServiceImpl implements MergeService {
         for (CategoryIdsPair pair : config.getParentIds()) {
             Set<String> words = new HashSet<>();
             words.add("<category id=\""+pair.getCategoryId()+"\" parentId=\".*\">");
+            words.add("<category id=\""+pair.getCategoryId()+"\">");
 
             replaces.add(new Replace(words,"<category id=\""+pair.getCategoryId()+"\" parentId=\""+pair.getParentId()+"\">"));
         }
