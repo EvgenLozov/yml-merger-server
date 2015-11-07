@@ -2,6 +2,7 @@ package com.merger.controller;
 
 import com.company.allowedcategories.Category;
 import com.company.config.Config;
+import com.company.logger.ProcessLogger;
 import com.google.common.collect.Sets;
 import com.merger.CategoryRepository;
 import com.merger.ConfigRepository;
@@ -68,4 +69,9 @@ public class ConfigController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
+    @RequestMapping(value = "/{id}/log", method = RequestMethod.GET)
+    public String log(@PathVariable String id) throws SchedulerException {
+
+        return ProcessLogger.INSTANCE.getLog(id);
+    }
 }

@@ -1,6 +1,7 @@
 package com.merger.scheduler;
 
 import com.company.config.Config;
+import com.company.logger.ProcessLogger;
 import org.quartz.*;
 import org.quartz.spi.JobFactory;
 
@@ -10,7 +11,7 @@ import java.util.logging.Logger;
  * Created by Yevhen on 2015-08-02.
  */
 public class SchedulerService {
-    private static final Logger logger = Logger.getLogger(SchedulerService.class.getSimpleName());
+    private static final ProcessLogger logger = ProcessLogger.INSTANCE;
 
     private Scheduler scheduler;
     private JobKeyFactory jobKeyFactory;

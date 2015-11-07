@@ -3,6 +3,7 @@ package com.company.readerproviders;
 import com.company.allowedcategories.CategoriesCollectorV2;
 import com.company.allowedcategories.Category;
 import com.company.http.HttpResponseHandler;
+import com.company.logger.ProcessLogger;
 import company.StAXService;
 import company.handlers.xml.AggregatedXmlEventNotifier;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -36,6 +37,8 @@ public class ExtractCategory implements HttpResponseHandler<Set<Category>> {
 
             return allCategories;
         } catch (XMLStreamException |  IOException e) {
+            String responce = httpResponse.getStatusLine().getStatusCode() + ": " + httpResponse.getStatusLine().getReasonPhrase();
+            ProcessLogger.INSTANCE.warning("Unable to process http response\n ; " + e.getMessage() + "; " + responce);
             throw new RuntimeException("Unable to process http response", e);
         }
     }

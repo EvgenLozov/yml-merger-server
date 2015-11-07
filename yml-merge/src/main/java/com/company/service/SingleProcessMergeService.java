@@ -1,6 +1,7 @@
 package com.company.service;
 
 import com.company.config.Config;
+import com.company.logger.ProcessLogger;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
@@ -12,7 +13,7 @@ import java.util.logging.Logger;
  * @author Yevhen
  */
 public class SingleProcessMergeService implements MergeService {
-    private static final Logger logger = Logger.getLogger(SingleProcessMergeService.class.getSimpleName());
+    private static final ProcessLogger logger = ProcessLogger.INSTANCE;
 
     private Map<String, Boolean> proceses = new HashMap<>();
 
@@ -25,11 +26,12 @@ public class SingleProcessMergeService implements MergeService {
     @Override
     public void process(Config config) throws IOException, XMLStreamException {
         if (proceses.containsKey(config.getId()) && proceses.get(config.getId())){
-            logger.info("Process for config " + config.getName() + " is running");
+            logger.info("Process for config " + config.getName() + "is already  running.");
             return;
         }
 
         putProcess(config.getId(), true);
+        ProcessLogger.INSTANCE.clean(config.getId());
 
         try {
             logger.info("Process for config " + config.getName() + " is started");

@@ -1,5 +1,6 @@
 package com.merger.controller;
 
+import com.company.logger.ProcessLogger;
 import com.company.service.MergeService;
 import com.company.service.MergeServiceImpl;
 import com.company.config.Config;
@@ -31,6 +32,9 @@ class PricelistController {
     public void merge(@PathVariable final String id) throws FileNotFoundException, XMLStreamException {
         Runnable mergeTask = () -> {
             Config config = configRepository.get(id);
+
+            ProcessLogger.INSTANCE.set(config.getId());
+
             try {
                 mergeService.process(config);
             } catch (XMLStreamException | IOException e) {

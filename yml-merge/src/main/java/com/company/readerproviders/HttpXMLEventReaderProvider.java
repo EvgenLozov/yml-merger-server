@@ -1,6 +1,7 @@
 package com.company.readerproviders;
 
 import com.company.http.HttpService;
+import com.company.logger.ProcessLogger;
 import company.XMLEventReaderProvider;
 
 import javax.xml.stream.XMLEventReader;
@@ -15,7 +16,7 @@ import java.util.logging.Logger;
  * Created by user50 on 04.07.2015.
  */
 public class HttpXMLEventReaderProvider implements XMLEventReaderProvider {
-    private static final Logger logger = Logger.getLogger(HttpXMLEventReaderProvider.class.getSimpleName());
+    private static final ProcessLogger logger = ProcessLogger.INSTANCE;
 
     HttpService httpService;
     String url;

@@ -1,5 +1,6 @@
 package com.merger.scheduler;
 
+import com.company.logger.ProcessLogger;
 import com.company.service.MergeService;
 import com.company.service.MergeServiceImpl;
 import com.company.config.Config;
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
  * Created by Yevhen on 2015-08-02.
  */
 public class MergeJob implements Job {
-    private static final Logger logger = Logger.getLogger(MergeJob.class.getSimpleName());
+    private static final ProcessLogger logger = ProcessLogger.INSTANCE;
 
     private MergeService mergeService;
     private Gson gson = new Gson();
