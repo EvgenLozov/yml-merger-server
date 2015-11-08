@@ -39,6 +39,51 @@
   "currencies" : [ "RUR", "BYR", "KZT" ],
   "replaces" : [ ],
   "oldPrice" : 0.3,
+  "lastMerge" : 1446971753326,
+  "autoMerge" : false,
+  "period" : 0,
+  "time" : "00:00"
+}, {
+  "id" : "72f15921-4601-45d9-ad2b-f0389a048995",
+  "name" : "test config (Копия)",
+  "user" : "user50",
+  "psw" : "bmV1c2VyNTA=",
+  "urls" : [ "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462391&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462395&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462401&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462763&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462770&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462783&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462803&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462816&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462822&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462826&addPictures=2" ],
+  "files" : [ ],
+  "encoding" : "cp1251",
+  "outputFile" : "prices/test config (Копия)",
+  "categoryIds" : [ ],
+  "parentIds" : [ {
+    "categoryId" : "967",
+    "parentId" : "114"
+  }, {
+    "categoryId" : "1026",
+    "parentId" : "114"
+  }, {
+    "categoryId" : "1376",
+    "parentId" : "114"
+  }, {
+    "categoryId" : "1578",
+    "parentId" : "114"
+  }, {
+    "categoryId" : "631",
+    "parentId" : "114"
+  }, {
+    "categoryId" : "2683",
+    "parentId" : "114"
+  }, {
+    "categoryId" : "2756",
+    "parentId" : "704"
+  }, {
+    "categoryId" : "919",
+    "parentId" : "704"
+  }, {
+    "categoryId" : "941",
+    "parentId" : "704"
+  } ],
+  "currencies" : [ "RUR", "BYR", "KZT" ],
+  "replaces" : [ ],
+  "oldPrice" : 0.3,
   "lastMerge" : 1446381850696,
   "autoMerge" : false,
   "period" : 0,

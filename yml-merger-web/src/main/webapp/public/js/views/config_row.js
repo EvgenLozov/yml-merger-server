@@ -8,6 +8,7 @@ APP.ConfigRowView = Backbone.View.extend({
     "click a.merge": "merge",
     "click a.download": "download",
     "click button.copy": "copy",
+    "click a.logs": "logs",
     "click a.delete": "destroy"
   },
 
@@ -65,6 +66,17 @@ APP.ConfigRowView = Backbone.View.extend({
         alert("Ошибка при удалении");
       }
     });
+  },
+
+  logs: function(){
+    var win = window.open(window.location.origin + "/configs/" + this.config.id + "/log", '_blank');
+    if(win){
+      //Browser has allowed it to be opened
+      win.focus();
+    }else{
+      //Broswer has blocked it
+      alert('Please allow popups for this site');
+    }
   },
 
   merge: function (event) {
