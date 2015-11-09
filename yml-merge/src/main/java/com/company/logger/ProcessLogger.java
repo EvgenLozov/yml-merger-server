@@ -14,7 +14,7 @@ public enum ProcessLogger {
 
     private Map<String, StringBuilder> logs = new HashMap<>();
 
-    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public void info(String message){
         log(message);

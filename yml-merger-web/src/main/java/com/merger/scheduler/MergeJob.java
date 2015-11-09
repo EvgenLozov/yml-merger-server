@@ -30,6 +30,8 @@ public class MergeJob implements Job {
 
         Config config = gson.fromJson(configJson, Config.class);
 
+        ProcessLogger.INSTANCE.set(config.getId());
+
         try {
             mergeService.process(config);
         } catch (XMLStreamException | IOException e) {

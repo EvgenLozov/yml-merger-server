@@ -34,8 +34,9 @@ public class SchedulerService {
 
         scheduler.scheduleJob(jobDetail, trigger);
 
-        logger.info("Task for config " + config.getName() + " is added/updated");
-        logger.info("Start time: " + trigger.getStartTime() + ", period : " + config.getPeriod());
+        logger.info("Task for auto merge of config " + config.getName() + " is added/updated");
+        logger.info("Auto merge will start at : " + trigger.getStartTime() +
+                    ", with period : " + config.getPeriod() + " day");
     }
 
     public void deleteTask(Config config) throws SchedulerException {
@@ -43,7 +44,7 @@ public class SchedulerService {
 
         if (scheduler.checkExists(jobKey)){
             scheduler.deleteJob(jobKey);
-            logger.info("Task for config " + config.getName() + " is deleted");
+            logger.info("Task for auto merge of config " + config.getName() + " is deleted");
         }
     }
 }
