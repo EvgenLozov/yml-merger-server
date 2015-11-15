@@ -1,21 +1,12 @@
-package com.merger;
+package com.company.repository;
 
 import com.company.allowedcategories.AllCategoriesProvider;
 import com.company.allowedcategories.Category;
 import com.company.config.Config;
-import com.company.http.HttpClientProvider;
-import com.company.http.HttpService;
-import com.company.readerproviders.FileXMLEventReaderProvider;
-import com.company.readerproviders.HttpXMLEventReaderProvider;
-import company.XMLEventReaderProvider;
-import org.apache.http.impl.client.CloseableHttpClient;
+import com.company.repository.ConfigRepository;
 
 import javax.xml.stream.XMLStreamException;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author yevhenlozov

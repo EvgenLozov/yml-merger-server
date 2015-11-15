@@ -1,4 +1,4 @@
-package com.merger.scheduler;
+package com.company.scheduler;
 
 import com.company.config.Config;
 import org.quartz.Trigger;
@@ -6,7 +6,6 @@ import org.quartz.TriggerBuilder;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.logging.Logger;
 
 import static org.quartz.CalendarIntervalScheduleBuilder.calendarIntervalSchedule;
 import static org.quartz.DateBuilder.todayAt;

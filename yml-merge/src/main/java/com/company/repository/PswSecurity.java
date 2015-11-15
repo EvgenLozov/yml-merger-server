@@ -1,4 +1,4 @@
-package com.merger;
+package com.company.repository;
 
 import com.company.config.Config;
 

@@ -10,7 +10,7 @@ import com.company.processing.MergedYmlSource;
 import com.company.processing.ReplaceProcessing;
 import com.company.readerproviders.FileXMLEventReaderProvider;
 import com.company.readerproviders.HttpXMLEventReaderProvider;
-import com.company.service.MergeService;
+import com.company.repository.ConfigRepository;
 import company.XMLEventReaderProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 
@@ -19,6 +19,12 @@ import java.io.IOException;
 import java.util.*;
 
 public class MergeServiceImpl implements MergeService {
+
+    private ConfigRepository configRepository;
+
+    public MergeServiceImpl(ConfigRepository configRepository) {
+        this.configRepository = configRepository;
+    }
 
     public void process(Config config) throws IOException, XMLStreamException {
         List<XMLEventReaderProvider> readerProviders = new ArrayList<>();
@@ -51,6 +57,9 @@ public class MergeServiceImpl implements MergeService {
         for (HttpXMLEventReaderProvider httpProvider : httpProviders) {
             httpProvider.removeTmpFile();
         }
+
+        config.setLastMerge(System.currentTimeMillis());
+        configRepository.save(config);
     }
 
     private List<Replace> getReplaces(Config config)

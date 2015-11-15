@@ -1,8 +1,10 @@
+import com.company.config.ConfigProvider;
 import com.company.service.MergeServiceImpl;
 import com.company.config.Config;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.merger.ConfigRepository;
-import com.merger.scheduler.*;
+import com.company.repository.ConfigRepository;
+import com.company.scheduler.*;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.Test;
 import org.quartz.Scheduler;
 import org.quartz.impl.StdSchedulerFactory;
@@ -16,7 +18,10 @@ public class SchedulerTest {
 
     @Test
     public void testName() throws Exception {
-        MergeServiceImpl mergeService = new MergeServiceImpl();
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+        MergeServiceImpl mergeService = new MergeServiceImpl(new ConfigRepository(mapper));
 
         JobKeyFactory jobKeyFactory = new JobKeyFactory();
         JobDetailFactory jobDetailFactory = new JobDetailFactory(jobKeyFactory);

@@ -1,4 +1,4 @@
-package com.merger.scheduler;
+package com.company.scheduler;
 
 import com.company.config.Config;
 import org.quartz.JobKey;

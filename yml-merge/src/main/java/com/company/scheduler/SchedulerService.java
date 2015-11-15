@@ -1,11 +1,9 @@
-package com.merger.scheduler;
+package com.company.scheduler;
 
 import com.company.config.Config;
 import com.company.logger.ProcessLogger;
 import org.quartz.*;
 import org.quartz.spi.JobFactory;
-
-import java.util.logging.Logger;
 
 /**
  * Created by Yevhen on 2015-08-02.

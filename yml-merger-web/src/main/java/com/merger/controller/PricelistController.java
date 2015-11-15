@@ -2,9 +2,8 @@ package com.merger.controller;
 
 import com.company.logger.ProcessLogger;
 import com.company.service.MergeService;
-import com.company.service.MergeServiceImpl;
 import com.company.config.Config;
-import com.merger.ConfigRepository;
+import com.company.repository.ConfigRepository;
 import company.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -40,9 +39,6 @@ class PricelistController {
             } catch (XMLStreamException | IOException e) {
                 e.printStackTrace();
             }
-
-            config.setLastMerge(System.currentTimeMillis());
-            configRepository.save(config);
         };
 
         new Thread(mergeTask).start();

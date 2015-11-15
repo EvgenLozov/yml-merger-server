@@ -4,6 +4,7 @@ import org.apache.http.client.CookieStore;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
@@ -55,7 +56,13 @@ public class HttpClientProvider {
 
         CookieStore cookieStore = seleniumCookiesToCookieStore(driver);
 
-        return HttpClients.custom().setDefaultCookieStore(cookieStore).build();
+        PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
+        // Increase max total connection to 200
+        cm.setMaxTotal(200);
+        // Increase default max connection per route to 20
+        cm.setDefaultMaxPerRoute(20);
+
+        return HttpClients.custom().setConnectionManager(cm).setDefaultCookieStore(cookieStore).build();
     }
 
     private CookieStore seleniumCookiesToCookieStore(WebDriver driver) {

@@ -1,11 +1,14 @@
 package com.merger;
 
+import com.company.repository.CategoryRepository;
+import com.company.repository.CategorySource;
+import com.company.repository.ConfigRepository;
 import com.company.service.MergeService;
 import com.company.service.MergeServiceImpl;
 import com.company.service.SingleProcessMergeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.merger.scheduler.*;
+import com.company.scheduler.*;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.impl.StdSchedulerFactory;
@@ -39,7 +42,7 @@ public class Application {
 
     @Bean
     public MergeService mergeService(){
-        return new SingleProcessMergeService(new MergeServiceImpl());
+        return new SingleProcessMergeService(new MergeServiceImpl(configRepository()));
     }
     @Bean
     public SchedulerService schedulerService() throws SchedulerException {

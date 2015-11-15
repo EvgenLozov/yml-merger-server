@@ -1,19 +1,15 @@
 package com.merger.controller;
 
-import com.company.allowedcategories.Category;
 import com.company.config.Config;
 import com.company.logger.ProcessLogger;
-import com.google.common.collect.Sets;
-import com.merger.CategoryRepository;
-import com.merger.ConfigRepository;
-import com.merger.scheduler.SchedulerService;
+import com.company.repository.ConfigRepository;
+import com.company.scheduler.SchedulerService;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.stream.XMLStreamException;
 import java.util.*;
 
 /**

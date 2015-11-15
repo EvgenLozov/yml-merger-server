@@ -1,8 +1,7 @@
-package com.merger.scheduler;
+package com.company.scheduler;
 
 import com.company.config.Config;
 import com.google.gson.Gson;
-import org.eclipse.jetty.util.ajax.JSON;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 

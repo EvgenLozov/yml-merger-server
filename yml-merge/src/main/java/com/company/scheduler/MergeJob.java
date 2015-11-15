@@ -1,8 +1,7 @@
-package com.merger.scheduler;
+package com.company.scheduler;
 
 import com.company.logger.ProcessLogger;
 import com.company.service.MergeService;
-import com.company.service.MergeServiceImpl;
 import com.company.config.Config;
 import com.google.gson.Gson;
 import org.quartz.Job;
@@ -12,7 +11,6 @@ import org.quartz.JobExecutionException;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
-import java.util.logging.Logger;
 
 /**
  * Created by Yevhen on 2015-08-02.

@@ -1,4 +1,4 @@
-package com.merger;
+package com.company.repository;
 
 import com.company.allowedcategories.Category;
 import com.company.config.CategoryIdsPair;
@@ -7,7 +7,6 @@ import com.company.logger.ProcessLogger;
 
 import javax.xml.stream.XMLStreamException;
 import java.util.*;
-import java.util.logging.Logger;
 
 /**
  * @author Yevhen

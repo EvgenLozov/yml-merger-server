@@ -3,8 +3,8 @@ package com.merger.controller;
 import com.company.allowedcategories.Category;
 import com.company.config.CategoryIdsPair;
 import com.company.config.Config;
-import com.merger.CategoryRepository;
-import com.merger.ConfigRepository;
+import com.company.repository.CategoryRepository;
+import com.company.repository.ConfigRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
