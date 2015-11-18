@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.stream.XMLStreamException;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -79,6 +80,17 @@ public class CategoriesController {
                 e.printStackTrace();
             }
         }).start();
+    }
+
+    @RequestMapping(value = "/cache", method = RequestMethod.GET)
+    public long cacheDate(@PathVariable String id) {
+        Config config = configRepository.get(id);
+
+        Date date = categoryRepository.getCacheDate(config.getId());
+        if (date == null)
+            return 0L;
+        else
+            return date.getTime();
     }
 
 }
