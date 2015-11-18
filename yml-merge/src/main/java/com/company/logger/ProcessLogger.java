@@ -12,7 +12,7 @@ public enum ProcessLogger {
     INSTANCE;
     private ThreadLocal<String> configId = new ThreadLocal<>();
 
-    private Map<String, StringBuilder> logs = new HashMap<>();
+    LogRepository logRepository = new LogRepositoryProvider().get();
 
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
@@ -28,15 +28,7 @@ public enum ProcessLogger {
 
     private void log(String message){
         String configId = getConfigId();
-        StringBuilder logBuilder = getLogString(configId);
-        logBuilder.append(dateFormat.format(new Date()) + " -- " + message + " <br>");
-    }
-
-    private StringBuilder getLogString(String configId) {
-        if (!logs.containsKey(configId))
-            logs.put(configId, new StringBuilder());
-
-        return logs.get(configId);
+        logRepository.appendLogMessage(configId, dateFormat.format(new Date()) + " -- " + message + " <br>");
     }
 
     public String getConfigId() {
@@ -49,14 +41,11 @@ public enum ProcessLogger {
     }
 
     public String getLog(String configId){
-        if (!logs.containsKey(configId))
-            return "Log is empty";
-
-        return logs.get(configId).toString();
+        return logRepository.getLog(configId);
     }
 
     public void clean(String configId)
     {
-        logs.remove(configId);
+        logRepository.clean(configId);
     }
 }
