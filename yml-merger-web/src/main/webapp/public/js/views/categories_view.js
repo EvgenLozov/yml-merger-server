@@ -5,6 +5,7 @@ APP.ConfigEditCategoriesView = Backbone.View.extend({
     events: {
         "click .backToConfig" : function(e){e.preventDefault(); window.history.back();},
         "click .updateCache" : "updateCache",
+        "click .cacheStatus" : "cacheStatus",
         "click .showCategory" : "showCategory",
         "click .moveCategories" : "moveCategories"
     },
@@ -82,6 +83,27 @@ APP.ConfigEditCategoriesView = Backbone.View.extend({
             url: "/configs/" + this.config.id + "/categories",
             success: function(){
                 alert("Процес обновления кеша запущен");
+            },
+            error: function(){
+                alert("Произошла ошибка");
+            }
+        });
+    },
+
+    cacheStatus: function(e){
+        e.preventDefault();
+        //var dateInput = this.$el.find("#cacheDate");
+
+        $.ajax({
+            type: "GET",
+            url: "/configs/" + this.config.id + "/categories/cache",
+            success: function(date){
+                if (date == 0 )
+                    //dateInput.attr("value", "Отсутствует");
+                    alert("Кеш отсутствут");
+                 else
+                    //dateInput.attr("value", parseDate(date));
+                    alert("Дата последнего успешного обновления кеша: " + parseDate(date));
             },
             error: function(){
                 alert("Произошла ошибка");
@@ -188,3 +210,28 @@ APP.CategoriesView = Backbone.View.extend({
         this.$el.append(tr);
     }
 });
+
+function parseDate(date){
+    var today = new Date(date);
+    var hh = today.getHours();
+    var MM = today.getMinutes();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if(dd<10) {
+        dd='0'+dd
+    }
+
+    if(mm<10) {
+        mm='0'+mm
+    }
+
+    if(MM<10) {
+        MM='0'+MM
+    }
+
+    today = dd+'/'+mm+'/'+yyyy + " " + hh + ":" + MM;
+
+    return today;
+}

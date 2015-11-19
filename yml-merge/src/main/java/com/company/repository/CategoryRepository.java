@@ -16,7 +16,8 @@ public class CategoryRepository {
     private static final ProcessLogger logger = ProcessLogger.INSTANCE;
 
     private Map<String, Set<Category>> categoriesCache = new HashMap<>();
-    
+    private Map<String, Date> categoriesCacheDates = new HashMap<>();
+
     private CategorySource categorySource;
 
     public CategoryRepository(CategorySource categorySource) {
@@ -51,6 +52,12 @@ public class CategoryRepository {
         categoriesCache.put(config.getId(), categories);
 
         logger.info("Categories cache for config \"" + config.getName() + "\" was updated");
+
+        categoriesCacheDates.put(config.getId(), new Date());
+    }
+
+    public Date getCacheDate(String configId){
+        return categoriesCacheDates.get(configId);
     }
 
     public Category setParent(Config config, String categoryId, String parentId) {
