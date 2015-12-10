@@ -3,6 +3,7 @@ package com.company.config;
 import company.Currency;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by user50 on 21.06.2015.
@@ -26,6 +27,7 @@ public class Config {
     private boolean autoMerge;
     private int period;
     private String time;
+    private Set<String> allowedWords;
 
     public String getUser() {
         return user;
@@ -164,4 +166,11 @@ public class Config {
     }
 
 
+    public Set<String> getAllowedWords() {
+        return allowedWords;
+    }
+
+    public void setAllowedWords(Set<String> allowedWords) {
+        this.allowedWords = allowedWords;
+    }
 }
