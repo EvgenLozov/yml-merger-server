@@ -45,7 +45,7 @@ public class MergedYmlSource implements ByteArraySource {
 
         AllCategoriesProvider allCategoriesProvider = new AllCategoriesProvider(config);
         Set<String> allowedCategories = new IncludedCategoriesProvider(allCategoriesProvider, new TreeSet<>(config.getCategoryIds())).get();
-        factories.add(new ElementWriterHandlerFactory(readerProviders, "offers", new OfferHandlerFactory( mergedOut, allowedCategories, config.getAllowedWords())));
+        factories.add(new ElementWriterHandlerFactory(readerProviders, "offers", new OfferHandlerFactory( mergedOut, allowedCategories, config.getNotAllowedWords())));
         factories.add(new ElementWriterHandlerFactory(readerProviders, "categories", new CategoryHandlerFactory(mergedOut, allowedCategories)));
 
         XmlEventHandler xmlEventHandler = new MergeXmlEventHandlerFactory(factories).get();

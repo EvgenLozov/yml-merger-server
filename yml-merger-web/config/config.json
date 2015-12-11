@@ -3,7 +3,7 @@
   "name" : "test config",
   "user" : "user50",
   "psw" : "bmV1c2VyNTA=",
-  "urls" : [ "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462391&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462395&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462401&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462763&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462770&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462783&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462803&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462816&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462822&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462826&addPictures=2" ],
+  "urls" : [ "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462822&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462826&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462391&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462395&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462401&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462763&addPictures=2" ],
   "files" : [ ],
   "encoding" : "cp1251",
   "outputFile" : "prices/test config",
@@ -39,16 +39,16 @@
   "currencies" : [ "RUR", "BYR", "KZT" ],
   "replaces" : [ ],
   "oldPrice" : 0.3,
-  "lastMerge" : 1446971753326,
-  "autoMerge" : false,
-  "period" : 0,
-  "time" : "00:00"
+  "lastMerge" : 1447583642011,
+  "autoMerge" : true,
+  "period" : 1,
+  "time" : "12:31"
 }, {
   "id" : "72f15921-4601-45d9-ad2b-f0389a048995",
   "name" : "test config (Копия)",
   "user" : "user50",
   "psw" : "bmV1c2VyNTA=",
-  "urls" : [ "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462391&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462395&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462401&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462763&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462770&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462783&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462803&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462816&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462822&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462826&addPictures=2" ],
+  "urls" : [ "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462822&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462826&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462391&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462395&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462401&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462763&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462770&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462783&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462803&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462816&addPictures=2" ],
   "files" : [ ],
   "encoding" : "cp1251",
   "outputFile" : "prices/test config (Копия)",
@@ -84,8 +84,8 @@
   "currencies" : [ "RUR", "BYR", "KZT" ],
   "replaces" : [ ],
   "oldPrice" : 0.3,
-  "lastMerge" : 1446381850696,
-  "autoMerge" : false,
-  "period" : 0,
-  "time" : "00:00"
+  "lastMerge" : 1447583351487,
+  "autoMerge" : true,
+  "period" : 1,
+  "time" : "20:30"
 } ]

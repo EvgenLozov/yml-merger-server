@@ -27,7 +27,7 @@ public class Config {
     private boolean autoMerge;
     private int period;
     private String time;
-    private Set<String> allowedWords;
+    private Set<String> notAllowedWords;
 
     public String getUser() {
         return user;
@@ -166,11 +166,11 @@ public class Config {
     }
 
 
-    public Set<String> getAllowedWords() {
-        return allowedWords;
+    public Set<String> getNotAllowedWords() {
+        return notAllowedWords;
     }
 
-    public void setAllowedWords(Set<String> allowedWords) {
-        this.allowedWords = allowedWords;
+    public void setNotAllowedWords(Set<String> notAllowedWords) {
+        this.notAllowedWords = notAllowedWords;
     }
 }

@@ -21,12 +21,12 @@ public class OfferHandlerFactory implements Factory<XmlEventHandler> {
 
     XMLEventWriter out;
     Set<String> allowedCategories;
-    Set<String> allowedWords;
+    Set<String> notAllowedWords;
 
-    public OfferHandlerFactory(XMLEventWriter out, Set<String> allowedCategories, Set<String> allowedWords) {
+    public OfferHandlerFactory(XMLEventWriter out, Set<String> allowedCategories, Set<String> notAllowedWords) {
         this.out = out;
         this.allowedCategories = allowedCategories;
-        this.allowedWords = allowedWords;
+        this.notAllowedWords = notAllowedWords;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class OfferHandlerFactory implements Factory<XmlEventHandler> {
         List<AggregatedXmlEventHandler> offersHandlers = new ArrayList<>();
 
         Predicate<List<XMLEvent>> predicate = new OfferBelongToCategories(allowedCategories);
-        predicate = predicate.and(new NameContainsWords(allowedWords).negate());
+        predicate = predicate.and(new NameContainsWords(notAllowedWords).negate());
 
         offersHandlers.add(new AggregatedXmlEventWriter(out, predicate));
 
