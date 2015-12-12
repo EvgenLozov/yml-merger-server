@@ -176,7 +176,7 @@ public class Config {
     }
 
     public Set<String> getNotAllowedWords() {
-        return new HashSet<>();
+        return notAllowedWords;
     }
 
     public void setNotAllowedWords(Set<String> notAllowedWords) {

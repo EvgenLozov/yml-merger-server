@@ -40,11 +40,11 @@
   "replaces" : [ ],
   "oldPrice" : 0.3,
   "lastMerge" : 1447583642011,
-  "autoMerge" : true,
+  "autoMerge" : false,
   "period" : 1,
   "time" : "12:31",
   "periodInHours" : 1,
-  "notAllowedWords" : null
+  "notAllowedWords" : [ "ваып ыва", "ывап", "вап ывап", "ваыпвыа", "пва" ]
 }, {
   "id" : "72f15921-4601-45d9-ad2b-f0389a048995",
   "name" : "test config (Копия)",
@@ -91,5 +91,25 @@
   "period" : 1,
   "time" : "20:30",
   "periodInHours" : 0,
-  "notAllowedWords" : null
+  "notAllowedWords" : [ ]
+}, {
+  "id" : "5715f513-e754-472f-a2f0-0335dcb9b881",
+  "name" : "Конфиг 12/12/2015 14:25",
+  "user" : "test",
+  "psw" : "test",
+  "urls" : [ ],
+  "files" : [ ],
+  "encoding" : "utf-8",
+  "outputFile" : "prices/Конфиг 12-12-2015 14-25",
+  "categoryIds" : [ ],
+  "parentIds" : [ ],
+  "currencies" : [ "RUR" ],
+  "replaces" : [ ],
+  "oldPrice" : 0.01,
+  "lastMerge" : 0,
+  "autoMerge" : true,
+  "period" : 1,
+  "time" : "00:00",
+  "periodInHours" : 1,
+  "notAllowedWords" : [ "віап  вап", "івап", "впа", "іва", "івап іва івап", "іва півап", "івапівап іва", "авп", "ваіп" ]
 } ]

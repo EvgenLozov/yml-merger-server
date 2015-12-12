@@ -135,6 +135,20 @@ APP.ConfigEditView = Backbone.View.extend({
         categoryIds: this.$el.find('#categoryIds').val().split(',')
       });
 
+    if (!this.$el.find('#notAllowedWords').val() || !this.$el.find('#notAllowedWords').val().trim())
+      this.config.set({
+        notAllowedWords: []
+      });
+    else{
+      var words = this.$el.find('#notAllowedWords').val().split(',');
+      for (var i = 0; i < words.length; i++) {
+        words[i] = words[i].trim();
+      }
+      this.config.set({
+        notAllowedWords: words
+      });
+    }
+
     var autoMerge = this.$el.find('#autoMerge').prop('checked');
 
     this.config.set({
