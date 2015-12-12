@@ -87,7 +87,8 @@ APP.ConfigNewView = Backbone.View.extend({
     if (autoMerge){
       this.config.set({
         period: this.$el.find('#period').val(),
-        time: this.$el.find('#time').val()
+        time: this.$el.find('#time').val(),
+        periodInHours: this.$el.find('#periodInHours').val()
       });
     }
 

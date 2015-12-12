@@ -187,8 +187,15 @@
                 </div>
                 <div class="form-group">
                     <label for="time" class="col-md-4 control-label">Время обновления ( 24-часовой формат, напр. 18:20)</label>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <input type="text" class="form-control" id="time" name="time" value="<%= time %>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="periodInHours" class="col-md-4 control-label">Обновлять каждые, часов</label>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" id="periodInHours" name="period" value="<%= periodInHours %>">
+                    </div>
                 </div>
             </div>
             </form>
@@ -499,6 +506,12 @@
             <label for="time" class="col-md-4 control-label">Время обновления ( 24-часовой формат, напр. 18:20)</label>
             <div class="col-md-2">
                 <input type="text" class="form-control" id="time" name="time" value="<%= time %>" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="periodInHours" class="col-md-4 control-label">Обновлять каждые, часов</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="periodInHours" name="period" value="<%= periodInHours %>" disabled>
             </div>
         </div>
         </form>

@@ -42,7 +42,9 @@
   "lastMerge" : 1447583642011,
   "autoMerge" : true,
   "period" : 1,
-  "time" : "12:31"
+  "time" : "12:31",
+  "periodInHours" : 1,
+  "notAllowedWords" : null
 }, {
   "id" : "72f15921-4601-45d9-ad2b-f0389a048995",
   "name" : "test config (Копия)",
@@ -87,5 +89,7 @@
   "lastMerge" : 1447583351487,
   "autoMerge" : true,
   "period" : 1,
-  "time" : "20:30"
+  "time" : "20:30",
+  "periodInHours" : 0,
+  "notAllowedWords" : null
 } ]

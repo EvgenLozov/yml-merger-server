@@ -2,6 +2,7 @@ package com.company.config;
 
 import company.Currency;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -27,6 +28,7 @@ public class Config {
     private boolean autoMerge;
     private int period;
     private String time;
+    private int periodInHours;
     private Set<String> notAllowedWords;
 
     public String getUser() {
@@ -165,9 +167,16 @@ public class Config {
         this.time = time;
     }
 
+    public int getPeriodInHours() {
+        return periodInHours;
+    }
+
+    public void setPeriodInHours(int periodInHours) {
+        this.periodInHours = periodInHours;
+    }
 
     public Set<String> getNotAllowedWords() {
-        return notAllowedWords;
+        return new HashSet<>();
     }
 
     public void setNotAllowedWords(Set<String> notAllowedWords) {

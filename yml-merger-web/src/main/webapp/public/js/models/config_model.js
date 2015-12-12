@@ -16,6 +16,7 @@ APP.ConfigModel = Backbone.Model.extend({
     "replaces": [],
     "autoMerge" : false,
     "period" : 0,
+    "periodInHours" : 0,
     "time" : "00:00"
   },
 
