@@ -14,8 +14,10 @@ APP.ConfigModel = Backbone.Model.extend({
     "categoryIds" : [],
     "oldPrice" : 0.01,
     "replaces": [],
+    "notAllowedWords" : [],
     "autoMerge" : false,
-    "period" : 0,
+    "period" : 1,
+    "periodInHours" : 0,
     "time" : "00:00"
   },
 

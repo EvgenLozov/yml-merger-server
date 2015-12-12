@@ -1,7 +1,8 @@
 {
+    "name":"my-config",
     "user" : "user50",
     "psw" : "bmV1c2VyNTA=",
-    "urls" : ["/websiteAction?action=getPriceTiu&id=462382&addPictures=2","/websiteAction?action=getPriceTiu&id=462401&addPictures=2"],
+    "urls" : ["http://www.apishops.com/websiteAction?action=getPriceTiu&id=462391&addPictures=2"],
     "files":[],
     "encoding" : "Windows-1251",
     "outputFile":"files",
@@ -14,5 +15,6 @@
         {"wordsToReplace":["Антенны"], "replacement":"пиписьки" },
         {"wordsToReplace":["id=\"9\" parentId=\"2\""], "replacement":"id=\"9\" parentId=\"3\"" },
         {"wordsToReplace":["кабель"], "replacement":"Кобель" }
-    ]
+    ],
+    "allowedWords":["moser 1400-0050"]
 }

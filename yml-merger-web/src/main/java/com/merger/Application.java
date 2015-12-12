@@ -48,7 +48,7 @@ public class Application {
     public SchedulerService schedulerService() throws SchedulerException {
         JobKeyFactory jobKeyFactory = new JobKeyFactory();
         JobDetailFactory jobDetailFactory = new JobDetailFactory(jobKeyFactory);
-        TriggerFactory triggerFactory = new TriggerFactory(jobKeyFactory);
+        TriggerFactory triggerFactory = new MultiTriggerFactory(jobKeyFactory);
 
         MergeJobFactory mergeJobFactory = new MergeJobFactory(mergeService());
         Scheduler scheduler = new StdSchedulerFactory().getScheduler();
