@@ -3,6 +3,7 @@ package company.conditions;
 import javax.xml.stream.events.XMLEvent;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -16,17 +17,20 @@ public class NameContainsWords implements Predicate<List<XMLEvent>> {
 
     @Override
     public boolean test(List<XMLEvent> xmlEvents) {
-        String name = getName(xmlEvents).toLowerCase();
+        Optional<String> name = getName(xmlEvents);
+
+        if (!name.isPresent())
+            return false;
 
         for (String word : words) {
-            if (name.contains(word.toLowerCase()))
+            if (name.get().toLowerCase().contains(word.toLowerCase()))
                 return true;
         }
 
         return false;
     }
 
-    private String getName(List<XMLEvent> xmlEvents)
+    private Optional<String> getName(List<XMLEvent> xmlEvents)
     {
         Iterator<XMLEvent> iterator = xmlEvents.iterator();
 
@@ -35,10 +39,10 @@ public class NameContainsWords implements Predicate<List<XMLEvent>> {
             XMLEvent event = iterator.next();
 
             if (event.isStartElement() && event.asStartElement().getName().getLocalPart().equals("name"))
-                return iterator.next().asCharacters().getData();
+                return Optional.of(iterator.next().asCharacters().getData());
 
         }
 
-        throw new RuntimeException("Offer"+xmlEvents.get(0).asStartElement().toString()+" doesn't contains element 'name'");
+        return Optional.empty();
     }
 }
