@@ -2,7 +2,7 @@ package com.company.factories.handler;
 
 import company.Factory;
 import company.StAXService;
-import company.XMLEventReaderProvider;
+import company.providers.XMLEventReaderProvider;
 import company.conditions.AfterElement;
 import company.conditions.OnceTime;
 import company.handlers.xml.SuccessiveXmlEventHandler;

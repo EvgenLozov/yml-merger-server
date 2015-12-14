@@ -2,7 +2,7 @@ package com.company.readerproviders;
 
 import com.company.http.HttpService;
 import com.company.logger.ProcessLogger;
-import company.XMLEventReaderProvider;
+import company.providers.XMLEventReaderProvider;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;

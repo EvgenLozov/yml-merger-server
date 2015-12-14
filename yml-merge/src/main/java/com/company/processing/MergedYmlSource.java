@@ -6,7 +6,7 @@ import com.company.config.Config;
 import com.company.factories.handler.*;
 import company.Factory;
 import company.StAXService;
-import company.XMLEventReaderProvider;
+import company.providers.XMLEventReaderProvider;
 import company.bytearray.ByteArraySource;
 import company.handlers.xml.XmlEventHandler;
 

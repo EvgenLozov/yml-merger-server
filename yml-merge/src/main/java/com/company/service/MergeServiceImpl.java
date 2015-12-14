@@ -8,10 +8,10 @@ import com.company.http.HttpService;
 import com.company.processing.MergePostProcessor;
 import com.company.processing.MergedYmlSource;
 import com.company.processing.ReplaceProcessing;
-import com.company.readerproviders.FileXMLEventReaderProvider;
+import company.providers.FileXMLEventReaderProvider;
 import com.company.readerproviders.HttpXMLEventReaderProvider;
 import com.company.repository.ConfigRepository;
-import company.XMLEventReaderProvider;
+import company.providers.XMLEventReaderProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 
 import javax.xml.stream.XMLStreamException;
