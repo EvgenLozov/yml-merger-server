@@ -38,8 +38,11 @@ public class NameContainsWords implements Predicate<List<XMLEvent>> {
         {
             XMLEvent event = iterator.next();
 
-            if (event.isStartElement() && event.asStartElement().getName().getLocalPart().equals("name"))
-                return Optional.of(iterator.next().asCharacters().getData());
+            if (event.isStartElement() && event.asStartElement().getName().getLocalPart().equals("name")) {
+                XMLEvent text = iterator.next();
+                if (text.isCharacters())
+                    return Optional.of(text.asCharacters().getData());
+            }
 
         }
 
