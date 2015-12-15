@@ -164,6 +164,12 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="notAllowedWords" class="col-md-4 control-label">Удалить офферы, содержащие в названии след. слова или фразы </label>
+                    <div class="col-md-8">
+                        <textarea class="form-control" rows="2" id="notAllowedWords" name="categoryIds"><%= notAllowedWords %></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="oldPrice" class="col-md-4 control-label">Наценка для старой цены, %</label>
                     <div class="col-md-8">
                         <input type="text" class="form-control" id="oldPrice" name="oldPrice" value="<%= oldPrice*100 %>">
@@ -187,8 +193,15 @@
                 </div>
                 <div class="form-group">
                     <label for="time" class="col-md-4 control-label">Время обновления ( 24-часовой формат, напр. 18:20)</label>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <input type="text" class="form-control" id="time" name="time" value="<%= time %>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="periodInHours" class="col-md-4 control-label">Обновлять каждые, часов</label>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" id="periodInHours" name="period" value="<%= periodInHours %>">
+                    </div>
                 </div>
             </div>
             </form>
@@ -481,6 +494,12 @@
             </div>
         </div>
         <div class="form-group">
+            <label for="notAllowedWords" class="col-md-4 control-label">Удалить офферы, содержащие в названии след. слова или фразы </label>
+            <div class="col-md-8">
+                <textarea class="form-control" rows="2" id="notAllowedWords" name="categoryIds" disabled><%= notAllowedWords %></textarea>
+            </div>
+        </div>
+        <div class="form-group">
             <label for="oldPrice" class="col-md-4 control-label">Наценка для старой цены, %</label>
             <div class="col-md-8">
                 <input type="text" class="form-control" id="oldPrice" name="oldPrice" value="<%= oldPrice*100 %>" disabled>
@@ -506,6 +525,12 @@
             <label for="time" class="col-md-4 control-label">Время обновления ( 24-часовой формат, напр. 18:20)</label>
             <div class="col-md-2">
                 <input type="text" class="form-control" id="time" name="time" value="<%= time %>" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="periodInHours" class="col-md-4 control-label">Обновлять каждые, часов</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="periodInHours" name="period" value="<%= periodInHours %>" disabled>
             </div>
         </div>
         </form>

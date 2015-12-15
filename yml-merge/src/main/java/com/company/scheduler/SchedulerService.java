@@ -3,7 +3,6 @@ package com.company.scheduler;
 import com.company.config.Config;
 import com.company.logger.ProcessLogger;
 import org.quartz.*;
-import org.quartz.spi.JobFactory;
 
 /**
  * Created by Yevhen on 2015-08-02.
@@ -33,8 +32,7 @@ public class SchedulerService {
         scheduler.scheduleJob(jobDetail, trigger);
 
         logger.info("Task for auto merge of config " + config.getName() + " is added/updated");
-        logger.info("Auto merge will start at : " + trigger.getStartTime() +
-                    ", with period : " + config.getPeriod() + " day");
+        logger.info("Auto merge will start at : " + trigger.getStartTime());
     }
 
     public void deleteTask(Config config) throws SchedulerException {

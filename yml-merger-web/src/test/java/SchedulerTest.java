@@ -1,4 +1,3 @@
-import com.company.config.ConfigProvider;
 import com.company.service.MergeServiceImpl;
 import com.company.config.Config;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,7 +24,7 @@ public class SchedulerTest {
 
         JobKeyFactory jobKeyFactory = new JobKeyFactory();
         JobDetailFactory jobDetailFactory = new JobDetailFactory(jobKeyFactory);
-        TriggerFactory triggerFactory = new TriggerFactory(jobKeyFactory);
+        TriggerFactory triggerFactory = new MultiTriggerFactory(jobKeyFactory);
 
         MergeJobFactory mergeJobFactory = new MergeJobFactory(mergeService);
         Scheduler scheduler = new StdSchedulerFactory().getScheduler();
