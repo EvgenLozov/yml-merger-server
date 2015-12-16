@@ -19,10 +19,14 @@ public class ModifyOfferDescription implements BufferXmlEventOperator {
 
     @Override
     public List<XMLEvent> apply(List<XMLEvent> events) {
-        Optional<String> url = XmlEventUtil.getTextOfElement(events, "url");
+
         Optional<Characters> description = XmlEventUtil.getCharacterEventOfElement(events, "description");
 
-        if (description.isPresent() && url.isPresent()) {
+        if (description.isPresent() ) {
+            Optional<String> url = XmlEventUtil.getTextOfElement(events, "url");
+            if (!url.isPresent())
+                return events;
+
             String descrText = description.get().getData();
 
             ((CharacterEvent) description.get()).setData(descriptionProvider.get(url.get()) + descrText);

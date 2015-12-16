@@ -26,8 +26,27 @@ public class XmlEventUtil {
         {
             XMLEvent event = iterator.next();
 
+            if (event.isStartElement() && event.asStartElement().getName().getLocalPart().equals(elementName)) {
+                XMLEvent nextEvent = iterator.next();
+                if (nextEvent.isCharacters())
+                    return Optional.of(nextEvent.asCharacters());
+            }
+
+        }
+
+        return Optional.empty();
+    }
+
+    public static Optional<XMLEvent> getStartElement(List<XMLEvent> events, String elementName)
+    {
+        Iterator<XMLEvent> iterator = events.iterator();
+
+        while (iterator.hasNext())
+        {
+            XMLEvent event = iterator.next();
+
             if (event.isStartElement() && event.asStartElement().getName().getLocalPart().equals(elementName))
-                return Optional.of(iterator.next().asCharacters());
+                return Optional.of(event);
 
         }
 
