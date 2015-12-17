@@ -1,7 +1,7 @@
 apply plugin: 'java'
 
 sourceCompatibility = 1.8
-version = '1.8'
+version = '1.11'
 
 repositories {
     mavenCentral()
@@ -16,7 +16,7 @@ dependencies {
 
 task fatJar(type: Jar) {
     manifest {
-        attributes 'Implementation-Title': 'Merge yml task',
+        attributes 'Implementation-Title': 'Modify yml',
                 'Implementation-Version': version,
                 'Main-Class': 'com.company.Main'
     }

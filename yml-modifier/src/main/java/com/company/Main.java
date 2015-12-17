@@ -1,12 +1,16 @@
 package com.company;
 
 import company.StAXService;
+import company.conditions.InElementCondition;
+import company.handlers.xml.EventCounter;
 import company.handlers.xml.XmlEventHandler;
 import company.providers.FileXMLEventReaderProvider;
 import company.providers.XMLEventReaderProvider;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -17,12 +21,11 @@ public class Main {
 
         StAXService stAXService = new StAXService( readerProvider );
 
-        Writer writer = new OutputStreamWriter(new FileOutputStream(config.getOutputDir() + "/my.xml"), config.getEncoding());
-        XmlEventHandler handler = new ModifierXmlEventHandlerProvider(config, writer).get();
+        XmlEventHandler handler = new ModifierXmlEventHandlerProvider(config).get();
 
         stAXService.process(handler);
-        writer.flush();
-
     }
+
+
 
 }

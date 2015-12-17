@@ -27,7 +27,7 @@ public class OffersCategoryIdModifier implements XmlEventHandler {
             inCategoryId = false;
         }
 
-        if (inCategoryId && event.isCharacters())
+        if (inCategoryId && event.isCharacters() && event instanceof  CharacterEvent)
         {
 
             String categoryId = ((CharacterEvent) event).getData();
