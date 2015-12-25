@@ -1,5 +1,5 @@
 import com.company.allowedcategories.Category;
-import com.company.config.Config;
+import com.company.config.MergerConfig;
 import com.company.config.ConfigProvider;
 import com.company.http.HttpClientProvider;
 import com.company.http.HttpService;
@@ -15,7 +15,7 @@ public class CategoryProviderTest {
 
     @Test
     public void testName() throws Exception {
-        Config config = new ConfigProvider().get();
+        MergerConfig config = new ConfigProvider().get();
         String psw = new String(Base64.getDecoder().decode(config.getPsw().getBytes()));
         CloseableHttpClient httpClient = new HttpClientProvider(config.getUser(), psw).get();
 

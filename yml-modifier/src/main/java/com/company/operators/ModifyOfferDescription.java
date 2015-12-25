@@ -1,5 +1,6 @@
 package com.company.operators;
 
+import com.company.OfferDescriptionProvider;
 import com.sun.xml.internal.stream.events.CharacterEvent;
 import company.handlers.xml.buffered.BufferXmlEventOperator;
 import company.util.XmlEventUtil;

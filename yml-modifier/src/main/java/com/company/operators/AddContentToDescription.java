@@ -1,5 +1,6 @@
 package com.company.operators;
 
+import com.company.OfferDescriptionProvider;
 import company.handlers.xml.buffered.BufferXmlEventOperator;
 import company.util.XmlEventUtil;
 

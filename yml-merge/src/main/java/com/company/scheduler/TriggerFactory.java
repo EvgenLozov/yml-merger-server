@@ -1,11 +1,11 @@
 package com.company.scheduler;
 
-import com.company.config.Config;
+import com.company.config.MergerConfig;
 import org.quartz.Trigger;
 
 /**
  * @author Yevhen
  */
 public interface TriggerFactory {
-    Trigger get(Config config);
+    Trigger get(MergerConfig config);
 }

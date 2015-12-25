@@ -2,8 +2,8 @@ package com.company.repository;
 
 import com.company.allowedcategories.AllCategoriesProvider;
 import com.company.allowedcategories.Category;
-import com.company.config.Config;
-import com.company.repository.ConfigRepository;
+import com.company.config.MergerConfig;
+import company.config.ConfigRepository;
 
 import javax.xml.stream.XMLStreamException;
 import java.util.Set;
@@ -13,14 +13,14 @@ import java.util.Set;
  */
 public class CategorySource {
 
-    private ConfigRepository configRepository;
+    private ConfigRepository<MergerConfig> configRepository;
 
-    public CategorySource(ConfigRepository configRepository) {
+    public CategorySource(ConfigRepository<MergerConfig> configRepository) {
         this.configRepository = configRepository;
     }
 
     public Set<Category> get(String configId) throws XMLStreamException {
-        Config config = configRepository.get(configId);
+        MergerConfig config = configRepository.get(configId);
 
         Set<Category> categories = new AllCategoriesProvider(config).get();
 

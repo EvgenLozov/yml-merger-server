@@ -6,7 +6,6 @@ import com.company.handlers.OffersSeparator;
 import com.company.handlers.ProgressHandler;
 import com.company.operators.AddContentToDescription;
 import com.company.operators.ModifyOfferDescription;
-import com.company.operators.OfferDescriptionProvider;
 import company.StAXService;
 import company.conditions.*;
 import company.handlers.xml.*;
@@ -14,12 +13,16 @@ import company.handlers.xml.buffered.AddElementIfAbsent;
 import company.handlers.xml.buffered.BufferXmlEventOperator;
 import company.handlers.xml.buffered.BufferedXmlEventHandler;
 import company.handlers.xml.buffered.ComplexBufferXmlEventOperator;
+import company.handlers.xml.insert.SimpleXmlEventSupplier;
+import company.handlers.xml.insert.XmlEventInserter;
+import company.handlers.xml.insert.XmlEventSupplier;
 import company.providers.FileXMLEventReaderProvider;
 
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.XMLEvent;
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.*;
 import java.util.function.Predicate;
 
@@ -63,16 +66,27 @@ public class ModifierXmlEventHandlerProvider {
         if (config.isModifyDescription())
             operators.add(provideDescriptionModification());
 
-        operators.add(new AddElementIfAbsent("categoryId", xmlEventFactory, Optional.of("0")));
+        operators.add(new AddElementIfAbsent("categoryId", xmlEventFactory, Optional.of(config.getRemovedCategoryId())));
         operators.add(new AddElementIfAbsent("currencyId", xmlEventFactory, Optional.of("RUR")));
         operators.add(new AddElementIfAbsent("description", xmlEventFactory, Optional.empty()));
-        operators.add(new AddElementIfAbsent("name", xmlEventFactory, Optional.of("Удалено")));
-        operators.add(new AddElementIfAbsent("model", xmlEventFactory, Optional.of("Удалено")));
+
+        String removedStr = Charset.forName(config.getEncoding()).toString().equals("UTF-8") ?
+                "Удалено" : new String("Удалено".getBytes(), config.getEncoding());
+
+        operators.add(new AddElementIfAbsent("name", xmlEventFactory, Optional.of(removedStr)));
+        operators.add(new AddElementIfAbsent("model", xmlEventFactory, Optional.of(removedStr)));
         operators.add(new AddElementIfAbsent("price", xmlEventFactory, Optional.of("10000")));
         operators.add(new AddElementIfAbsent("url", xmlEventFactory, Optional.of("http://kupi-na-dom.ru")));
         operators.add(new AddElementIfAbsent("vendor", xmlEventFactory, Optional.empty()));
 
         handler = new BufferedXmlEventHandler(handler, new StartElement("offer"), new EndElement("offer"), new ComplexBufferXmlEventOperator(operators) );
+
+        XmlEventSupplier xmlEventSupplier = new SimpleXmlEventSupplier(
+                (event)-> event.isEndElement() && event.asEndElement().getName().getLocalPart().equals("shop"),
+                ()->Arrays.asList(xmlEventFactory.createEndElement("", "", "offers")));
+        handler = new XmlEventInserter(handler, xmlEventSupplier);
+
+        handler = new XmlEventFilter(handler, new StartElement("deleted_offers").or(new EndElement("deleted_offers")).or(new EndElement("offers")).negate());
 
         return handler;
     }

@@ -1,9 +1,12 @@
+import com.company.repository.MergerConfigRepository;
 import com.company.service.MergeServiceImpl;
-import com.company.config.Config;
+import com.company.config.MergerConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.company.repository.ConfigRepository;
 import com.company.scheduler.*;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import company.config.ConfigRepository;
+import company.config.JsonBasedConfigRepository;
+import org.junit.Before;
 import org.junit.Test;
 import org.quartz.Scheduler;
 import org.quartz.impl.StdSchedulerFactory;
@@ -13,14 +16,21 @@ import org.quartz.impl.StdSchedulerFactory;
  */
 public class SchedulerTest {
 
-    private ConfigRepository configRepository = new ConfigRepository(new ObjectMapper());
+    private ConfigRepository<MergerConfig> configRepository;
+
+    @Before
+    public void setUp() throws Exception {
+
+        configRepository= new JsonBasedConfigRepository<>("config/config.json",MergerConfig.class,new ObjectMapper());
+        configRepository= new MergerConfigRepository(configRepository);
+    }
 
     @Test
     public void testName() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
-        MergeServiceImpl mergeService = new MergeServiceImpl(new ConfigRepository(mapper));
+        MergeServiceImpl mergeService = new MergeServiceImpl(configRepository);
 
         JobKeyFactory jobKeyFactory = new JobKeyFactory();
         JobDetailFactory jobDetailFactory = new JobDetailFactory(jobKeyFactory);
@@ -43,7 +53,7 @@ public class SchedulerTest {
 
     }
 
-    public Config getConfig(String id) {
+    public MergerConfig getConfig(String id) {
         return configRepository.get(id);
     }
 }

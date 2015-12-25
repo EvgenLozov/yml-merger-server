@@ -1,11 +1,13 @@
 package com.company;
 
-import com.company.config.Config;
+import com.company.config.MergerConfig;
 import com.company.config.ConfigProvider;
-import com.company.repository.ConfigRepository;
+import com.company.repository.MergerConfigRepository;
 import com.company.service.MergeServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import company.config.ConfigRepository;
+import company.config.JsonBasedConfigRepository;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
@@ -13,11 +15,12 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException, XMLStreamException {
-        Config config = new ConfigProvider().get();
+        MergerConfig config = new ConfigProvider().get();
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
-        new MergeServiceImpl(new ConfigRepository(mapper)).process(config);
+        ConfigRepository<MergerConfig> repository = new MergerConfigRepository(new JsonBasedConfigRepository<>("config/config.json",MergerConfig.class,mapper));
+        new MergeServiceImpl(repository).process(config);
     }
 }

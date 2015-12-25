@@ -1,6 +1,6 @@
 package com.company.scheduler;
 
-import com.company.config.Config;
+import com.company.config.MergerConfig;
 import org.quartz.Trigger;
 
 /**
@@ -14,7 +14,7 @@ public class MultiTriggerFactory implements TriggerFactory{
         this.jobKeyFactory = jobKeyFactory;
     }
 
-    public Trigger get(Config config) {
+    public Trigger get(MergerConfig config) {
         if (config.getPeriodInHours() > 0) {
             return new TriggerFactoryPerHours(jobKeyFactory).get(config);
         } else {

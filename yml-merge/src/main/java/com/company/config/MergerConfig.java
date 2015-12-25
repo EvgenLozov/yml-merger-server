@@ -1,6 +1,7 @@
 package com.company.config;
 
 import company.Currency;
+import company.config.Config;
 
 import java.util.HashSet;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.Set;
 /**
  * Created by user50 on 21.06.2015.
  */
-public class Config {
+public class MergerConfig implements Config {
 
     private String id;
     private String name;

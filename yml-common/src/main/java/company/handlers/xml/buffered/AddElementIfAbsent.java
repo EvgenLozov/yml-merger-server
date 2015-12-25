@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 
 
 /*
-* якщо елемент elementName відсутній у списку events, він буде добавлений перед останім евентом.
+* якщо елемент elementName відсутній у списку events, він буде добавлений перед останім евентом у списку events.
 * */
 
 public class AddElementIfAbsent implements BufferXmlEventOperator {

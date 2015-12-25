@@ -1,8 +1,6 @@
 package com.company;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Properties;
 
 /**
@@ -15,15 +13,35 @@ public class ModifierConfigProvider {
     }
 
     private Properties getProperties(){
+        File properyFile = new File("config.properties");
+        if (!properyFile.exists())
+        {
+            System.out.println("Unable to find config file "+properyFile.getAbsolutePath());
+            System.out.println("Loading default config");
+            return getDefault();
+        }
+
+        Properties prop = new Properties();
+        try(InputStream input = new FileInputStream(properyFile)) {
+            prop.load(input);
+        }  catch (FileNotFoundException ex) {
+            throw new RuntimeException("Unable to find config.properties file");
+        } catch (IOException e) {
+            throw new RuntimeException("Unable to read config.properties file. " + e.getMessage());
+        }
+
+        return prop;
+    }
+
+    private Properties getDefault()
+    {
         Properties prop = new Properties();
 
         try (InputStream input = ModifierConfigProvider.class.getResourceAsStream("/config.properties")) {
             prop.load(input);
         }
-        catch (FileNotFoundException ex) {
-            throw new RuntimeException("Unable to find config/config.properties file");
-        } catch (IOException e) {
-            throw new RuntimeException("Unable to read config/config.properties file. " + e.getMessage());
+        catch ( IOException ex) {
+            throw new RuntimeException(ex);
         }
 
         return prop;

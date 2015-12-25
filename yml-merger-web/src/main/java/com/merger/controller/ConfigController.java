@@ -1,9 +1,9 @@
 package com.merger.controller;
 
-import com.company.config.Config;
+import com.company.config.MergerConfig;
 import com.company.logger.ProcessLogger;
-import com.company.repository.ConfigRepository;
 import com.company.scheduler.SchedulerService;
+import company.config.ConfigRepository;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,21 +23,21 @@ public class ConfigController {
     private SchedulerService schedulerService;
 
     @Autowired
-    private ConfigRepository configRepository;
+    private ConfigRepository<MergerConfig> configRepository;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Config> list() {
+    public List<MergerConfig> list() {
         return configRepository.list();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Config get(@PathVariable String id) {
+    public MergerConfig get(@PathVariable String id) {
         return configRepository.get(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Config create(@RequestBody Config config) throws SchedulerException {
-        Config newConfig = configRepository.create(config);
+    public MergerConfig create(@RequestBody MergerConfig config) throws SchedulerException {
+        MergerConfig newConfig = configRepository.create(config);
 
         if (config.isAutoMerge())
             schedulerService.addTask(newConfig);
@@ -46,7 +46,7 @@ public class ConfigController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Config save(@PathVariable String id, @RequestBody Config config) throws SchedulerException {
+    public MergerConfig save(@PathVariable String id, @RequestBody MergerConfig config) throws SchedulerException {
         configRepository.save(config);
 
         if (config.isAutoMerge())

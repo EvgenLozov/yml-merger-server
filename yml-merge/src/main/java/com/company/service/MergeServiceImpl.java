@@ -1,16 +1,16 @@
 package com.company.service;
 
 import com.company.config.CategoryIdsPair;
-import com.company.config.Config;
+import com.company.config.MergerConfig;
 import com.company.config.Replace;
 import com.company.http.HttpClientProvider;
 import com.company.http.HttpService;
 import com.company.processing.MergePostProcessor;
 import com.company.processing.MergedYmlSource;
 import com.company.processing.ReplaceProcessing;
+import company.config.ConfigRepository;
 import company.providers.FileXMLEventReaderProvider;
 import com.company.readerproviders.HttpXMLEventReaderProvider;
-import com.company.repository.ConfigRepository;
 import company.providers.XMLEventReaderProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 
@@ -20,13 +20,13 @@ import java.util.*;
 
 public class MergeServiceImpl implements MergeService {
 
-    private ConfigRepository configRepository;
+    private ConfigRepository<MergerConfig> configRepository;
 
-    public MergeServiceImpl(ConfigRepository configRepository) {
+    public MergeServiceImpl(ConfigRepository<MergerConfig> configRepository) {
         this.configRepository = configRepository;
     }
 
-    public void process(Config config) throws IOException, XMLStreamException {
+    public void process(MergerConfig config) throws IOException, XMLStreamException {
         List<XMLEventReaderProvider> readerProviders = new ArrayList<>();
 
         List<HttpXMLEventReaderProvider> httpProviders = new ArrayList<>();
@@ -62,7 +62,7 @@ public class MergeServiceImpl implements MergeService {
         configRepository.save(config);
     }
 
-    private List<Replace> getReplaces(Config config)
+    private List<Replace> getReplaces(MergerConfig config)
     {
         List<Replace> replaces = new ArrayList<>();
 
