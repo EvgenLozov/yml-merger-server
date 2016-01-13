@@ -9412,7 +9412,7 @@
 <offer><url>http://my-company.com/offers</url><description></description> </offer>
         <offer><url>http://my-company.com/offers</url></offer>
 
-        <offer deleted="true" id="3926089"/>
+        <offer deleted="true" id="3926089"><name>продукт опТом дешево</name> <price>0</price></offer>
 <offer deleted="true" id="4095751"/>
 <offer deleted="true" id="4095753"/>
 <offer deleted="true" id="4095754"/>
@@ -9420,4 +9420,9 @@
 <offer deleted="true" id="4095756"/>
 <offer deleted="true" id="4095760"/>
 <offer deleted="true" id="4095761"/>
-</offers></shop></yml_catalog>
+</offers>
+            <deleted_offers>
+                <offer id="1961051" />
+                <offer id="1961052" />
+            </deleted_offers>
+        </shop></yml_catalog>

@@ -1,17 +1,14 @@
 package com.company;
 
+import com.company.functions.ReplaceWordsOperator;
 import com.company.handlers.OffersCategoryIdModifier;
+import com.company.handlers.OffersSeparator;
+import com.company.handlers.ProgressHandler;
 import com.company.operators.AddContentToDescription;
 import com.company.operators.ModifyOfferDescription;
-import com.company.operators.OfferDescriptionProvider;
-import company.conditions.AfterElement;
-import company.conditions.EndElement;
-import company.conditions.OnceTime;
-import company.conditions.StartElement;
-import company.handlers.xml.AttributeValueModifier;
-import company.handlers.xml.ConditionalXmlEventWriter;
-import company.handlers.xml.SuccessiveXmlEventHandler;
-import company.handlers.xml.XmlEventHandler;
+import company.StAXService;
+import company.conditions.*;
+import company.handlers.xml.*;
 import company.handlers.xml.buffered.AddElementIfAbsent;
 import company.handlers.xml.buffered.BufferXmlEventOperator;
 import company.handlers.xml.buffered.BufferedXmlEventHandler;
@@ -19,32 +16,27 @@ import company.handlers.xml.buffered.ComplexBufferXmlEventOperator;
 import company.handlers.xml.insert.SimpleXmlEventSupplier;
 import company.handlers.xml.insert.XmlEventInserter;
 import company.handlers.xml.insert.XmlEventSupplier;
+import company.providers.FileXMLEventReaderProvider;
 
 import javax.xml.stream.XMLEventFactory;
-import javax.xml.stream.XMLEventWriter;
-import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.XMLEvent;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.nio.charset.Charset;
+import java.util.*;
+import java.util.function.Predicate;
 
 public class ModifierXmlEventHandlerProvider {
 
     ModifierConfig config;
-    Writer writer;
 
-    public ModifierXmlEventHandlerProvider(ModifierConfig config, Writer writer) {
+    private XMLEventFactory xmlEventFactory = XMLEventFactory.newFactory();
+
+    public ModifierXmlEventHandlerProvider(ModifierConfig config) {
         this.config = config;
-        this.writer = writer;
     }
 
     public XmlEventHandler get() throws FileNotFoundException, UnsupportedEncodingException, XMLStreamException {
-        XMLOutputFactory oFactory = XMLOutputFactory.newFactory();
-        XMLEventWriter xmlEventWriter = oFactory.createXMLEventWriter(writer);
-
-        XMLEventFactory eventFactory = XMLEventFactory.newInstance();
-
         List<XmlEventHandler> handlers = new ArrayList<>();
         if (config.isModifyOfferId())
             handlers.add(new AttributeValueModifier("offer","id", (old)-> config.getOfferIdPrefix()+old));
@@ -55,22 +47,66 @@ public class ModifierXmlEventHandlerProvider {
             handlers.add(new OffersCategoryIdModifier(config.getCategoryIdPrefix()));
         }
 
-        handlers.add(new ConditionalXmlEventWriter(xmlEventWriter, (event)-> true ));
+        handlers.add(new ModifyElementAttributes("offer", new OfferAttributeModificator(xmlEventFactory) ));
+        handlers.add(new XmlEventFilter(new ModifyTextData((old) -> old.equals("0") ? "10000" : old ), new InElementCondition("price")));
+
+        TreeSet<String> forbiddenWords = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+        forbiddenWords.add("опт");
+        forbiddenWords.add("опт.");
+        forbiddenWords.add("оптом");
+
+        handlers.add(new XmlEventFilter(new ModifyTextData(new ReplaceWordsOperator(forbiddenWords)), new InElementCondition("description").or(new InElementCondition("name"))));
+
+        handlers.add(getOutputHandler());
 
         XmlEventHandler handler = new SuccessiveXmlEventHandler(handlers);
 
+        List<BufferXmlEventOperator> operators = new ArrayList<>();
+
         if (config.isModifyDescription())
-            handler = new BufferedXmlEventHandler(handler, new StartElement("offer"), new EndElement("offer"), provideDescriptionModification() );
+            operators.add(provideDescriptionModification());
 
-        XmlEventSupplier supplier = new SimpleXmlEventSupplier(new OnceTime<>(new AfterElement("offers")),
-                ()-> Arrays.asList(eventFactory.createDTD("\n\t\t"),
-                        eventFactory.createStartElement("","","offer"),
-                        eventFactory.createEndElement("","","offer"),
-                        eventFactory.createDTD("\n\t\t")));
+        operators.add(new AddElementIfAbsent("categoryId", xmlEventFactory, Optional.of(config.getRemovedCategoryId())));
+        operators.add(new AddElementIfAbsent("currencyId", xmlEventFactory, Optional.of("RUR")));
+        operators.add(new AddElementIfAbsent("description", xmlEventFactory, Optional.empty()));
 
-        handler = new XmlEventInserter(handler, supplier);
+        String removedStr = Charset.forName(config.getEncoding()).toString().equals("UTF-8") ?
+                "Удалено" : new String("Удалено".getBytes(), config.getEncoding());
+
+        operators.add(new AddElementIfAbsent("name", xmlEventFactory, Optional.of(removedStr)));
+        operators.add(new AddElementIfAbsent("model", xmlEventFactory, Optional.of(removedStr)));
+        operators.add(new AddElementIfAbsent("price", xmlEventFactory, Optional.of("10000")));
+        operators.add(new AddElementIfAbsent("url", xmlEventFactory, Optional.of("http://kupi-na-dom.ru")));
+        operators.add(new AddElementIfAbsent("vendor", xmlEventFactory, Optional.empty()));
+
+        handler = new BufferedXmlEventHandler(handler, new StartElement("offer"), new EndElement("offer"), new ComplexBufferXmlEventOperator(operators) );
+
+        XmlEventSupplier xmlEventSupplier = new SimpleXmlEventSupplier(
+                (event)-> event.isEndElement() && event.asEndElement().getName().getLocalPart().equals("shop"),
+                ()->Arrays.asList(xmlEventFactory.createEndElement("", "", "offers")));
+        handler = new XmlEventInserter(handler, xmlEventSupplier);
+
+        handler = new XmlEventFilter(handler, new StartElement("deleted_offers").or(new EndElement("deleted_offers")).or(new EndElement("offers")).negate());
 
         return handler;
+    }
+
+    private XmlEventHandler getOutputHandler() throws XMLStreamException {
+        int offerCount = getOfferCount();
+
+        List<XmlEventHandler> fileXmlEventWriters = new ArrayList<>();
+        Predicate<XMLEvent> closeCondition = (event) -> event.isEndElement() && event.asEndElement().getName().getLocalPart().equals("yml_catalog");
+        for (int i = 0; i < config.getFilesCount(); i++)
+            fileXmlEventWriters.add(new WriteEventToFile(config.getOutputDir() + "/output"+i+".xml", config.getEncoding(), closeCondition));
+
+        List<XmlEventHandler> handlers = new ArrayList<>();
+        for (XmlEventHandler fileXmlEventWriter : fileXmlEventWriters)
+            handlers.add(new XmlEventFilter(fileXmlEventWriter, new InElementCondition("offers").negate()));
+
+        handlers.add(new XmlEventFilter(new OffersSeparator( fileXmlEventWriters, offerCount/config.getFilesCount() ), new InElementCondition("offers") ));
+        handlers.add(new ProgressHandler(offerCount));
+
+        return new SuccessiveXmlEventHandler(handlers);
     }
 
     private BufferXmlEventOperator provideDescriptionModification()
@@ -78,11 +114,22 @@ public class ModifierXmlEventHandlerProvider {
         OfferDescriptionProvider provider = new OfferDescriptionProvider(config.getTemplate(),"utf-8");
 
         List<BufferXmlEventOperator> operators = new ArrayList<>();
-        operators.add(new AddElementIfAbsent("description",XMLEventFactory.newFactory()));
+        operators.add(new AddElementIfAbsent("description",xmlEventFactory, Optional.<String>empty()));
         operators.add(new ModifyOfferDescription(provider));
-        operators.add(new AddContentToDescription(provider, XMLEventFactory.newFactory()));
+        operators.add(new AddContentToDescription(provider, xmlEventFactory.newFactory()));
 
         return new ComplexBufferXmlEventOperator(operators);
     }
+
+    private int getOfferCount() throws XMLStreamException {
+        EventCounter eventCounter = new EventCounter(new InElementCondition("offers").and((event) -> event.isStartElement()
+                && event.asStartElement().getName().getLocalPart().equals("offer")));
+
+        new StAXService(new FileXMLEventReaderProvider(config.getInputFile(), config.getEncoding())).process(eventCounter);
+
+        return eventCounter.getCount();
+    }
+
+
 
 }

@@ -10,10 +10,10 @@ import java.io.InputStream;
  */
 public class ConfigProvider {
 
-    public Config get(){
+    public MergerConfig get(){
         InputStream inputStream = getClass().getResourceAsStream("/config.json");
         try {
-            return new ObjectMapper().readValue(inputStream, Config.class);
+            return new ObjectMapper().readValue(inputStream, MergerConfig.class);
         } catch (IOException e) {
             throw new RuntimeException("Unable to read /config.json", e);
         }

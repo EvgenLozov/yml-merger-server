@@ -1,4 +1,4 @@
-package com.company.operators;
+package com.company;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;

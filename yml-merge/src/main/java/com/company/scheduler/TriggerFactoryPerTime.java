@@ -1,6 +1,6 @@
 package com.company.scheduler;
 
-import com.company.config.Config;
+import com.company.config.MergerConfig;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 
@@ -23,7 +23,7 @@ public class TriggerFactoryPerTime implements TriggerFactory {
     }
 
     @Override
-    public Trigger get(Config config) {
+    public Trigger get(MergerConfig config) {
         Integer hours = Integer.valueOf(config.getTime().split(":")[0]);
         Integer minutes = Integer.valueOf(config.getTime().split(":")[1]);
 

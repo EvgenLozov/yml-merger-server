@@ -32,7 +32,6 @@ public class AttributeValueModifier implements XmlEventHandler {
         if (event.isStartElement() && event.asStartElement().getName().getLocalPart().equals(tagName) )
         {
             Iterator<Attribute> attributesIterator = event.asStartElement().getAttributes();
-
             while (attributesIterator.hasNext()){
                 Attribute attribute = attributesIterator.next();
                 if(attribute.getName().toString().equals(attributeName)){

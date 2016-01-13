@@ -1,6 +1,6 @@
 package com.company.scheduler;
 
-import com.company.config.Config;
+import com.company.config.MergerConfig;
 import com.company.logger.ProcessLogger;
 import org.quartz.*;
 
@@ -23,7 +23,7 @@ public class SchedulerService {
         this.triggerFactory = triggerFactory;
     }
 
-    public void addTask(Config config) throws SchedulerException {
+    public void addTask(MergerConfig config) throws SchedulerException {
         deleteTask(config);
 
         JobDetail jobDetail = jobDetailFactory.get(config);
@@ -35,7 +35,7 @@ public class SchedulerService {
         logger.info("Auto merge will start at : " + trigger.getStartTime());
     }
 
-    public void deleteTask(Config config) throws SchedulerException {
+    public void deleteTask(MergerConfig config) throws SchedulerException {
         JobKey jobKey = jobKeyFactory.get(config);
 
         if (scheduler.checkExists(jobKey)){

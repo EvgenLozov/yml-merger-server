@@ -2,9 +2,9 @@ package com.merger.controller;
 
 import com.company.logger.ProcessLogger;
 import com.company.service.MergeService;
-import com.company.config.Config;
-import com.company.repository.ConfigRepository;
+import com.company.config.MergerConfig;
 import company.Currency;
+import company.config.ConfigRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
@@ -22,7 +22,7 @@ import java.io.*;
 class PricelistController {
 
     @Autowired
-    private ConfigRepository configRepository;
+    private ConfigRepository<MergerConfig> configRepository;
 
     @Autowired
     MergeService mergeService;
@@ -30,7 +30,7 @@ class PricelistController {
     @RequestMapping(value = "/{id}/merge", method = RequestMethod.POST)
     public void merge(@PathVariable final String id) throws FileNotFoundException, XMLStreamException {
         Runnable mergeTask = () -> {
-            Config config = configRepository.get(id);
+            MergerConfig config = configRepository.get(id);
 
             ProcessLogger.INSTANCE.set(config.getId());
 

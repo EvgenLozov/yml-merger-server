@@ -56,10 +56,15 @@ public class ModifierConfig {
         return properties.getProperty("categoryIdPrefix");
     }
 
+    public String getRemovedCategoryId()
+    {
+        return properties.getProperty("removedCategoryId");
+    }
+
     public String getTemplate()
     {
         try {
-            return new String(Files.readAllBytes(Paths.get("yml-modifier/templates/template.html")), "utf-8");
+            return new String(Files.readAllBytes(Paths.get(properties.getProperty("templatePath"))), "utf-8");
         } catch (IOException e) {
             throw new RuntimeException("Unable to find config/template.html file. ");
         }

@@ -2,7 +2,7 @@ package com.company.scheduler;
 
 import com.company.logger.ProcessLogger;
 import com.company.service.MergeService;
-import com.company.config.Config;
+import com.company.config.MergerConfig;
 import com.google.gson.Gson;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
@@ -26,7 +26,7 @@ public class MergeJob implements Job {
         JobDataMap dataMap = context.getJobDetail().getJobDataMap();
         String configJson = dataMap.getString("config");
 
-        Config config = gson.fromJson(configJson, Config.class);
+        MergerConfig config = gson.fromJson(configJson, MergerConfig.class);
 
         ProcessLogger.INSTANCE.set(config.getId());
 

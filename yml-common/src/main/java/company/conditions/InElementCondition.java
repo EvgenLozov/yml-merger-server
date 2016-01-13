@@ -1,11 +1,10 @@
 package company.conditions;
 
-import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.XMLEvent;
 import java.util.function.Predicate;
 
 /**
- * Created by user50 on 26.07.2015.
+ * повертае true якщо xmlEvent в елементі elementName
  */
 public class InElementCondition implements Predicate<XMLEvent> {
     String elementName;

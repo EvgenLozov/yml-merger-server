@@ -2,7 +2,7 @@ package com.company.repository;
 
 import com.company.allowedcategories.Category;
 import com.company.config.CategoryIdsPair;
-import com.company.config.Config;
+import com.company.config.MergerConfig;
 import com.company.logger.ProcessLogger;
 
 import javax.xml.stream.XMLStreamException;
@@ -40,7 +40,7 @@ public class CategoryRepository {
         return children;
     }
 
-    public void addOrUpdateCache(Config config) throws XMLStreamException {
+    public void addOrUpdateCache(MergerConfig config) throws XMLStreamException {
         logger.info("Updating categories cache for config : " + config.getName() + " is started.");
 
         Set<Category> categories = categorySource.get(config.getId());
@@ -60,7 +60,7 @@ public class CategoryRepository {
         return categoriesCacheDates.get(configId);
     }
 
-    public Category setParent(Config config, String categoryId, String parentId) {
+    public Category setParent(MergerConfig config, String categoryId, String parentId) {
         Set<Category> categories = categoriesCache.get(config.getId());
 
         for (Category category : categories) {

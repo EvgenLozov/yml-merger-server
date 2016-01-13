@@ -1,6 +1,6 @@
 package com.company.scheduler;
 
-import com.company.config.Config;
+import com.company.config.MergerConfig;
 import org.quartz.JobKey;
 
 /**
@@ -8,7 +8,7 @@ import org.quartz.JobKey;
  */
 public class JobKeyFactory {
 
-    public JobKey get(Config config){
+    public JobKey get(MergerConfig config){
         return JobKey.jobKey(config.getId());
     }
 }
