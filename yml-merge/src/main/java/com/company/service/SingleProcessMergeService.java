@@ -31,9 +31,9 @@ public class SingleProcessMergeService implements MergeService {
         }
 
         putProcess(config.getId(), true);
-        ProcessLogger.INSTANCE.clean(config.getId());
 
         try {
+            ProcessLogger.INSTANCE.clean(config.getId());
             logger.info("Process for config " + config.getName() + " is started");
             mergeService.process(config);
             logger.info("Process for config " + config.getName() + " is finished successfully");

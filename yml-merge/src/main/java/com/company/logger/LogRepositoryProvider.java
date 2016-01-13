@@ -12,6 +12,11 @@ import java.util.logging.Logger;
 public class LogRepositoryProvider implements Supplier<LogRepository>{
 
     String logFileName = "logs/application-logs.json";
+    ObjectMapper objectMapper;
+
+    public LogRepositoryProvider(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     public LogRepository get() {
@@ -26,7 +31,7 @@ public class LogRepositoryProvider implements Supplier<LogRepository>{
         File logFile = new File(logFileName);
         if (logFile.exists())
             try {
-                return new ObjectMapper().readValue(logFile, Map.class);
+                return objectMapper.readValue(logFile, Map.class);
             } catch (IOException e) {
                 Logger.getAnonymousLogger().warning("Unable to read logs from log file: "+logFileName+". Cause: "+e.getMessage());
             }

@@ -1,5 +1,8 @@
 package com.company.logger;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,7 +15,7 @@ public enum ProcessLogger {
     INSTANCE;
     private ThreadLocal<String> configId = new ThreadLocal<>();
 
-    LogRepository logRepository = new LogRepositoryProvider().get();
+    LogRepository logRepository = new LogRepositoryProvider(new ObjectMapper().configure(SerializationFeature.WRITE_NULL_MAP_VALUES, false)).get();
 
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
