@@ -8,12 +8,13 @@ import java.util.Properties;
  */
 public class ModifierConfigProvider {
 
-    public ModifierConfig get(){
-        return new ModifierConfig(getProperties());
+    public ModifierConfigProperties get(){
+        return new ModifierConfigProperties(getProperties());
     }
 
     private Properties getProperties(){
-        File properyFile = new File("config.properties");
+       // File properyFile = new File("config.properties");
+        File properyFile = new File("D:\\Java\\yml-merger-server\\yml-merger-server\\yml-modifier\\prices\\config.properties");
         if (!properyFile.exists())
         {
             System.out.println("Unable to find config file "+properyFile.getAbsolutePath());

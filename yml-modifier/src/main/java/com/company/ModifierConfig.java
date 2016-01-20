@@ -1,81 +1,128 @@
 package com.company;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Properties;
+import company.config.Config;
 
 /**
- * Created by user50 on 20.06.2015.
+ * Created by Naya on 12.01.2016.
  */
-public class ModifierConfig {
+public class ModifierConfig implements Config{
+    private String id;
+    private String inputFileURL;
+    private String inputFile;
+    private String outputDir;
+    private String encoding;
+    private boolean modifyDescription;
+    private boolean modifyOfferId;
+    private String offerIdPrefix;
+    private boolean modifyCategoryId;
+    private String categoryIdPrefix;
+    private String removedCategoryId;
+    private String template;
+    private int filesCount;
 
-    Properties properties;
-
-    public ModifierConfig(Properties properties) {
-        this.properties = properties;
+    public String getOutputDir() {
+        return outputDir;
     }
 
-    public String getInputFile()
-    {
-        return properties.getProperty("inputFile");
+    public void setOutputDir(String outputDir) {
+        this.outputDir = outputDir;
     }
 
-    public String getOutputDir()
-    {
-        return properties.getProperty("outputDir");
+    public String getTemplate() {
+        return template;
     }
 
-    public String getEncoding()
-    {
-        return properties.getProperty("encoding");
+    public void setTemplate(String template) {
+        this.template = template;
     }
 
-    public boolean isModifyDescription()
-    {
-        return Boolean.parseBoolean(properties.getProperty("modifyDescription"));
+    @Override
+    public String getId() {
+        return id;
     }
 
-    public boolean isModifyOfferId()
-    {
-        return Boolean.parseBoolean(properties.getProperty("modifyOfferId"));
+    @Override
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getOfferIdPrefix()
-    {
-        return properties.getProperty("offerIdPrefix");
+    public String getInputFileURL() {
+        return inputFileURL;
     }
 
-    public boolean isModifyCategoryId()
-    {
-        return Boolean.parseBoolean(properties.getProperty("modifyCategoryId"));
+    public void setInputFileURL(String inputFileURL) {
+        this.inputFileURL = inputFileURL;
     }
 
-    public String getCategoryIdPrefix()
-    {
-        return properties.getProperty("categoryIdPrefix");
+    public String getInputFile() {
+        return inputFile;
     }
 
-    public String getRemovedCategoryId()
-    {
-        return properties.getProperty("removedCategoryId");
+    public void setInputFile(String inputFile) {
+        this.inputFile = inputFile;
     }
 
-    public String getTemplate()
-    {
-        try {
-            return new String(Files.readAllBytes(Paths.get(properties.getProperty("templatePath"))), "utf-8");
-        } catch (IOException e) {
-            throw new RuntimeException("Unable to find config/template.html file. ");
-        }
+    public String getEncoding() {
+        return encoding;
     }
 
-    public int getFilesCount(){
-        int filesCount = Integer.valueOf(properties.getProperty("filesCount"));
+    public void setEncoding(String encoding) {
+        this.encoding = encoding;
+    }
 
-        if (filesCount <= 0)
-            throw new IllegalArgumentException("filesCount has to be a positive integer");
+    public boolean isModifyDescription() {
+        return modifyDescription;
+    }
 
+    public void setModifyDescription(boolean modifyDescription) {
+        this.modifyDescription = modifyDescription;
+    }
+
+    public boolean isModifyOfferId() {
+        return modifyOfferId;
+    }
+
+    public void setModifyOfferId(boolean modifyOfferId) {
+        this.modifyOfferId = modifyOfferId;
+    }
+
+    public String getOfferIdPrefix() {
+        return offerIdPrefix;
+    }
+
+    public void setOfferIdPrefix(String offerIdPrefix) {
+        this.offerIdPrefix = offerIdPrefix;
+    }
+
+    public boolean isModifyCategoryId() {
+        return modifyCategoryId;
+    }
+
+    public void setModifyCategoryId(boolean modifyCategoryId) {
+        this.modifyCategoryId = modifyCategoryId;
+    }
+
+    public String getCategoryIdPrefix() {
+        return categoryIdPrefix;
+    }
+
+    public void setCategoryIdPrefix(String categoryIdPrefix) {
+        this.categoryIdPrefix = categoryIdPrefix;
+    }
+
+    public String getRemovedCategoryId() {
+        return removedCategoryId;
+    }
+
+    public void setRemovedCategoryId(String removedCategoryId) {
+        this.removedCategoryId = removedCategoryId;
+    }
+
+    public int getFilesCount() {
         return filesCount;
+    }
+
+    public void setFilesCount(int filesCount) {
+        this.filesCount = filesCount;
     }
 }

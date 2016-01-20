@@ -26,13 +26,13 @@ import java.io.*;
 import java.util.*;
 import java.util.function.Predicate;
 
-public class ModifierXmlEventHandlerProvider {
+public class ModifierPropertiesXmlEventHandlerProvider {
 
-    ModifierConfig config;
+    ModifierConfigProperties config;
 
     private XMLEventFactory xmlEventFactory = XMLEventFactory.newFactory();
 
-    public ModifierXmlEventHandlerProvider(ModifierConfig config) {
+    public ModifierPropertiesXmlEventHandlerProvider(ModifierConfigProperties config) {
         this.config = config;
     }
 
@@ -70,11 +70,13 @@ public class ModifierXmlEventHandlerProvider {
         operators.add(new AddElementIfAbsent("currencyId", xmlEventFactory, Optional.of("RUR")));
         operators.add(new AddElementIfAbsent("description", xmlEventFactory, Optional.empty()));
 
-      //  String removedStr = Charset.forName(config.getEncoding()).toString().equals("UTF-8") ?
-      //          "Удалено" : new String("Удалено".getBytes(), config.getEncoding());              //don't work! wrong encoding
         String removedStr = new String("Удалено".getBytes(), config.getEncoding());
-                operators.add(new AddElementIfAbsent("name", xmlEventFactory, Optional.of(removedStr)));
-        operators.add(new AddElementIfAbsent("model", xmlEventFactory, Optional.of(removedStr))); // always add Удалено, model is abset
+
+       // String removedStr = Charset.forName(config.getEncoding()).toString().equals("UTF-8") ?
+         //       "Удалено" : new String("Удалено".getBytes(), config.getEncoding());
+
+        operators.add(new AddElementIfAbsent("name", xmlEventFactory, Optional.of(removedStr)));
+        operators.add(new AddElementIfAbsent("model", xmlEventFactory, Optional.of(removedStr)));
         operators.add(new AddElementIfAbsent("price", xmlEventFactory, Optional.of("10000")));
         operators.add(new AddElementIfAbsent("url", xmlEventFactory, Optional.of("http://kupi-na-dom.ru")));
         operators.add(new AddElementIfAbsent("vendor", xmlEventFactory, Optional.empty()));
