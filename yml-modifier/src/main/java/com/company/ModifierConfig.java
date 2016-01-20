@@ -123,6 +123,8 @@ public class ModifierConfig implements Config{
     }
 
     public void setFilesCount(int filesCount) {
+        if (filesCount <= 0)
+            throw new IllegalArgumentException("filesCount has to be a positive integer");
         this.filesCount = filesCount;
     }
 }
