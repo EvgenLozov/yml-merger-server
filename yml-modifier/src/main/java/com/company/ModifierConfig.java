@@ -46,6 +46,11 @@ public class ModifierConfig implements Config{
         this.id = id;
     }
 
+    @Override
+    public int getPeriodInHours() {
+        return 0;
+    }
+
     public String getInputFileURL() {
         return inputFileURL;
     }

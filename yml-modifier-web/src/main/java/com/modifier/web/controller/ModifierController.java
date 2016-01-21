@@ -3,6 +3,7 @@ package com.modifier.web.controller;
 import com.company.FileDownloader;
 import com.company.ModifierConfig;
 import com.company.ModifierXmlEventHandlerProvider;
+import com.company.scheduler.ModifyService;
 import company.StAXService;
 import company.config.ConfigRepository;
 import company.handlers.xml.XmlEventHandler;
@@ -12,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.xml.stream.XMLStreamException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 
 /**
@@ -27,29 +30,23 @@ public class ModifierController {
     private ConfigRepository<ModifierConfig> configRepository;
 
     @RequestMapping(value = "{id}/modify", method = RequestMethod.POST)
-    public void modify(@PathVariable final String id) {
+    public void modify(@PathVariable final String id) throws XMLStreamException {
         Runnable modifyTask = () -> {
             ModifierConfig config = configRepository.get(id);
             if (config.getInputFileURL()!=null){
                 FileDownloader fd = new FileDownloader(config.getInputFileURL(), config.getOutputDir());
-                String inputFile = null;
                 try {
-                    inputFile = fd.download();
+                    String inputFile = fd.download();
+                    config.setInputFile(inputFile);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    throw new RuntimeException("Unable to download an input file");      // unable download file
                 }
-                config.setInputFile(inputFile);
+
             }
 
-            XMLEventReaderProvider readerProvider = new FileXMLEventReaderProvider(config.getInputFile(), config.getEncoding());
-            StAXService stAXService = new StAXService(readerProvider);
+            ModifyService modifyService = new ModifyService();
+            modifyService.process(config);
 
-            try {
-                XmlEventHandler handler = new ModifierXmlEventHandlerProvider(config).get();
-                stAXService.process(handler);
-            } catch (IOException | XMLStreamException e) {
-                e.printStackTrace();
-            }
         };
 
         new Thread(modifyTask).start();
