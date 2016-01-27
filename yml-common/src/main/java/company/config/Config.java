@@ -6,6 +6,4 @@ public interface Config {
 
     void setId(String id);
 
-    int getPeriodInHours();
-
 }

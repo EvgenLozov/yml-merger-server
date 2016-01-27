@@ -24,4 +24,8 @@ public class InMemoryQuartzTasksScheduler implements QuartzTasksScheduler{
             scheduler.deleteJob(jobKey);
         }
     }
+
+    public boolean isScheduled(QuartzTask task) throws SchedulerException {
+        return scheduler.checkExists(task.jobKey());
+    }
 }

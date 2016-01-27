@@ -33,20 +33,9 @@ public class ModifierController {
     public void modify(@PathVariable final String id) throws XMLStreamException {
         Runnable modifyTask = () -> {
             ModifierConfig config = configRepository.get(id);
-            if (config.getInputFileURL()!=null){
-                FileDownloader fd = new FileDownloader(config.getInputFileURL(), config.getOutputDir());
-                try {
-                    String inputFile = fd.download();
-                    config.setInputFile(inputFile);
-                } catch (IOException e) {
-                    throw new RuntimeException("Unable to download an input file");      // unable download file
-                }
-
-            }
 
             ModifyService modifyService = new ModifyService();
             modifyService.process(config);
-
         };
 
         new Thread(modifyTask).start();

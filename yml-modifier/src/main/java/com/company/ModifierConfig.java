@@ -19,6 +19,9 @@ public class ModifierConfig implements Config{
     private String removedCategoryId;
     private String template;
     private int filesCount;
+    private String time;
+    private int period;
+
 
     public String getOutputDir() {
         return outputDir;
@@ -44,11 +47,6 @@ public class ModifierConfig implements Config{
     @Override
     public void setId(String id) {
         this.id = id;
-    }
-
-    @Override
-    public int getPeriodInHours() {
-        return 0;
     }
 
     public String getInputFileURL() {
@@ -131,5 +129,23 @@ public class ModifierConfig implements Config{
         if (filesCount <= 0)
             throw new IllegalArgumentException("filesCount has to be a positive integer");
         this.filesCount = filesCount;
+    }
+
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public int getPeriod() {
+
+        return period;
+    }
+
+    public void setPeriod(int period) {
+        this.period = period;
     }
 }
