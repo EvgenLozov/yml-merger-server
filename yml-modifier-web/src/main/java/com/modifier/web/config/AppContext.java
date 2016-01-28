@@ -1,6 +1,7 @@
 package com.modifier.web.config;
 
 import com.company.ModifierConfig;
+import com.company.scheduler.InMemoryQTSchedulerInitializer;
 import com.company.taskscheduler.InMemoryQuartzTasksScheduler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -30,7 +31,9 @@ public class AppContext {
     public InMemoryQuartzTasksScheduler tasksScheduler() throws SchedulerException {
         Scheduler scheduler = new StdSchedulerFactory().getScheduler();
         scheduler.start();
-        return new InMemoryQuartzTasksScheduler(scheduler);
+        InMemoryQTSchedulerInitializer qtSchedulerInitializer = new InMemoryQTSchedulerInitializer(scheduler, configRepository());
+
+        return qtSchedulerInitializer.getScheduler();
     }
 
 }
