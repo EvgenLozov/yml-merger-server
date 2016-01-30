@@ -1,9 +1,14 @@
 package com.company.scheduler;
 
-import com.company.FileDownloader;
 import com.company.ModifierConfig;
 import com.company.ModifierXmlEventHandlerProvider;
+import com.company.http.HttpClientProvider;
+import com.company.http.HttpRequestProvider;
+import com.company.http.HttpResponseHandler;
+import com.company.http.HttpService;
 import com.company.logger.ProcessLogger;
+import com.company.readerproviders.DownloadPriceListRequest;
+import com.company.readerproviders.SaveIntoFileHttpResponseHandler;
 import company.StAXService;
 import company.handlers.xml.XmlEventHandler;
 import company.providers.FileXMLEventReaderProvider;
@@ -13,6 +18,7 @@ import javax.xml.stream.XMLStreamException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 
 /**
  * Created by Naya on 20.01.2016.
@@ -25,12 +31,15 @@ public class ModifyService {
     public void process(ModifierConfig config)  {
 
         if (config.getInputFileURL()!=null){
-            FileDownloader fd = new FileDownloader(config.getInputFileURL(), config.getOutputDir());
+
             try {
-                String inputFile = fd.download();
-                config.setInputFile(inputFile);
+                //String psw = new String(Base64.getDecoder().decode(config.getPsw().getBytes()));
+                HttpService httpService = new HttpService(new HttpClientProvider(config.getUser(), config.getPsw()).get());
+                HttpRequestProvider requestProvider = new DownloadPriceListRequest(config.getInputFileURL());
+                HttpResponseHandler<String> responseHandler = new SaveIntoFileHttpResponseHandler(config.getEncoding());
+                config.setInputFile(httpService.execute(requestProvider, responseHandler));
             } catch (IOException e) {
-                //throw new RuntimeException("Unable to download an input file");      // unable download file
+                //throw new RuntimeException("Unable to download an input file");
                 logger.warning("Unable to do auto merge of " + config.getId());
                 e.printStackTrace();
             }

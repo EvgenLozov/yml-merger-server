@@ -1,5 +1,6 @@
 package com.company;
 
+
 import company.config.Config;
 
 /**
@@ -21,6 +22,8 @@ public class ModifierConfig implements Config{
     private int filesCount;
     private String time;
     private int period;
+    private String user;
+    private String psw;
 
 
     public String getOutputDir() {
@@ -147,5 +150,22 @@ public class ModifierConfig implements Config{
 
     public void setPeriod(int period) {
         this.period = period;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+
+    public String getPsw() {
+        return psw;
+    }
+
+    public void setPsw(String psw) {
+        this.psw = psw;
     }
 }
