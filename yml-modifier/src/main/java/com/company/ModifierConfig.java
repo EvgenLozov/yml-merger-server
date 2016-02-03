@@ -24,6 +24,7 @@ public class ModifierConfig implements Config{
     private int period;
     private String user;
     private String psw;
+    private String name;
 
 
     public String getOutputDir() {
@@ -167,5 +168,13 @@ public class ModifierConfig implements Config{
 
     public void setPsw(String psw) {
         this.psw = psw;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
