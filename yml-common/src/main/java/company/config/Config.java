@@ -6,4 +6,7 @@ public interface Config {
 
     void setId(String id);
 
+    String getPsw();
+
+    void setPsw(String psw);
 }
