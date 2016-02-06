@@ -36,7 +36,7 @@ public class SchedulerTest {
         JobDetailFactory jobDetailFactory = new JobDetailFactory(jobKeyFactory);
         TriggerFactory triggerFactory = new MultiTriggerFactory(jobKeyFactory);
 
-        MergeJobFactory mergeJobFactory = new MergeJobFactory(mergeService);
+        MergeJobFactory mergeJobFactory = new MergeJobFactory(mergeService, configRepository);
         Scheduler scheduler = new StdSchedulerFactory().getScheduler();
         scheduler.setJobFactory(mergeJobFactory);
         scheduler.start();

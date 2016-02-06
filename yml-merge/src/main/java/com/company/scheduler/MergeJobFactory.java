@@ -1,6 +1,7 @@
 package com.company.scheduler;
 
 import com.company.service.MergeService;
+import company.config.ConfigRepository;
 import org.quartz.Job;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
@@ -13,15 +14,18 @@ import org.quartz.spi.TriggerFiredBundle;
 public class MergeJobFactory extends SimpleJobFactory{
 
     private MergeService mergeService;
+    private ConfigRepository configRepository;
 
-    public MergeJobFactory(MergeService mergeService) {
+    public MergeJobFactory(MergeService mergeService, ConfigRepository configRepository) {
         this.mergeService = mergeService;
+        this.configRepository = configRepository;
     }
 
     @Override
     public Job newJob(TriggerFiredBundle bundle, Scheduler scheduler) throws SchedulerException {
         MergeJob job = (MergeJob) super.newJob(bundle, scheduler);
         job.setMergeService(mergeService);
+        job.setConfigRepository(configRepository);
 
         return job;
     }

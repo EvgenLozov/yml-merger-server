@@ -4,6 +4,8 @@ import com.company.logger.ProcessLogger;
 import com.company.service.MergeService;
 import com.company.config.MergerConfig;
 import com.google.gson.Gson;
+import company.config.ConfigRepository;
+import company.config.JsonBasedConfigRepository;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
@@ -20,6 +22,7 @@ public class MergeJob implements Job {
 
     private MergeService mergeService;
     private Gson gson = new Gson();
+    private ConfigRepository<MergerConfig> configRepository;
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
@@ -30,7 +33,9 @@ public class MergeJob implements Job {
 
         ProcessLogger.INSTANCE.set(config.getId());
 
-        try {
+        config.setNextFireTime(context.getNextFireTime().getTime());
+        configRepository.save(config);
+            try {
             mergeService.process(config);
         } catch (XMLStreamException | IOException e) {
             logger.warning("Unable to do auto merge of " + config.getName());
@@ -40,5 +45,9 @@ public class MergeJob implements Job {
 
     public void setMergeService(MergeService mergeService) {
         this.mergeService = mergeService;
+    }
+
+    public void setConfigRepository(ConfigRepository<MergerConfig> configRepository) {
+        this.configRepository = configRepository;
     }
 }

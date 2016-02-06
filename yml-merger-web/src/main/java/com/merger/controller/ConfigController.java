@@ -2,7 +2,8 @@ package com.merger.controller;
 
 import com.company.config.MergerConfig;
 import com.company.logger.ProcessLogger;
-import com.company.scheduler.SchedulerService;
+import com.company.taskscheduler.InMemoryQuartzTasksScheduler;
+import com.company.taskscheduler.MergeQuartzTask;
 import company.config.ConfigRepository;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import java.util.*;
 public class ConfigController {
 
     @Autowired
-    private SchedulerService schedulerService;
+    private InMemoryQuartzTasksScheduler taskScheduler;
 
     @Autowired
     private ConfigRepository<MergerConfig> configRepository;
@@ -40,7 +41,7 @@ public class ConfigController {
         MergerConfig newConfig = configRepository.create(config);
 
         if (config.isAutoMerge())
-            schedulerService.addTask(newConfig);
+            taskScheduler.schedule(new MergeQuartzTask(newConfig));
 
         return config;
     }
@@ -48,11 +49,15 @@ public class ConfigController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public MergerConfig save(@PathVariable String id, @RequestBody MergerConfig config) throws SchedulerException {
         configRepository.save(config);
+        MergeQuartzTask task = new MergeQuartzTask(config);
 
-        if (config.isAutoMerge())
-            schedulerService.addTask(config);
+        if (config.isAutoMerge()) {
+            if (taskScheduler.isScheduled(task))
+                taskScheduler.delete(task);
+            taskScheduler.schedule(task);
+        }
         else
-            schedulerService.deleteTask(config);
+            taskScheduler.delete(task);
 
         return config;
     }
@@ -60,7 +65,7 @@ public class ConfigController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity delete(@PathVariable String id) throws SchedulerException {
-        schedulerService.deleteTask(configRepository.get(id));
+        taskScheduler.delete(new MergeQuartzTask(configRepository.get(id)));
         configRepository.delete(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

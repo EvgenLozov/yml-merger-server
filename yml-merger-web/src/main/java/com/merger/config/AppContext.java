@@ -8,6 +8,8 @@ import com.company.scheduler.*;
 import com.company.service.MergeService;
 import com.company.service.MergeServiceImpl;
 import com.company.service.SingleProcessMergeService;
+import com.company.taskscheduler.InMemoryMergeTaskSchedulerInitializer;
+import com.company.taskscheduler.InMemoryQuartzTasksScheduler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import company.config.ConfigRepository;
@@ -42,16 +44,14 @@ public class AppContext {
         return new SingleProcessMergeService(new MergeServiceImpl(configRepository));
     }
     @Bean
-    public SchedulerService schedulerService(ConfigRepository configRepository) throws SchedulerException {
-        JobKeyFactory jobKeyFactory = new JobKeyFactory();
-        JobDetailFactory jobDetailFactory = new JobDetailFactory(jobKeyFactory);
-        TriggerFactory triggerFactory = new MultiTriggerFactory(jobKeyFactory);
-
-        MergeJobFactory mergeJobFactory = new MergeJobFactory(mergeService(configRepository));
+    public InMemoryQuartzTasksScheduler taskScheduler(ConfigRepository configRepository) throws SchedulerException {
+        MergeJobFactory mergeJobFactory = new MergeJobFactory(mergeService(configRepository), configRepository);
         Scheduler scheduler = new StdSchedulerFactory().getScheduler();
         scheduler.setJobFactory(mergeJobFactory);
         scheduler.start();
+        InMemoryMergeTaskSchedulerInitializer schedulerInitializer =
+                new InMemoryMergeTaskSchedulerInitializer(scheduler, configRepository());
 
-        return new SchedulerService(scheduler, jobKeyFactory, jobDetailFactory, triggerFactory);
+        return schedulerInitializer.getScheduler();
     }
 }

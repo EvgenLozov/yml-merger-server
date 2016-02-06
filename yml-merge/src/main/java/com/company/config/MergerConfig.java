@@ -3,6 +3,7 @@ package com.company.config;
 import company.Currency;
 import company.config.Config;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,6 +32,7 @@ public class MergerConfig implements Config {
     private String time;
     private int periodInHours;
     private Set<String> notAllowedWords;
+    private long nextFireTime;
 
     public String getUser() {
         return user;
@@ -182,5 +184,13 @@ public class MergerConfig implements Config {
 
     public void setNotAllowedWords(Set<String> notAllowedWords) {
         this.notAllowedWords = notAllowedWords;
+    }
+
+    public void setNextFireTime(long nextFireTime) {
+        this.nextFireTime = nextFireTime;
+    }
+
+    public long getNextFireTime() {
+        return nextFireTime;
     }
 }

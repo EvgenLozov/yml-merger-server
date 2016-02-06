@@ -11,11 +11,11 @@ import java.util.List;
 /**
  * Created by Naya on 27.01.2016.
  */
-public class InMemoryQTSchedulerInitializer {
+public class InMemoryModifyTaskSchedulerInitializer {
     private Scheduler scheduler;
     private ConfigRepository<ModifierConfig> configRepository;
 
-    public InMemoryQTSchedulerInitializer(Scheduler scheduler, ConfigRepository<ModifierConfig> configRepository) {
+    public InMemoryModifyTaskSchedulerInitializer(Scheduler scheduler, ConfigRepository<ModifierConfig> configRepository) {
         this.scheduler = scheduler;
         this.configRepository = configRepository;
     }

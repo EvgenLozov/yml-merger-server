@@ -1,7 +1,8 @@
 package com.modifier.web.config;
 
 import com.company.ModifierConfig;
-import com.company.scheduler.InMemoryQTSchedulerInitializer;
+import com.company.ModifierConfigRepository;
+import com.company.scheduler.InMemoryModifyTaskSchedulerInitializer;
 import com.company.taskscheduler.InMemoryQuartzTasksScheduler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -24,14 +25,15 @@ public class AppContext {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
-        return new JsonBasedConfigRepository<>("config/config.json",ModifierConfig.class,mapper);
+        return new ModifierConfigRepository(new JsonBasedConfigRepository<>("config/config.json",ModifierConfig.class,mapper));
     }
 
     @Bean
     public InMemoryQuartzTasksScheduler tasksScheduler() throws SchedulerException {
         Scheduler scheduler = new StdSchedulerFactory().getScheduler();
         scheduler.start();
-        InMemoryQTSchedulerInitializer qtSchedulerInitializer = new InMemoryQTSchedulerInitializer(scheduler, configRepository());
+        InMemoryModifyTaskSchedulerInitializer qtSchedulerInitializer =
+                new InMemoryModifyTaskSchedulerInitializer(scheduler, configRepository());
 
         return qtSchedulerInitializer.getScheduler();
     }
