@@ -1,6 +1,5 @@
-package com.company.readerproviders;
+package company.http;
 
-import com.company.http.HttpRequestProvider;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpRequestBase;
 

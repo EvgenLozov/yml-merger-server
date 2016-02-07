@@ -2,13 +2,9 @@ package com.modifier.web.controller;
 
 import com.company.ModifierConfig;
 import com.company.scheduler.ModifyQuartzTask;
-import com.company.taskscheduler.InMemoryQuartzTasksScheduler;
-import com.company.taskscheduler.QuartzTask;
+import company.scheduler.InMemoryQuartzTasksScheduler;
 import company.config.ConfigRepository;
-import org.quartz.JobDetail;
-import org.quartz.JobKey;
 import org.quartz.SchedulerException;
-import org.quartz.Trigger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

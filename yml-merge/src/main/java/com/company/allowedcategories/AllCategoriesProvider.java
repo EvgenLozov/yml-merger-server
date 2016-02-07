@@ -1,10 +1,10 @@
 package com.company.allowedcategories;
 
 import com.company.config.MergerConfig;
-import com.company.http.HttpClientProvider;
-import com.company.http.HttpService;
+import company.http.HttpClientProvider;
+import company.http.HttpService;
 import com.company.logger.ProcessLogger;
-import com.company.readerproviders.DownloadPriceListRequest;
+import company.http.DownloadPriceListRequest;
 import com.company.readerproviders.ExtractCategory;
 import org.apache.http.impl.client.CloseableHttpClient;
 

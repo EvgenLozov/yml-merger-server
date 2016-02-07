@@ -1,14 +1,11 @@
-package com.company.readerproviders;
+package company.http;
 
-import com.company.http.HttpResponseHandler;
 import org.apache.http.client.methods.CloseableHttpResponse;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 /**
  * Created by user50 on 28.07.2015.

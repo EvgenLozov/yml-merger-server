@@ -1,6 +1,7 @@
 package com.company.scheduler;
 
 import com.company.service.MergeService;
+import com.company.taskscheduler.MergeJob;
 import company.config.ConfigRepository;
 import org.quartz.Job;
 import org.quartz.Scheduler;

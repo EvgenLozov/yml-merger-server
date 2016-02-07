@@ -1,7 +1,9 @@
 package com.company.readerproviders;
 
-import com.company.http.HttpService;
+import company.http.DownloadPriceListRequest;
+import company.http.HttpService;
 import com.company.logger.ProcessLogger;
+import company.http.SaveIntoFileHttpResponseHandler;
 import company.providers.XMLEventReaderProvider;
 
 import javax.xml.stream.XMLEventReader;

@@ -1,21 +1,12 @@
 package com.modifier.web.controller;
 
-import com.company.FileDownloader;
 import com.company.ModifierConfig;
-import com.company.ModifierXmlEventHandlerProvider;
-import com.company.scheduler.ModifyService;
-import company.StAXService;
+import com.company.ModifyService;
 import company.config.ConfigRepository;
-import company.handlers.xml.XmlEventHandler;
-import company.providers.FileXMLEventReaderProvider;
-import company.providers.XMLEventReaderProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.xml.stream.XMLStreamException;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 
 /**

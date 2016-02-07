@@ -1,9 +1,9 @@
 import com.company.allowedcategories.Category;
 import com.company.config.MergerConfig;
 import com.company.config.ConfigProvider;
-import com.company.http.HttpClientProvider;
-import com.company.http.HttpService;
-import com.company.readerproviders.DownloadPriceListRequest;
+import company.http.HttpClientProvider;
+import company.http.HttpService;
+import company.http.DownloadPriceListRequest;
 import com.company.readerproviders.ExtractCategory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.junit.Test;

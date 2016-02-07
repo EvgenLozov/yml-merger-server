@@ -1,11 +1,10 @@
-package com.company.scheduler;
+package com.company.taskscheduler;
 
+import com.company.config.MergerConfig;
 import com.company.logger.ProcessLogger;
 import com.company.service.MergeService;
-import com.company.config.MergerConfig;
 import com.google.gson.Gson;
 import company.config.ConfigRepository;
-import company.config.JsonBasedConfigRepository;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;

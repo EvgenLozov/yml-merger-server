@@ -1,8 +1,8 @@
 package com.company.scheduler;
 
 import com.company.ModifierConfig;
-import com.company.taskscheduler.InMemoryQuartzTasksScheduler;
 import company.config.ConfigRepository;
+import company.scheduler.InMemoryQuartzTasksScheduler;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 

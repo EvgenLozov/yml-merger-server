@@ -2,7 +2,7 @@ package com.merger.controller;
 
 import com.company.config.MergerConfig;
 import com.company.logger.ProcessLogger;
-import com.company.taskscheduler.InMemoryQuartzTasksScheduler;
+import company.scheduler.InMemoryQuartzTasksScheduler;
 import com.company.taskscheduler.MergeQuartzTask;
 import company.config.ConfigRepository;
 import org.quartz.SchedulerException;

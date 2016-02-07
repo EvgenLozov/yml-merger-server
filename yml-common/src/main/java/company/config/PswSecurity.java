@@ -1,7 +1,4 @@
-package com.company.repository;
-
-
-import company.config.Config;
+package company.config;
 
 import java.util.Base64;
 

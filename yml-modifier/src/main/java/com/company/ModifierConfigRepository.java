@@ -1,7 +1,7 @@
 package com.company;
 
-import com.company.repository.PswSecurity;
 import company.config.ConfigRepository;
+import company.config.PswSecurity;
 
 import java.util.List;
 

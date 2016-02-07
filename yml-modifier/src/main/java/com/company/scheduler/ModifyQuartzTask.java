@@ -1,10 +1,11 @@
 package com.company.scheduler;
 
 import com.company.ModifierConfig;
-import com.company.taskscheduler.QuartzTask;
 import com.google.gson.Gson;
+import company.scheduler.QuartzTask;
 import org.quartz.*;
-import java.util.*;
+
+import java.util.Date;
 
 import static org.quartz.CalendarIntervalScheduleBuilder.calendarIntervalSchedule;
 import static org.quartz.DateBuilder.todayAt;

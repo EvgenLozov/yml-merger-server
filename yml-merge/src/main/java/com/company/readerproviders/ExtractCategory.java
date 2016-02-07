@@ -2,7 +2,7 @@ package com.company.readerproviders;
 
 import com.company.allowedcategories.CategoriesCollectorV2;
 import com.company.allowedcategories.Category;
-import com.company.http.HttpResponseHandler;
+import company.http.HttpResponseHandler;
 import com.company.logger.ProcessLogger;
 import company.StAXService;
 import company.handlers.xml.AggregatedXmlEventNotifier;

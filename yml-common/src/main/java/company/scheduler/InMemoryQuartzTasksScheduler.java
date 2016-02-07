@@ -1,4 +1,4 @@
-package com.company.taskscheduler;
+package company.scheduler;
 
 import org.quartz.JobKey;
 import org.quartz.Scheduler;

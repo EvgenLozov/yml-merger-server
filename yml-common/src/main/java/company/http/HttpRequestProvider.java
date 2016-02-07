@@ -1,4 +1,4 @@
-package com.company.http;
+package company.http;
 
 import org.apache.http.client.methods.HttpRequestBase;
 
