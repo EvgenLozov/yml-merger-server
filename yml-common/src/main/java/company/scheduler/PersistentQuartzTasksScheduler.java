@@ -27,4 +27,9 @@ public class PersistentQuartzTasksScheduler implements QuartzTasksScheduler {
         quartzTaskRepository.delete(task);
         quartzTasksScheduler.delete(task);
     }
+
+    @Override
+    public boolean isScheduled(QuartzTask task) throws SchedulerException {
+        return quartzTasksScheduler.isScheduled(task);
+    }
 }

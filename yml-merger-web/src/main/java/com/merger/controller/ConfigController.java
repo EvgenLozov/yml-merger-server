@@ -2,9 +2,10 @@ package com.merger.controller;
 
 import com.company.config.MergerConfig;
 import com.company.logger.ProcessLogger;
-import company.scheduler.InMemoryQuartzTasksScheduler;
-import com.company.taskscheduler.MergeQuartzTask;
+import com.company.scheduler.MergeQuartzTaskFactory;
 import company.config.ConfigRepository;
+import company.scheduler.QuartzTask;
+import company.scheduler.QuartzTasksScheduler;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,9 @@ import java.util.*;
 public class ConfigController {
 
     @Autowired
-    private InMemoryQuartzTasksScheduler taskScheduler;
+    private QuartzTasksScheduler taskScheduler;
+
+    private MergeQuartzTaskFactory quartzTaskFactory = new MergeQuartzTaskFactory();
 
     @Autowired
     private ConfigRepository<MergerConfig> configRepository;
@@ -41,7 +44,7 @@ public class ConfigController {
         MergerConfig newConfig = configRepository.create(config);
 
         if (config.isAutoMerge())
-            taskScheduler.schedule(new MergeQuartzTask(newConfig));
+            taskScheduler.schedule(quartzTaskFactory.create(newConfig));
 
         return config;
     }
@@ -49,7 +52,7 @@ public class ConfigController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public MergerConfig save(@PathVariable String id, @RequestBody MergerConfig config) throws SchedulerException {
         configRepository.save(config);
-        MergeQuartzTask task = new MergeQuartzTask(config);
+        QuartzTask task = quartzTaskFactory.create(config);
 
         if (config.isAutoMerge()) {
             if (taskScheduler.isScheduled(task))
@@ -65,7 +68,8 @@ public class ConfigController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity delete(@PathVariable String id) throws SchedulerException {
-        taskScheduler.delete(new MergeQuartzTask(configRepository.get(id)));
+        QuartzTask task = quartzTaskFactory.create(configRepository.get(id));
+        taskScheduler.delete(task);
         configRepository.delete(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

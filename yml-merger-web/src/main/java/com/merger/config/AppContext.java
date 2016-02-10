@@ -4,16 +4,15 @@ import com.company.config.MergerConfig;
 import com.company.repository.CategoryRepository;
 import com.company.repository.CategorySource;
 import com.company.repository.MergerConfigRepository;
-import com.company.scheduler.MergeJobFactory;
+import com.company.scheduler.*;
 import com.company.service.MergeService;
 import com.company.service.MergeServiceImpl;
 import com.company.service.SingleProcessMergeService;
-import com.company.taskscheduler.InMemoryMergeTaskSchedulerInitializer;
-import company.scheduler.InMemoryQuartzTasksScheduler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import company.config.ConfigRepository;
 import company.config.JsonBasedConfigRepository;
+import company.scheduler.QuartzTasksScheduler;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.impl.StdSchedulerFactory;
@@ -27,7 +26,7 @@ import org.springframework.context.annotation.Configuration;
 public class AppContext {
 
     @Bean
-    public ConfigRepository configRepository(){
+    public ConfigRepository<MergerConfig> configRepository(){
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
@@ -35,20 +34,26 @@ public class AppContext {
     }
 
     @Bean
-    public CategoryRepository categoryRepository(ConfigRepository configRepository){
+    public CategoryRepository categoryRepository(ConfigRepository<MergerConfig> configRepository){
         return new CategoryRepository(new CategorySource(configRepository));
     }
 
     @Bean
-    public MergeService mergeService(ConfigRepository configRepository){
+    public MergeService mergeService(ConfigRepository<MergerConfig> configRepository){
         return new SingleProcessMergeService(new MergeServiceImpl(configRepository));
     }
     @Bean
-    public InMemoryQuartzTasksScheduler taskScheduler(ConfigRepository configRepository) throws SchedulerException {
-        MergeJobFactory mergeJobFactory = new MergeJobFactory(mergeService(configRepository), configRepository);
+    public NextFireTimeStorage nextFireTimeStorage(ConfigRepository<MergerConfig> configRepository){
+        return new NextFireTimeStorage(configRepository);
+    }
+
+    @Bean
+    public QuartzTasksScheduler taskScheduler(ConfigRepository<MergerConfig> configRepository,NextFireTimeStorage storage) throws SchedulerException {
+        MergeJobFactory mergeJobFactory = new MergeJobFactory(mergeService(configRepository), storage);
         Scheduler scheduler = new StdSchedulerFactory().getScheduler();
         scheduler.setJobFactory(mergeJobFactory);
         scheduler.start();
+
         InMemoryMergeTaskSchedulerInitializer schedulerInitializer =
                 new InMemoryMergeTaskSchedulerInitializer(scheduler, configRepository());
 

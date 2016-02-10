@@ -1,4 +1,4 @@
-package com.company.taskscheduler;
+package com.company.scheduler;
 
 import com.company.config.MergerConfig;
 import company.config.ConfigRepository;
@@ -12,6 +12,9 @@ import java.util.List;
  * Created by Naya on 05.02.2016.
  */
 public class InMemoryMergeTaskSchedulerInitializer {
+
+    private MergeQuartzTaskFactory factory = new MergeQuartzTaskFactory();
+
     private Scheduler scheduler;
     private ConfigRepository<MergerConfig> configRepository;
 
@@ -24,8 +27,8 @@ public class InMemoryMergeTaskSchedulerInitializer {
         InMemoryQuartzTasksScheduler quartzTasksScheduler = new InMemoryQuartzTasksScheduler(scheduler);
         List<MergerConfig> modifierConfigList = configRepository.list();
         for(MergerConfig config: modifierConfigList){
-            if(config.isAutoMerge()==true)
-                quartzTasksScheduler.schedule(new MergeQuartzTask(config));
+            if(config.isAutoMerge())
+                quartzTasksScheduler.schedule(factory.create(config));
 
         }
         return quartzTasksScheduler;

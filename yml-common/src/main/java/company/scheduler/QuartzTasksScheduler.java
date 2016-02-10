@@ -8,4 +8,5 @@ import org.quartz.SchedulerException;
 public interface QuartzTasksScheduler {
     public void schedule(QuartzTask task) throws SchedulerException;
     public void delete(QuartzTask task) throws SchedulerException;
+    public boolean isScheduled(QuartzTask task) throws SchedulerException;
 }

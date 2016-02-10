@@ -1,4 +1,4 @@
-package com.company.taskscheduler;
+package com.company.scheduler;
 
 import com.company.config.MergerConfig;
 import com.company.logger.ProcessLogger;
@@ -20,21 +20,17 @@ public class MergeJob implements Job {
     private static final ProcessLogger logger = ProcessLogger.INSTANCE;
 
     private MergeService mergeService;
-    private Gson gson = new Gson();
-    private ConfigRepository<MergerConfig> configRepository;
+    private NextFireTimeStorage storage;
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        JobDataMap dataMap = context.getJobDetail().getJobDataMap();
-        String configJson = dataMap.getString("config");
-
-        MergerConfig config = gson.fromJson(configJson, MergerConfig.class);
+        MergerConfig config = new ExtractMergeConfigFromJobDetail().extract(context.getJobDetail());
 
         ProcessLogger.INSTANCE.set(config.getId());
 
-        config.setNextFireTime(context.getNextFireTime().getTime());
-        configRepository.save(config);
-            try {
+        storage.saveNextFireTime(config.getId(), context.getNextFireTime().getTime());
+
+        try {
             mergeService.process(config);
         } catch (XMLStreamException | IOException e) {
             logger.warning("Unable to do auto merge of " + config.getName());
@@ -46,7 +42,11 @@ public class MergeJob implements Job {
         this.mergeService = mergeService;
     }
 
-    public void setConfigRepository(ConfigRepository<MergerConfig> configRepository) {
-        this.configRepository = configRepository;
+    public void setStorage(NextFireTimeStorage storage) {
+        this.storage = storage;
+    }
+
+    public MergeJob(NextFireTimeStorage storage) {
+        this.storage = storage;
     }
 }
