@@ -22,6 +22,9 @@ public class MergeJob implements Job {
     private MergeService mergeService;
     private NextFireTimeStorage storage;
 
+    public MergeJob() {
+    }
+
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         MergerConfig config = new ExtractMergeConfigFromJobDetail().extract(context.getJobDetail());
@@ -43,10 +46,6 @@ public class MergeJob implements Job {
     }
 
     public void setStorage(NextFireTimeStorage storage) {
-        this.storage = storage;
-    }
-
-    public MergeJob(NextFireTimeStorage storage) {
         this.storage = storage;
     }
 }

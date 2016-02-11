@@ -4,8 +4,6 @@ import com.company.config.MergerConfig;
 import company.scheduler.QuartzTask;
 import company.scheduler.QuartzTaskRepository;
 
-import java.util.List;
-
 /**
  * @author Yevhen
  */
@@ -18,11 +16,6 @@ public class InConfigFieldQuartzTaskRepository implements QuartzTaskRepository {
     }
 
     @Override
-    public List<QuartzTask> get() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void save(QuartzTask task) {
         MergerConfig config = new ExtractMergeConfigFromJobDetail().extract(task.jobDetail());
         storage.saveNextFireTime(config.getId(), task.trigger().getStartTime().getTime());
@@ -30,6 +23,5 @@ public class InConfigFieldQuartzTaskRepository implements QuartzTaskRepository {
 
     @Override
     public void delete(QuartzTask task) {
-        throw new UnsupportedOperationException();
     }
 }

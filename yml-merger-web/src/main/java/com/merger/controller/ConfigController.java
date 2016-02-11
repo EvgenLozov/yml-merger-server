@@ -41,6 +41,7 @@ public class ConfigController {
 
     @RequestMapping(method = RequestMethod.POST)
     public MergerConfig create(@RequestBody MergerConfig config) throws SchedulerException {
+        config.setNextFireTime(0L);
         MergerConfig newConfig = configRepository.create(config);
 
         if (config.isAutoMerge())
@@ -51,6 +52,7 @@ public class ConfigController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public MergerConfig save(@PathVariable String id, @RequestBody MergerConfig config) throws SchedulerException {
+        config.setNextFireTime(0L);
         configRepository.save(config);
         QuartzTask task = quartzTaskFactory.create(config);
 

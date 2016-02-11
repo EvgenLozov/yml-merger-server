@@ -12,6 +12,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import company.config.ConfigRepository;
 import company.config.JsonBasedConfigRepository;
+import company.scheduler.InMemoryQuartzTasksScheduler;
+import company.scheduler.PersistentQuartzTasksScheduler;
 import company.scheduler.QuartzTasksScheduler;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
@@ -48,15 +50,26 @@ public class AppContext {
     }
 
     @Bean
-    public QuartzTasksScheduler taskScheduler(ConfigRepository<MergerConfig> configRepository,NextFireTimeStorage storage) throws SchedulerException {
-        MergeJobFactory mergeJobFactory = new MergeJobFactory(mergeService(configRepository), storage);
+    public MergeJobFactory mergeJobFactory(MergeService mergeService,NextFireTimeStorage storage){
+        return new MergeJobFactory(mergeService, storage);
+    }
+    @Bean
+    public Scheduler taskScheduler(MergeJobFactory mergeJobFactory) throws SchedulerException {
         Scheduler scheduler = new StdSchedulerFactory().getScheduler();
         scheduler.setJobFactory(mergeJobFactory);
         scheduler.start();
 
-        InMemoryMergeTaskSchedulerInitializer schedulerInitializer =
-                new InMemoryMergeTaskSchedulerInitializer(scheduler, configRepository());
+        return scheduler;
+    }
 
-        return schedulerInitializer.getScheduler();
+    @Bean
+    public QuartzTasksScheduler quartzTasksScheduler(Scheduler scheduler, ConfigRepository<MergerConfig> repository,
+                                                     NextFireTimeStorage storage) throws SchedulerException {
+        QuartzTasksScheduler inMemoryScheduler = new InMemoryQuartzTasksScheduler(scheduler);
+        QuartzTasksScheduler persistentQuartzTasksScheduler = new PersistentQuartzTasksScheduler(inMemoryScheduler, new InConfigFieldQuartzTaskRepository(storage));
+
+        new MergeTaskSchedulerInitializer(repository).init(inMemoryScheduler);
+
+        return persistentQuartzTasksScheduler;
     }
 }
