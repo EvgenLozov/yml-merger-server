@@ -45,6 +45,8 @@ public class MergerConfigRepository implements ConfigRepository<MergerConfig> {
 
     @Override
     public MergerConfig get(String id) {
-        return repository.get(id);
+        MergerConfig config = repository.get(id);
+        pswSecurity.decodePsw(config);
+        return config;
     }
 }
