@@ -68,7 +68,7 @@ public class AppContext {
         QuartzTasksScheduler inMemoryScheduler = new InMemoryQuartzTasksScheduler(scheduler);
         QuartzTasksScheduler persistentQuartzTasksScheduler = new PersistentQuartzTasksScheduler(inMemoryScheduler, new InConfigFieldQuartzTaskRepository(storage));
 
-        new MergeTaskSchedulerInitializer(repository).init(inMemoryScheduler);
+        new MergeTaskSchedulerInitializer(repository).init(persistentQuartzTasksScheduler);
 
         return persistentQuartzTasksScheduler;
     }
