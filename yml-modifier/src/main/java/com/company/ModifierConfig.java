@@ -5,9 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
 
-/**
- * Created by user50 on 20.06.2015.
- */
+
 public class ModifierConfig {
 
     Properties properties;
