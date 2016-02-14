@@ -23,6 +23,20 @@
 
 <script type="text/template" id="config-list-item">
     <td><%- name %></td>
+    <td>
+        <a href="#" class="btn btn-small js-show">
+            <i class="icon-eye-open"></i>
+            Показать
+        </a>
+        <button class="btn btn-small js-delete">
+            <i class="icon-remove"></i>
+            Удалить
+        </button>
+    </td>
+</script>
+
+<script type="text/template" id="config-view">
+    <h1><%- name %></h1>
 </script>
 
 <script src="./js/vendor/jquery.js"></script>
@@ -37,6 +51,8 @@
 <script src="./js/list/list_view.js"></script>
 <script src="./js/list/list_view.js"></script>
 <script src="./js/list/list_controller.js"></script>
+<script src="./js/show/show_config.js"></script>
+<script src="./js/show/show_controller.js"></script>
 
 <script type="text/javascript">
     ConfigManager.start();

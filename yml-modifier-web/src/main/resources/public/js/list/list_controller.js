@@ -8,6 +8,14 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
               collection: configs
           });
 
+          configListView.on("itemview:config:delete", function(childView, model){
+            configs.remove(model);
+          });
+
+          configListView.on("itemview:config:show", function(childView, model){
+              ConfigManager.ConfigsApp.Show.Controller.showConfig(model);
+          });
+
           ConfigManager.mainRegion.show(configListView);
       }
     };
