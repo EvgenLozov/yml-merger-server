@@ -1,7 +1,6 @@
-ConfigManager.module("ConfigsApp.Show", function(Show,  ConfigManager,  Backbone, Marionette, $, _){
-
-    Show.Controller = {
-        showConfig : function(id){
+ConfigManager.module("ConfigsApp.Edit", function(Edit,  ConfigManager,  Backbone, Marionette, $, _){
+    Edit.Controller = {
+        editConfig: function(id){
             var loadingView = new ConfigManager.Common.Views.Loading({title: "Loading config with id: " + id});
             ConfigManager.mainRegion.show(loadingView);
 
@@ -9,20 +8,21 @@ ConfigManager.module("ConfigsApp.Show", function(Show,  ConfigManager,  Backbone
             $.when(fetchingConfig).done(function(config){
                 var configView;
                 if (config === undefined){
-                    configView = new Show.MissingConfig();
+                    configView = new ConfigManager.ConfigsApp.Show.MissingConfig();
                 } else {
-                    configView = new Show.Config({
+                    configView = new Edit.Config({
                         model: config
                     });
-
-                    configView.on("config:edit", function(model){
-                        ConfigManager.trigger("config:edit", model.get("id"));
-                    });
                 }
+
+                configView.on("form:submit", function(data){
+                    config.save(data);
+                    ConfigManager.trigger("config:show", config.get("id"));
+
+                });
 
                 ConfigManager.mainRegion.show(configView);
             });
         }
     }
-
 });

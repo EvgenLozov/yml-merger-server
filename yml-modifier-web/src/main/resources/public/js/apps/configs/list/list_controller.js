@@ -2,6 +2,9 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
 
     List.Controller = {
       listConfigs : function(){
+          var loadingView = new ConfigManager.Common.Views.Loading({title: "Loading list of configs"});
+          ConfigManager.mainRegion.show(loadingView);
+
           var fetchedConfigs = ConfigManager.request("config:entities");
 
           $.when(fetchedConfigs).done(function(configs){

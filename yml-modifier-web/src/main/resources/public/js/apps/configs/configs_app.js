@@ -3,7 +3,8 @@ ConfigManager.module("ConfigsApp", function(ConfigsApp, ConfigManager,  Backbone
     ConfigsApp.Router = Marionette.AppRouter.extend({
        appRoutes: {
            "configs" : "listConfigs",
-           "configs/:id": "showConfig"
+           "configs/:id": "showConfig",
+           "configs/:id/edit": "editConfig"
        }
    });
 
@@ -14,6 +15,10 @@ ConfigManager.module("ConfigsApp", function(ConfigsApp, ConfigManager,  Backbone
 
         showConfig: function(id){
             ConfigsApp.Show.Controller.showConfig(id);
+        },
+
+        editConfig: function(id){
+            ConfigsApp.Edit.Controller.editConfig(id);
         }
     };
 
@@ -26,6 +31,12 @@ ConfigManager.module("ConfigsApp", function(ConfigsApp, ConfigManager,  Backbone
     ConfigManager.on("config:show", function(id){
         ConfigManager.navigate("configs/" + id);
         API.showConfig(id);
+    });
+
+
+    ConfigManager.on("config:edit", function(id){
+        ConfigManager.navigate("configs/" + id + "/edit");
+        API.editConfig(id);
     });
 
     ConfigManager.addInitializer(function(){

@@ -13,25 +13,33 @@ ConfigManager.module("Entities", function(Entities, ConfigManager,  Backbone, Ma
         getConfigEntities: function(){
             var configs = new Entities.Configs();
             var defer = $.Deferred();
-            configs.fetch({
-                success: function(data){
-                    defer.resolve(data);
-                }
-            });
+
+            setTimeout(function(){
+                configs.fetch({
+                    success: function (data) {
+                        defer.resolve(data);
+                    }
+                });
+            }, 1000);
+
             return defer.promise();
         },
 
         getConfigEntity: function(id){
             var config = new Entities.Config({id: id});
             var defer = $.Deferred();
-            config.fetch({
-                success: function(data){
-                    defer.resolve(data);
-                },
-                error: function(data){
-                    defer.resolve(undefined);
-                }
-            });
+
+            setTimeout(function(){
+                config.fetch({
+                    success: function(data){
+                        defer.resolve(data);
+                    },
+                    error: function(data){
+                        defer.resolve(undefined);
+                    }
+                });
+            }, 1000);
+
             return defer.promise();
         }
     };
