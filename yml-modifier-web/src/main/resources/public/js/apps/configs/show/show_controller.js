@@ -2,18 +2,19 @@ ConfigManager.module("ConfigsApp.Show", function(Show,  ConfigManager,  Backbone
 
     Show.Controller = {
         showConfig : function(id){
-            var configs = ConfigManager.request("config:entities");
-            var model = configs.get(id);
-            var configView;
-            if (model === undefined){
-                configView = new Show.MissingConfig();
-            } else {
-                configView = new Show.Config({
-                    model: model
-                });
-            }
+            var fetchingConfig = ConfigManager.request("config:entity", id);
+            $.when(fetchingConfig).done(function(config){
+                var configView;
+                if (config === undefined){
+                    configView = new Show.MissingConfig();
+                } else {
+                    configView = new Show.Config({
+                        model: config
+                    });
+                }
 
-            ConfigManager.mainRegion.show(configView);
+                ConfigManager.mainRegion.show(configView);
+            });
         }
     }
 

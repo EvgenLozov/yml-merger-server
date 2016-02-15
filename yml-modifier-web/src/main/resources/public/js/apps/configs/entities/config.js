@@ -1,24 +1,47 @@
 ConfigManager.module("Entities", function(Entities, ConfigManager,  Backbone, Marionette, $, _){
 
-    Entities.Config = Backbone.Model.extend();
-
-    Entities.Configs = Backbone.Collection.extend({
-        model: Entities.Config
+    Entities.Config = Backbone.Model.extend({
+        urlRoot: "configs"
     });
 
-    var configs = new Entities.Configs([
-        { id: 1, name: "Config One"},
-        { id: 2, name: "Config Two"},
-        { id: 3, name: "Config Three"}
-    ]);
+    Entities.Configs = Backbone.Collection.extend({
+        model: Entities.Config,
+        url: "configs"
+    });
 
     var API = {
-        getConfigList: function(){
-            return configs;
+        getConfigEntities: function(){
+            var configs = new Entities.Configs();
+            var defer = $.Deferred();
+            configs.fetch({
+                success: function(data){
+                    defer.resolve(data);
+                }
+            });
+            return defer.promise();
+        },
+
+        getConfigEntity: function(id){
+            var config = new Entities.Config({id: id});
+            var defer = $.Deferred();
+            config.fetch({
+                success: function(data){
+                    defer.resolve(data);
+                },
+                error: function(data){
+                    defer.resolve(undefined);
+                }
+            });
+            return defer.promise();
         }
     };
 
     ConfigManager.reqres.setHandler("config:entities", function(){
-        return API.getConfigList();
+        return API.getConfigEntities();
     });
+
+    ConfigManager.reqres.setHandler("config:entity", function(id){
+        return API.getConfigEntity(id);
+    });
+
 });

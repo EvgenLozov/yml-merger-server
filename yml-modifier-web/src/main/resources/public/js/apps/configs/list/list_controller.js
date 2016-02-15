@@ -2,21 +2,23 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
 
     List.Controller = {
       listConfigs : function(){
-          var configs = ConfigManager.request("config:entities");
+          var fetchedConfigs = ConfigManager.request("config:entities");
 
-          var configListView = new ConfigManager.ConfigsApp.List.Configs({
-              collection: configs
+          $.when(fetchedConfigs).done(function(configs){
+              var configListView = new List.Configs({
+                  collection: configs
+              });
+
+              configListView.on("itemview:config:delete", function(childView, model){
+                  model.destroy();
+              });
+
+              configListView.on("itemview:config:show", function(childView, model){
+                  ConfigManager.trigger("config:show", model.get("id"));
+              });
+
+              ConfigManager.mainRegion.show(configListView);
           });
-
-          configListView.on("itemview:config:delete", function(childView, model){
-            configs.remove(model);
-          });
-
-          configListView.on("itemview:config:show", function(childView, model){
-              ConfigManager.trigger("config:show", model.get("id"));
-          });
-
-          ConfigManager.mainRegion.show(configListView);
       }
     };
 });
