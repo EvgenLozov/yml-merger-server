@@ -9,6 +9,13 @@ ConfigManager.module("Entities", function(Entities, ConfigManager,  Backbone, Ma
                 errors.name = "Укажите название"
             }
 
+            if (! attrs.user){
+                errors.user = "Укажите имя пользователя"
+            }
+
+            if (! attrs.psw){
+                errors.psw = "Укажите пароль"
+            }
             if (!_.isEmpty(errors))
                 return errors;
         }

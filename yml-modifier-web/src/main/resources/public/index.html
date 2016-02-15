@@ -36,31 +36,75 @@
 </script>
 
 <script type="text/template" id="config-view">
-    <h1><%- name %></h1>
-    <a href="#configs/<%= id %>/edit" class="btn btn-small js-edit">
-        <i class="icon-pencil"></i>
-        Редакт.
-    </a>
+    <h3>Конфиг : <%- name %></h3>
+    <form>
+        <div class="control-group">
+            <label for="config-name" class="control-label">
+                Название:</label>
+            <input id="config-name" name="name"
+                   type="text" value="<%= name %>" disabled/>
+        </div>
+        <div class="control-group">
+            <label for="config-user" class="control-label">
+                Имя польз.:</label>
+            <input id="config-user" name="user"
+                   type="text" value="<%= user %>" disabled/>
+        </div>
+        <div class="control-group">
+            <label for="config-psw" class="control-label">
+                Пароль:</label>
+            <input id="config-psw" name="psw"
+                   type="password" value="<%= psw %>" disabled/>
+        </div>
+        <div class="control-group">
+            <label for="config-categoryIdPrefix" class="control-label">
+                Префикс для ИД категорий:</label>
+            <input id="config-categoryIdPrefix" name="categoryIdPrefix"
+                   type="text" value="<%= categoryIdPrefix %>" disabled/>
+        </div>
+        <a href="#configs/<%= id %>/edit" class="btn btn-small js-edit">
+            <i class="icon-pencil"></i>
+            Редактировать
+        </a>
+    </form>
 </script>
 
 <script type="text/template" id="missing-config-view">
-    <div class="alert alert-error">This config doesn't exist !</div>
+    <div class="alert alert-error">Такого конфига не существует!</div>
 </script>
 
 <script type="text/template" id="loading-view">
-    <h1><%= title %></h1>
+    <h3><%= title %></h3>
     <p><%= message %></p>
     <div id="spinner"></div>
 </script>
 
 <script type="text/template" id="config-form">
-    <h1>Редактирование <%= name %></h1>
+    <h3>Редактирование конфига: <%= name %></h3>
     <form>
         <div class="control-group">
             <label for="config-name" class="control-label">
                 Название:</label>
             <input id="config-name" name="name"
                    type="text" value="<%= name %>"/>
+        </div>
+        <div class="control-group">
+            <label for="config-user" class="control-label">
+                Имя польз.:</label>
+            <input id="config-user" name="user"
+                   type="text" value="<%= user %>"/>
+        </div>
+        <div class="control-group">
+            <label for="config-psw" class="control-label">
+                Пароль:</label>
+            <input id="config-psw" name="psw"
+                   type="password" value="<%= psw %>"/>
+        </div>
+        <div class="control-group">
+            <label for="config-categoryIdPrefix" class="control-label">
+                Префикс для ИД категорий:</label>
+            <input id="config-categoryIdPrefix" name="categoryIdPrefix"
+                   type="text" value="<%= categoryIdPrefix %>"/>
         </div>
         <button class="btn js-submit">Сохранить</button>
     </form>
