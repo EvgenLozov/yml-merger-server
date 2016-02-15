@@ -1,7 +1,17 @@
 ConfigManager.module("Entities", function(Entities, ConfigManager,  Backbone, Marionette, $, _){
 
     Entities.Config = Backbone.Model.extend({
-        urlRoot: "configs"
+        urlRoot: "configs",
+
+        validate: function(attrs, options){
+            var errors = {};
+            if (! attrs.name){
+                errors.name = "Укажите название"
+            }
+
+            if (!_.isEmpty(errors))
+                return errors;
+        }
     });
 
     Entities.Configs = Backbone.Collection.extend({

@@ -16,8 +16,11 @@ ConfigManager.module("ConfigsApp.Edit", function(Edit,  ConfigManager,  Backbone
                 }
 
                 configView.on("form:submit", function(data){
-                    config.save(data);
-                    ConfigManager.trigger("config:show", config.get("id"));
+                    if (config.save(data)){
+                        ConfigManager.trigger("config:show", config.get("id"));
+                    } else {
+                       configView.triggerMethod("form:data:invalid", config.validationError);
+                    }
 
                 });
 
