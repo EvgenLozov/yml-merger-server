@@ -23,6 +23,11 @@ ConfigManager.module("ConfigsApp", function(ConfigsApp, ConfigManager,  Backbone
 
     });
 
+    ConfigManager.on("config:show", function(id){
+        ConfigManager.navigate("configs/" + id);
+        API.showConfig(id);
+    });
+
     ConfigManager.addInitializer(function(){
         new ConfigsApp.Router({
             controller: API
