@@ -13,6 +13,7 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
           });
 
           configListView.on("itemview:config:show", function(childView, model){
+              ConfigManager.navigate("configs/" + model.get("id"));
               ConfigManager.ConfigsApp.Show.Controller.showConfig(model);
           });
 

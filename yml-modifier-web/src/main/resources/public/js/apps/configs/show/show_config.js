@@ -4,4 +4,7 @@ ConfigManager.module("ConfigsApp.Show", function(Show,  ConfigManager,  Backbone
        template: "#config-view"
     });
 
+    Show.MissingConfig = Marionette.ItemView.extend({
+        template: "#missing-config-view"
+    });
 });
