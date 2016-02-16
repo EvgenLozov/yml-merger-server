@@ -5,11 +5,19 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
           var loadingView = new ConfigManager.Common.Views.Loading({title: "Loading list of configs"});
           ConfigManager.mainRegion.show(loadingView);
 
+          var configsListLayout = new List.Layout();
+          var configsListPanel = new List.Panel();
+
           var fetchedConfigs = ConfigManager.request("config:entities");
 
           $.when(fetchedConfigs).done(function(configs){
               var configListView = new List.Configs({
                   collection: configs
+              });
+
+              configsListLayout.on("show", function(){
+                  configsListLayout.panelRegion.show(configsListPanel);
+                  configsListLayout.configsRegion.show(configListView);
               });
 
               configListView.on("itemview:config:delete", function(childView, model){
@@ -42,7 +50,7 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
               });
 
 
-              ConfigManager.mainRegion.show(configListView);
+              ConfigManager.mainRegion.show(configsListLayout);
           });
       }
     };

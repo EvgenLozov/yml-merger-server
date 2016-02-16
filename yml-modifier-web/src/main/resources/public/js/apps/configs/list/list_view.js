@@ -42,4 +42,18 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
         className: "table table-hover",
         itemView: List.Config
     });
+
+    List.Layout = Marionette.Layout.extend({
+        template: "#config-list-layout",
+
+        regions: {
+            panelRegion: "#panel-region",
+            configsRegion: "#configs-region"
+        }
+    });
+
+    List.Panel = Marionette.ItemView.extend({
+        template: "#config-list-panel"
+    });
+
 });
