@@ -33,14 +33,37 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
                     $view.toggleClass(cssClass)
                 }, 500);
             });
+        },
+
+        remove: function(){
+            var self = this;
+            this.$el.fadeOut(function(){
+                Marionette.ItemView.prototype.remove.call(self);
+            });
         }
 
     });
 
-    List.Configs = Marionette.CollectionView.extend({
+    List.Configs = Marionette.CompositeView.extend({
         tagName: "table",
         className: "table table-hover",
-        itemView: List.Config
+        template: "#config-list",
+        itemView: List.Config,
+        itemViewContainer: "tbody",
+
+        initialize: function(){
+            this.listenTo(this.collection, "reset", function(){
+                this.appendHtml = function(collectionView, itemView, index){
+                    collectionView.$el.append(itemView.el);
+                }
+            });
+        },
+
+        onCompositeCollectionRendered: function(){
+            this.appendHtml = function(collectionView, itemView, index){
+                collectionView.$el.prepend(itemView.el);
+            }
+        }
     });
 
     List.Layout = Marionette.Layout.extend({
@@ -53,7 +76,11 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
     });
 
     List.Panel = Marionette.ItemView.extend({
-        template: "#config-list-panel"
+        template: "#config-list-panel",
+
+        triggers: {
+            "click button.js-new" : "config:new"
+        }
     });
 
 });

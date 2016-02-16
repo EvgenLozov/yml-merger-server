@@ -29,6 +29,32 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
               });
 
 
+              configsListPanel.on("config:new", function() {
+                  var newConfig = new ConfigManager.Entities.Config();
+
+                  var view = new ConfigManager.ConfigsApp.New.Config({
+                      model: newConfig,
+                      asModal: true
+                  });
+
+                  view.on("form:submit", function (data) {
+
+                  newConfig.save(data)
+                              .done(function(){
+                                  configs.add(newConfig);
+                                  ConfigManager.dialogRegion.close();
+                                  configListView.children.findByModel(newConfig).
+                                      flash("success");
+                              })
+                              .fail(function(){
+                                  view.triggerMethod("form:data:invalid", newConfig.validationError);
+                              });
+
+                  });
+
+                  ConfigManager.dialogRegion.show(view);
+              });
+
               configListView.on("itemview:config:edit", function(childView, model){
                   var view = new ConfigManager.ConfigsApp.Edit.Config({
                       model: model,
@@ -39,7 +65,7 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
                     if (model.save(data)){
                         childView.render();
                         ConfigManager.dialogRegion.close();
-                        childView.flash("success");
+                        childView.flash("info");
                     } else {
                         view.triggerMethod("form:data:invalid", model.validationError)
                     }

@@ -3,6 +3,14 @@ ConfigManager.module("Entities", function(Entities, ConfigManager,  Backbone, Ma
     Entities.Config = Backbone.Model.extend({
         urlRoot: "configs",
 
+        defaults: {
+            name: "",
+            user: "",
+            psw: "",
+            categoryIdPrefix: "",
+            filesCount: 1
+        },
+
         validate: function(attrs, options){
             var errors = {};
             if (! attrs.name){
