@@ -5,7 +5,8 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
 
         events: {
             "click button.js-delete" : "deleteClicked",
-            "click a.js-show" : "showConfig"
+            "click a.js-show" : "showConfig",
+            "click a.js-edit" : "editConfig"
         },
 
         deleteClicked: function(e){
@@ -17,6 +18,21 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
             e.preventDefault();
             e.stopPropagation();
             this.trigger("config:show", this.model);
+        },
+
+        editConfig: function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            this.trigger("config:edit", this.model);
+        },
+
+        flash: function(cssClass){
+            var $view = this.$el;
+            $view.hide().toggleClass(cssClass).fadeIn(800, function(){
+                setTimeout(function(){
+                    $view.toggleClass(cssClass)
+                }, 500);
+            });
         }
 
     });

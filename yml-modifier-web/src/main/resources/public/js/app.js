@@ -1,7 +1,8 @@
 var ConfigManager = new Marionette.Application();
 
 ConfigManager.addRegions({
-    mainRegion: "#main-region"
+    mainRegion: "#main-region",
+    dialogRegion: "#dialog-region"
 });
 
 ConfigManager.navigate = function(route, options){

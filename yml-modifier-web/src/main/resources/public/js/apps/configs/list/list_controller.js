@@ -20,6 +20,28 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
                   ConfigManager.trigger("config:show", model.get("id"));
               });
 
+
+              configListView.on("itemview:config:edit", function(childView, model){
+                  var view = new ConfigManager.ConfigsApp.Edit.Config({
+                      model: model,
+                      asModal: true
+                  });
+
+                  view.on("form:submit", function(data){
+                    if (model.save(data)){
+                        childView.render();
+                        ConfigManager.dialogRegion.close();
+                        childView.flash("success");
+                    } else {
+                        view.triggerMethod("form:data:invalid", model.validationError)
+                    }
+                  });
+
+                  ConfigManager.dialogRegion.show(view);
+
+              });
+
+
               ConfigManager.mainRegion.show(configListView);
           });
       }

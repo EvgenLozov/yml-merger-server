@@ -2,6 +2,10 @@ ConfigManager.module("ConfigsApp.Edit", function(Edit,  ConfigManager,  Backbone
     Edit.Config = Marionette.ItemView.extend({
         template: "#config-form",
 
+        initialize : function(){
+            this.title = "Редактирование  " + this.model.get("name");
+        },
+
         events: {
             "click button.js-submit" : "submitClicked"
         },
@@ -10,6 +14,24 @@ ConfigManager.module("ConfigsApp.Edit", function(Edit,  ConfigManager,  Backbone
             e.preventDefault();
             var data = Backbone.Syphon.serialize(this);
             this.trigger("form:submit", data);
+        },
+
+        onRender: function(){
+            if (!this.options.asModal){
+                var $title = $("<h3>", { text: this.title });
+                this.$el.prepend($title);
+            }
+        },
+
+        onShow : function(){
+            if (this.options.asModal) {
+                this.$el.dialog({
+                    modal: true,
+                    title: this.title,
+                    width: "auto"
+                });
+            }
+
         },
 
         onFormDataInvalid: function(errors){
