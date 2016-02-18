@@ -37,18 +37,21 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
                       asModal: true
                   });
 
+                  newConfig.on("invalid", function(model, error) {
+                      view.triggerMethod("form:data:invalid", newConfig.validationError);
+                  });
+
                   view.on("form:submit", function (data) {
 
-                  newConfig.save(data)
-                              .done(function(){
-                                  configs.add(newConfig);
-                                  ConfigManager.dialogRegion.close();
-                                  configListView.children.findByModel(newConfig).
-                                      flash("success");
-                              })
-                              .fail(function(){
-                                  view.triggerMethod("form:data:invalid", newConfig.validationError);
-                              });
+                  newConfig.save(data, { success: function()
+                                            {
+                                              configs.add(newConfig);
+                                              ConfigManager.dialogRegion.close();
+                                              configListView.children.findByModel(newConfig).
+                                                  flash("success");
+                                            }
+                                        }
+                                );
 
                   });
 

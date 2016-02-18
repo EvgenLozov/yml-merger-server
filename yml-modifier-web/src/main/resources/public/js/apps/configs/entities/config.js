@@ -4,11 +4,23 @@ ConfigManager.module("Entities", function(Entities, ConfigManager,  Backbone, Ma
         urlRoot: "configs",
 
         defaults: {
-            name: "",
-            user: "",
-            psw: "",
-            categoryIdPrefix: "",
-            filesCount: 1
+            "categoryIdPrefix": "",
+            "encoding": "UTF-8",
+            "filesCount": 1,
+            "inputFile": null,
+            "inputFileURL": null,
+            "modifyCategoryId": false,
+            "modifyDescription": false,
+            "modifyOfferId": false,
+            "name": "",
+            "offerIdPrefix": "",
+            "outputDir": null,
+            "period": 1,
+            "psw": "",
+            "removedCategoryId": "",
+            "template": "",
+            "time": "00:00",
+            "user": ""
         },
 
         validate: function(attrs, options){
@@ -24,6 +36,27 @@ ConfigManager.module("Entities", function(Entities, ConfigManager,  Backbone, Ma
             if (! attrs.psw){
                 errors.psw = "Укажите пароль"
             }
+
+            if (! attrs.encoding){
+                errors.encoding = "Укажите кодировку"
+            }
+
+            if (! attrs.outputDir){
+                errors.outputDir = "Укажите папку для результатов"
+            }
+
+            if (! attrs.inputFile && !attrs.inputFileURL){
+                errors.inputFile = "Укажите имя файла";
+                errors.inputFileURL = "Укажите ссылку"
+            }
+
+            if (! attrs.filesCount){
+                errors.filesCount = ""
+            } else if (attrs.filesCount < 0 )
+                errors.filesCount = "Укажите число больше 0";
+
+
+
             if (!_.isEmpty(errors))
                 return errors;
         }

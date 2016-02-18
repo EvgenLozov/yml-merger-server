@@ -3,7 +3,13 @@
 <head>
     <meta charset="utf-8">
     <title>Modifier Config Manager</title>
-    <link href="./css/bootstrap.css" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!--<link href="./css/bootstrap.css" rel="stylesheet">-->
     <link href="./css/application.css" rel="stylesheet">
     <link href="./css/jquery-ui-1.10.0.custom.css" rel="stylesheet">
 </head>
@@ -35,16 +41,16 @@
 <script type="text/template" id="config-list-item">
     <td><%- name %></td>
     <td>
-        <a href="#configs/<%= id %>" class="btn btn-small js-show">
-            <i class="icon-eye-open"></i>
+        <a href="#configs/<%= id %>" class="btn btn-default btn-sm js-show">
+            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
             Показать
         </a>
-        <a href="#configs/<%= id %>/edit" class="btn btn-small js-edit">
-            <i class="icon-pencil"></i>
+        <a href="#configs/<%= id %>/edit" class="btn btn-default btn-sm js-edit">
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
             Редакт.
         </a>
-        <button class="btn btn-small js-delete">
-            <i class="icon-remove"></i>
+        <button class="btn btn-default btn-sm js-delete">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             Удалить
         </button>
     </td>
@@ -72,12 +78,93 @@
                    type="password" value="<%= psw %>" disabled/>
         </div>
         <div class="control-group">
+            <label for="config-encoding" class="control-label">
+                Кодировка:</label>
+            <input id="config-encoding" name="encoding"
+                   type="text" value="<%= encoding %>" disabled/>
+        </div>
+        <div class="control-group">
+            <label for="config-inputFile" class="control-label">
+                Исх.файл:</label>
+            <input id="config-inputFile" name="inputFile"
+                   type="text" value="<%= inputFile %>" disabled/>
+        </div>
+        <div class="control-group">
+            <label for="config-inputFileURL" class="control-label">
+                Ссылка на исх.файл:</label>
+            <input id="config-inputFileURL" name="inputFileURL"
+                   type="text" value="<%= inputFileURL %>" disabled/>
+        </div>
+        <div class="control-group">
+            <label for="config-time" class="control-label">
+                Время авт. обновления:</label>
+            <input id="config-time" name="time"
+                   type="text" value="<%= time %>" disabled/>
+        </div>
+        <div class="control-group">
+            <label for="config-outputDir" class="control-label">
+                Результ. папка:</label>
+            <input id="config-outputDir" name="outputDir"
+                   type="text" value="<%= outputDir %>" disabled/>
+        </div>
+        <div class="control-group">
+            <label for="config-filesCount" class="control-label">
+                Кол-во результ. файлов:</label>
+            <input id="config-filesCount" name="filesCount"
+                   type="text" value="<%= filesCount %>" disabled/>
+        </div>
+        <div class="control-group">
+            <label for="config-removedCategoryId" class="control-label">
+                categoryId для удаленных офферов:</label>
+            <input id="config-removedCategoryId" name="removedCategoryId"
+                   type="text" value="<%= removedCategoryId %>" disabled/>
+        </div>
+        <div class="control-group">
+            <label for="config-modifyCategoryId" class="control-label">
+                Модифиц. ид категорий? :</label>
+            <input id="config-modifyCategoryId" name="modifyCategoryId"
+                   type="checkbox" value="<%= modifyCategoryId %>" disabled/>
+        </div>
+        <div class="control-group">
             <label for="config-categoryIdPrefix" class="control-label">
-                Префикс для ИД категорий:</label>
+                Префикс categoryId:</label>
             <input id="config-categoryIdPrefix" name="categoryIdPrefix"
                    type="text" value="<%= categoryIdPrefix %>" disabled/>
         </div>
-        <a href="#configs/<%= id %>/edit" class="btn btn-small js-edit">
+
+        <%if (modifyDescription) { %>
+        <div class="control-group">
+            <label for="config-modifyDescription" class="control-label">
+                Модифиц. описание? :</label>
+            <input id="config-modifyDescription" name="modifyCategoryId"
+                   type="checkbox" checked/>
+        </div> <% } else {%>
+        <div class="control-group">
+            <label for="config-modifyDescription" class="control-label">
+                Модифиц. описание? :</label>
+            <input id="config-modifyDescription" name="modifyCategoryId"
+                   type="checkbox"/>
+        </div> <% } %>
+
+        <div class="control-group">
+            <label for="config-template" class="control-label">
+                Шаблон для вставки в описание:</label>
+            <input id="config-template" name="template"
+                   type="text" value="<%= template %>" disabled/>
+        </div>
+        <div class="control-group">
+            <label for="config-modifyOfferId" class="control-label">
+                Модифиц. ид офферов? :</label>
+            <input id="config-modifyOfferId" name="modifyOfferId"
+                   type="checkbox" value="<%= modifyOfferId %>" disabled/>
+        </div>
+        <div class="control-group">
+            <label for="config-offerIdPrefix" class="control-label">
+                Префикс offerId:</label>
+            <input id="config-offerIdPrefix" name="offerIdPrefix"
+                   type="text" value="<%= offerIdPrefix %>" disabled/>
+        </div>
+        <a href="#configs/<%= id %>/edit" class="btn btn-default btn-small js-edit">
             <i class="icon-pencil"></i>
             Редактировать
         </a>
@@ -115,10 +202,91 @@
                    type="password" value="<%= psw %>"/>
         </div>
         <div class="control-group">
+            <label for="config-encoding" class="control-label">
+                Кодировка:</label>
+            <input id="config-encoding" name="encoding"
+                   type="text" value="<%= encoding %>"/>
+        </div>
+        <div class="control-group">
+            <label for="config-inputFile" class="control-label">
+                Исх.файл:</label>
+            <input id="config-inputFile" name="inputFile"
+                   type="text" value="<%= inputFile %>"/>
+        </div>
+        <div class="control-group">
+            <label for="config-inputFileURL" class="control-label">
+                Ссылка на исх.файл:</label>
+            <input id="config-inputFileURL" name="inputFileURL"
+                   type="text" value="<%= inputFileURL %>"/>
+        </div>
+        <div class="control-group">
+            <label for="config-time" class="control-label">
+                Время авт. обновления:</label>
+            <input id="config-time" name="time"
+                   type="text" value="<%= time %>"/>
+        </div>
+        <div class="control-group">
+            <label for="config-outputDir" class="control-label">
+                Результ. папка:</label>
+            <input id="config-outputDir" name="outputDir"
+                   type="text" value="<%= outputDir %>"/>
+        </div>
+        <div class="control-group">
+            <label for="config-filesCount" class="control-label">
+                Кол-во результ. файлов:</label>
+            <input id="config-filesCount" name="filesCount"
+                   type="text" value="<%= filesCount %>"/>
+        </div>
+        <div class="control-group">
+            <label for="config-removedCategoryId" class="control-label">
+                categoryId для удаленных офферов:</label>
+            <input id="config-removedCategoryId" name="removedCategoryId"
+                   type="text" value="<%= removedCategoryId %>"/>
+        </div>
+        <div class="control-group">
+            <label for="config-modifyCategoryId" class="control-label">
+                Модифиц. ид категорий? :</label>
+            <input id="config-modifyCategoryId" name="modifyCategoryId"
+                   type="checkbox" value="<%= modifyCategoryId %>"/>
+        </div>
+        <div class="control-group">
             <label for="config-categoryIdPrefix" class="control-label">
-                Префикс для ИД категорий:</label>
+                Префикс categoryId:</label>
             <input id="config-categoryIdPrefix" name="categoryIdPrefix"
                    type="text" value="<%= categoryIdPrefix %>"/>
+        </div>
+
+        <%if (modifyDescription) { %>
+        <div class="control-group">
+            <label for="config-modifyDescription" class="control-label">
+                Модифиц. описание? :</label>
+            <input id="config-modifyDescription" name="modifyCategoryId"
+                   type="checkbox" checked/>
+        </div> <% } else {%>
+        <div class="control-group">
+            <label for="config-modifyDescription" class="control-label">
+                Модифиц. описание? :</label>
+            <input id="config-modifyDescription" name="modifyCategoryId"
+                   type="checkbox"/>
+        </div> <% } %>
+
+        <div class="control-group">
+            <label for="config-template" class="control-label">
+                Шаблон для вставки в описание:</label>
+            <input id="config-template" name="template"
+                   type="text" value="<%= template %>"/>
+        </div>
+        <div class="control-group">
+            <label for="config-modifyOfferId" class="control-label">
+                Модифиц. ид офферов? :</label>
+            <input id="config-modifyOfferId" name="modifyOfferId"
+                   type="checkbox" value="<%= modifyOfferId %>"/>
+        </div>
+        <div class="control-group">
+            <label for="config-offerIdPrefix" class="control-label">
+                Префикс offerId:</label>
+            <input id="config-offerIdPrefix" name="offerIdPrefix"
+                   type="text" value="<%= offerIdPrefix %>"/>
         </div>
         <button class="btn js-submit">Сохранить</button>
     </form>
