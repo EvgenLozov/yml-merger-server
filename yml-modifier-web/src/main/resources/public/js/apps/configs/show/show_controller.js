@@ -2,7 +2,7 @@ ConfigManager.module("ConfigsApp.Show", function(Show,  ConfigManager,  Backbone
 
     Show.Controller = {
         showConfig : function(id){
-            var loadingView = new ConfigManager.Common.Views.Loading({title: "Loading config with id: " + id});
+            var loadingView = new ConfigManager.Common.Views.Loading();
             ConfigManager.mainRegion.show(loadingView);
 
             var fetchingConfig = ConfigManager.request("config:entity", id);

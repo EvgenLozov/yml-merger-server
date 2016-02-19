@@ -1,7 +1,7 @@
 ConfigManager.module("ConfigsApp.Edit", function(Edit,  ConfigManager,  Backbone, Marionette, $, _){
     Edit.Controller = {
         editConfig: function(id){
-            var loadingView = new ConfigManager.Common.Views.Loading({title: "Loading config with id: " + id});
+            var loadingView = new ConfigManager.Common.Views.Loading();
             ConfigManager.mainRegion.show(loadingView);
 
             var fetchingConfig = ConfigManager.request("config:entity", id);
