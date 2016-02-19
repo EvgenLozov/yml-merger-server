@@ -7,8 +7,8 @@ ConfigManager.module("Entities", function(Entities, ConfigManager,  Backbone, Ma
             "categoryIdPrefix": "",
             "encoding": "UTF-8",
             "filesCount": 1,
-            "inputFile": null,
-            "inputFileURL": null,
+            "inputFile": "",
+            "inputFileURL": "",
             "modifyCategoryId": false,
             "modifyDescription": false,
             "modifyOfferId": false,
@@ -46,8 +46,8 @@ ConfigManager.module("Entities", function(Entities, ConfigManager,  Backbone, Ma
             }
 
             if (! attrs.inputFile && !attrs.inputFileURL){
-                errors.inputFile = "Укажите имя файла";
-                errors.inputFileURL = "Укажите ссылку"
+                errors.inputFile = "Укажите путь к исходному файлу";
+                errors.inputFileURL = "Укажите ссылку на исходный файл"
             }
 
             if (! attrs.filesCount){

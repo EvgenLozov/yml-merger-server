@@ -16,17 +16,17 @@
 
 <body>
 
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <span class="brand">Modifier Config Manager</span>
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                Менеджер конфигов для модификатора прайсов
+            </a>
         </div>
     </div>
-</div>
+</nav>
 
-<div id="main-region" class="container">
-    <p>Here will be our content :)</p>
-</div>
+<div id="main-region" class="container"></div>
 
 <div id="dialog-region"></div>
 
@@ -58,116 +58,200 @@
 
 <script type="text/template" id="config-view">
     <h3>Конфиг : <%- name %></h3>
-    <form>
-        <div class="control-group">
-            <label for="config-name" class="control-label">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="config-name" class="col-sm-2 control-label">
                 Название:</label>
-            <input id="config-name" name="name"
+            <div class="col-sm-6">
+            <input id="config-name" name="name" class="form-control"
                    type="text" value="<%= name %>" disabled/>
+            </div>
         </div>
-        <div class="control-group">
-            <label for="config-user" class="control-label">
+        <div class="form-group">
+            <label for="config-user" class="col-sm-2 control-label">
                 Имя польз.:</label>
-            <input id="config-user" name="user"
+            <div class="col-sm-6">
+            <input id="config-user" name="user" class="form-control"
                    type="text" value="<%= user %>" disabled/>
+            </div>
         </div>
-        <div class="control-group">
-            <label for="config-psw" class="control-label">
+        <div class="form-group">
+            <label for="config-psw" class="col-sm-2 control-label">
                 Пароль:</label>
-            <input id="config-psw" name="psw"
+            <div class="col-sm-6">
+            <input id="config-psw" name="psw" class="form-control"
                    type="password" value="<%= psw %>" disabled/>
+            </div>
         </div>
-        <div class="control-group">
-            <label for="config-encoding" class="control-label">
+        <div class="form-group">
+            <label for="config-encoding" class="col-sm-2 control-label">
                 Кодировка:</label>
-            <input id="config-encoding" name="encoding"
+            <div class="col-sm-6">
+            <input id="config-encoding" name="encoding" class="form-control"
                    type="text" value="<%= encoding %>" disabled/>
+            </div>
         </div>
-        <div class="control-group">
-            <label for="config-inputFile" class="control-label">
-                Исх.файл:</label>
-            <input id="config-inputFile" name="inputFile"
-                   type="text" value="<%= inputFile %>" disabled/>
+        <div class="form-group">
+            <label for="config-inputFile" class="col-sm-2 control-label">
+                Исх. файл:</label>
+            <div class="col-sm-6">
+                <input id="config-inputFile" name="inputFile" class="form-control"
+                       type="text" value="<%= inputFile %>" disabled/>
+            </div>
         </div>
-        <div class="control-group">
-            <label for="config-inputFileURL" class="control-label">
+        <div class="form-group">
+            <label for="config-inputFileURL" class="col-sm-2 control-label">
                 Ссылка на исх.файл:</label>
-            <input id="config-inputFileURL" name="inputFileURL"
-                   type="text" value="<%= inputFileURL %>" disabled/>
+            <div class="col-sm-6">
+                <input id="config-inputFileURL" name="inputFileURL" class="form-control"
+                       type="text" value="<%= inputFileURL %>" disabled/>
+            </div>
         </div>
-        <div class="control-group">
-            <label for="config-time" class="control-label">
-                Время авт. обновления:</label>
-            <input id="config-time" name="time"
-                   type="text" value="<%= time %>" disabled/>
-        </div>
-        <div class="control-group">
-            <label for="config-outputDir" class="control-label">
+        <div class="form-group">
+            <label for="config-outputDir" class="col-sm-2 control-label">
                 Результ. папка:</label>
-            <input id="config-outputDir" name="outputDir"
-                   type="text" value="<%= outputDir %>" disabled/>
+            <div class="col-sm-6">
+                <input id="config-outputDir" name="outputDir" class="form-control"
+                       type="text" value="<%= outputDir %>" disabled/>
+            </div>
         </div>
-        <div class="control-group">
-            <label for="config-filesCount" class="control-label">
+        <div class="form-group">
+            <label for="config-filesCount" class="col-sm-2 control-label">
                 Кол-во результ. файлов:</label>
-            <input id="config-filesCount" name="filesCount"
-                   type="text" value="<%= filesCount %>" disabled/>
+            <div class="col-sm-6">
+                <input id="config-filesCount" name="filesCount" class="form-control"
+                       type="text" value="<%= filesCount %>" disabled/>
+            </div>
         </div>
-        <div class="control-group">
-            <label for="config-removedCategoryId" class="control-label">
+        <div class="form-group">
+            <label for="config-time" class="col-sm-2 control-label">
+                Время авт. обновления:</label>
+            <div class="col-sm-6">
+                <input id="config-time" name="time" class="form-control"
+                       type="text" value="<%= time %>" disabled/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="config-removedCategoryId" class="col-sm-2 control-label">
                 categoryId для удаленных офферов:</label>
-            <input id="config-removedCategoryId" name="removedCategoryId"
-                   type="text" value="<%= removedCategoryId %>" disabled/>
+            <div class="col-sm-6">
+                <input id="config-removedCategoryId" name="removedCategoryId" class="form-control"
+                       type="text" value="<%= removedCategoryId %>" disabled/>
+            </div>
         </div>
-        <div class="control-group">
-            <label for="config-modifyCategoryId" class="control-label">
-                Модифиц. ид категорий? :</label>
-            <input id="config-modifyCategoryId" name="modifyCategoryId"
-                   type="checkbox" value="<%= modifyCategoryId %>" disabled/>
-        </div>
-        <div class="control-group">
-            <label for="config-categoryIdPrefix" class="control-label">
-                Префикс categoryId:</label>
-            <input id="config-categoryIdPrefix" name="categoryIdPrefix"
-                   type="text" value="<%= categoryIdPrefix %>" disabled/>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <% if (modifyCategoryId) { %>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-6">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="modifyCategoryId" checked disabled>  Изменять ид категорий
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <% } else { %>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-6">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="modifyCategoryId" disabled>  Изменять ид категорий
+                            </label>
+                        </div>
+                    </div>
+                </div> <% } %>
+
+                <div class="form-group">
+                    <label for="config-categoryIdPrefix" class="col-sm-2 control-label">
+                        Префикс categoryId:</label>
+                    <div class="col-sm-6">
+                        <input id="config-categoryIdPrefix" name="categoryIdPrefix" class="form-control"
+                               type="text" value="<%= categoryIdPrefix %>" disabled/>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <%if (modifyDescription) { %>
-        <div class="control-group">
-            <label for="config-modifyDescription" class="control-label">
-                Модифиц. описание? :</label>
-            <input id="config-modifyDescription" name="modifyCategoryId"
-                   type="checkbox" checked/>
-        </div> <% } else {%>
-        <div class="control-group">
-            <label for="config-modifyDescription" class="control-label">
-                Модифиц. описание? :</label>
-            <input id="config-modifyDescription" name="modifyCategoryId"
-                   type="checkbox"/>
-        </div> <% } %>
+        <div class="panel panel-default">
+            <div class="panel-body">
 
-        <div class="control-group">
-            <label for="config-template" class="control-label">
-                Шаблон для вставки в описание:</label>
-            <input id="config-template" name="template"
-                   type="text" value="<%= template %>" disabled/>
+                <% if (modifyDescription) { %>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-6">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="modifyDescription" checked disabled> Изменять описание
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                 <% } else { %>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-6">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="modifyDescription" disabled> Изменять описание
+                            </label>
+                        </div>
+                    </div>
+                </div> <% } %>
+
+                <div class="form-group">
+                    <label for="config-template" class="col-sm-2 control-label">
+                        Шаблон для вставки в описание:</label>
+                    <div class="col-sm-6">
+                        <input id="config-template" name="template" class="form-control"
+                               type="text" value="<%= template %>" disabled/>
+                    </div>
+                </div>
+
+            </div>
         </div>
-        <div class="control-group">
-            <label for="config-modifyOfferId" class="control-label">
-                Модифиц. ид офферов? :</label>
-            <input id="config-modifyOfferId" name="modifyOfferId"
-                   type="checkbox" value="<%= modifyOfferId %>" disabled/>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                <% if (modifyOfferId) { %>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-6">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="modifyOfferId" checked disabled> Изменять ид офферов
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <% } else { %>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-6">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="modifyOfferId" disabled> Изменять ид офферов
+                            </label>
+                        </div>
+                    </div>
+                </div> <% } %>
+
+                <div class="form-group">
+                    <label for="config-offerIdPrefix" class="col-sm-2 control-label">
+                        Префикс offerId:</label>
+                    <div class="col-sm-6">
+                        <input id="config-offerIdPrefix" name="template" class="form-control"
+                               type="text" value="<%= offerIdPrefix %>" disabled/>
+                    </div>
+                </div>
+
+            </div>
         </div>
-        <div class="control-group">
-            <label for="config-offerIdPrefix" class="control-label">
-                Префикс offerId:</label>
-            <input id="config-offerIdPrefix" name="offerIdPrefix"
-                   type="text" value="<%= offerIdPrefix %>" disabled/>
+
+        <div class="form-group">
+            <div class="col-sm-10">
+                <a href="#configs/<%= id %>/edit" class="btn btn-default btn-small js-edit">
+                    Редактировать
+                </a>
+            </div>
         </div>
-        <a href="#configs/<%= id %>/edit" class="btn btn-default btn-small js-edit">
-            <i class="icon-pencil"></i>
-            Редактировать
-        </a>
     </form>
 </script>
 
@@ -182,113 +266,200 @@
 </script>
 
 <script type="text/template" id="config-form">
-    <form>
-        <div class="control-group">
-            <label for="config-name" class="control-label">
+    <form class="form-horizontal">
+
+        <div class="form-group">
+            <label for="config-name" class="col-sm-2 control-label">
                 Название:</label>
-            <input id="config-name" name="name"
-                   type="text" value="<%= name %>"/>
+            <div class="col-sm-6">
+                <input id="config-name" name="name" class="form-control"
+                       type="text" value="<%= name %>"/>
+            </div>
         </div>
-        <div class="control-group">
-            <label for="config-user" class="control-label">
+        <div class="form-group">
+            <label for="config-user" class="col-sm-2 control-label">
                 Имя польз.:</label>
-            <input id="config-user" name="user"
-                   type="text" value="<%= user %>"/>
+            <div class="col-sm-6">
+                <input id="config-user" name="user" class="form-control"
+                       type="text" value="<%= user %>"/>
+            </div>
         </div>
-        <div class="control-group">
-            <label for="config-psw" class="control-label">
+        <div class="form-group">
+            <label for="config-psw" class="col-sm-2 control-label">
                 Пароль:</label>
-            <input id="config-psw" name="psw"
-                   type="password" value="<%= psw %>"/>
+            <div class="col-sm-6">
+                <input id="config-psw" name="psw" class="form-control"
+                       type="password" value="<%= psw %>"/>
+            </div>
         </div>
-        <div class="control-group">
-            <label for="config-encoding" class="control-label">
+        <div class="form-group">
+            <label for="config-encoding" class="col-sm-2 control-label">
                 Кодировка:</label>
-            <input id="config-encoding" name="encoding"
-                   type="text" value="<%= encoding %>"/>
+            <div class="col-sm-6">
+                <input id="config-encoding" name="encoding" class="form-control"
+                       type="text" value="<%= encoding %>"/>
+            </div>
         </div>
-        <div class="control-group">
-            <label for="config-inputFile" class="control-label">
-                Исх.файл:</label>
-            <input id="config-inputFile" name="inputFile"
-                   type="text" value="<%= inputFile %>"/>
+        <div class="form-group">
+            <label for="config-inputFile" class="col-sm-2 control-label">
+                Исх. файл:</label>
+            <div class="col-sm-6">
+                <input id="config-inputFile" name="inputFile" class="form-control"
+                       type="text" value="<%= inputFile %>"/>
+            </div>
         </div>
-        <div class="control-group">
-            <label for="config-inputFileURL" class="control-label">
+        <div class="form-group">
+            <label for="config-inputFileURL" class="col-sm-2 control-label">
                 Ссылка на исх.файл:</label>
-            <input id="config-inputFileURL" name="inputFileURL"
-                   type="text" value="<%= inputFileURL %>"/>
+            <div class="col-sm-6">
+                <input id="config-inputFileURL" name="inputFileURL" class="form-control"
+                       type="text" value="<%= inputFileURL %>"/>
+            </div>
         </div>
-        <div class="control-group">
-            <label for="config-time" class="control-label">
-                Время авт. обновления:</label>
-            <input id="config-time" name="time"
-                   type="text" value="<%= time %>"/>
-        </div>
-        <div class="control-group">
-            <label for="config-outputDir" class="control-label">
+        <div class="form-group">
+            <label for="config-outputDir" class="col-sm-2 control-label">
                 Результ. папка:</label>
-            <input id="config-outputDir" name="outputDir"
-                   type="text" value="<%= outputDir %>"/>
+            <div class="col-sm-6">
+                <input id="config-outputDir" name="outputDir" class="form-control"
+                       type="text" value="<%= outputDir %>"/>
+            </div>
         </div>
-        <div class="control-group">
-            <label for="config-filesCount" class="control-label">
+        <div class="form-group">
+            <label for="config-filesCount" class="col-sm-2 control-label">
                 Кол-во результ. файлов:</label>
-            <input id="config-filesCount" name="filesCount"
-                   type="text" value="<%= filesCount %>"/>
+            <div class="col-sm-6">
+                <input id="config-filesCount" name="filesCount" class="form-control"
+                       type="text" value="<%= filesCount %>"/>
+            </div>
         </div>
-        <div class="control-group">
-            <label for="config-removedCategoryId" class="control-label">
+        <div class="form-group">
+            <label for="config-time" class="col-sm-2 control-label">
+                Время авт. обновления:</label>
+            <div class="col-sm-6">
+                <input id="config-time" name="time" class="form-control"
+                       type="text" value="<%= time %>"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="config-removedCategoryId" class="col-sm-2 control-label">
                 categoryId для удаленных офферов:</label>
-            <input id="config-removedCategoryId" name="removedCategoryId"
-                   type="text" value="<%= removedCategoryId %>"/>
+            <div class="col-sm-6">
+                <input id="config-removedCategoryId" name="removedCategoryId" class="form-control"
+                       type="text" value="<%= removedCategoryId %>"/>
+            </div>
         </div>
-        <div class="control-group">
-            <label for="config-modifyCategoryId" class="control-label">
-                Модифиц. ид категорий? :</label>
-            <input id="config-modifyCategoryId" name="modifyCategoryId"
-                   type="checkbox" value="<%= modifyCategoryId %>"/>
-        </div>
-        <div class="control-group">
-            <label for="config-categoryIdPrefix" class="control-label">
-                Префикс categoryId:</label>
-            <input id="config-categoryIdPrefix" name="categoryIdPrefix"
-                   type="text" value="<%= categoryIdPrefix %>"/>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <% if (modifyCategoryId) { %>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-6">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="modifyCategoryId" checked>  Изменять ид категорий
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <% } else { %>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-6">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="modifyCategoryId">  Изменять ид категорий
+                            </label>
+                        </div>
+                    </div>
+                </div> <% } %>
+
+                <div class="form-group">
+                    <label for="config-categoryIdPrefix" class="col-sm-2 control-label">
+                        Префикс categoryId:</label>
+                    <div class="col-sm-6">
+                        <input id="config-categoryIdPrefix" name="categoryIdPrefix" class="form-control"
+                               type="text" value="<%= categoryIdPrefix %>"/>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <%if (modifyDescription) { %>
-        <div class="control-group">
-            <label for="config-modifyDescription" class="control-label">
-                Модифиц. описание? :</label>
-            <input id="config-modifyDescription" name="modifyCategoryId"
-                   type="checkbox" checked/>
-        </div> <% } else {%>
-        <div class="control-group">
-            <label for="config-modifyDescription" class="control-label">
-                Модифиц. описание? :</label>
-            <input id="config-modifyDescription" name="modifyCategoryId"
-                   type="checkbox"/>
-        </div> <% } %>
+        <div class="panel panel-default">
+            <div class="panel-body">
 
-        <div class="control-group">
-            <label for="config-template" class="control-label">
-                Шаблон для вставки в описание:</label>
-            <input id="config-template" name="template"
-                   type="text" value="<%= template %>"/>
+                <% if (modifyDescription) { %>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-6">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="modifyDescription" checked> Изменять описание
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <% } else { %>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-6">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="modifyDescription"> Изменять описание
+                            </label>
+                        </div>
+                    </div>
+                </div> <% } %>
+
+                <div class="form-group">
+                    <label for="config-template" class="col-sm-2 control-label">
+                        Шаблон для вставки в описание:</label>
+                    <div class="col-sm-6">
+                        <input id="config-template" name="template" class="form-control"
+                               type="text" value="<%= template %>"/>
+                    </div>
+                </div>
+
+            </div>
         </div>
-        <div class="control-group">
-            <label for="config-modifyOfferId" class="control-label">
-                Модифиц. ид офферов? :</label>
-            <input id="config-modifyOfferId" name="modifyOfferId"
-                   type="checkbox" value="<%= modifyOfferId %>"/>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                <% if (modifyOfferId) { %>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-6">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="modifyOfferId" checked> Изменять ид офферов
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <% } else { %>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-6">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="modifyOfferId"> Изменять ид офферов
+                            </label>
+                        </div>
+                    </div>
+                </div> <% } %>
+
+                <div class="form-group">
+                    <label for="config-offerIdPrefix" class="col-sm-2 control-label">
+                        Префикс offerId:</label>
+                    <div class="col-sm-6">
+                        <input id="config-offerIdPrefix" name="template" class="form-control"
+                               type="text" value="<%= offerIdPrefix %>"/>
+                    </div>
+                </div>
+
+            </div>
         </div>
-        <div class="control-group">
-            <label for="config-offerIdPrefix" class="control-label">
-                Префикс offerId:</label>
-            <input id="config-offerIdPrefix" name="offerIdPrefix"
-                   type="text" value="<%= offerIdPrefix %>"/>
+
+        <div class="form-group">
+            <div class="col-sm-10">
+                <button class="btn btn-default js-submit">Сохранить</button>
+            </div>
         </div>
-        <button class="btn js-submit">Сохранить</button>
+
     </form>
 </script>
 
@@ -307,6 +478,7 @@
 <script src="./js/vendor/underscore.js"></script>
 <script src="./js/vendor/backbone.js"></script>
 <script src="./js/vendor/backbone.syphon.js"></script>
+<script src="./js/vendor/backbone-validation.js"></script>
 <script src="./js/vendor/backbone.marionette.js"></script>
 <script src="./js/vendor/spin.js"></script>
 <script src="./js/vendor/spin.jquery.js"></script>
