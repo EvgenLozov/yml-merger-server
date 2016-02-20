@@ -2,7 +2,7 @@ package com.merger.controller;
 
 import com.company.config.MergerConfig;
 import com.company.logger.ProcessLogger;
-import com.company.scheduler.MergeQuartzTaskFactory;
+import com.company.scheduler.MergeQuartzTaskFactory1;
 import company.config.ConfigRepository;
 import company.scheduler.QuartzTask;
 import company.scheduler.QuartzTasksScheduler;
@@ -24,7 +24,7 @@ public class ConfigController {
     @Autowired
     private QuartzTasksScheduler taskScheduler;
 
-    private MergeQuartzTaskFactory quartzTaskFactory = new MergeQuartzTaskFactory();
+    private MergeQuartzTaskFactory1 quartzTaskFactory = new MergeQuartzTaskFactory1();
 
     @Autowired
     private ConfigRepository<MergerConfig> configRepository;

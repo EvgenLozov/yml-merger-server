@@ -2,9 +2,7 @@ package com.company.scheduler;
 
 import com.company.config.MergerConfig;
 import company.config.ConfigRepository;
-import company.scheduler.InMemoryQuartzTasksScheduler;
 import company.scheduler.QuartzTasksScheduler;
-import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 
 import java.util.List;
@@ -14,7 +12,7 @@ import java.util.List;
  */
 public class MergeTaskSchedulerInitializer {
 
-    private MergeQuartzTaskFactory factory = new MergeQuartzTaskFactory();
+    private MergeQuartzTaskFactory1 factory = new MergeQuartzTaskFactory1();
 
     private ConfigRepository<MergerConfig> configRepository;
 
