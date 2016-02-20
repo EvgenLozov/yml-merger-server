@@ -1,14 +1,9 @@
 package com.company;
 
 
-
-public class ModifierConfig {
 import company.config.Config;
 
-/**
- * Created by Naya on 12.01.2016.
- */
-public class ModifierConfig implements Config{
+public class ModifierConfig implements Config {
     private String id;
     private String inputFileURL;
     private String inputFile;
