@@ -9,15 +9,13 @@ import com.company.operators.ModifyOfferDescription;
 import company.StAXService;
 import company.conditions.*;
 import company.handlers.xml.*;
-import company.handlers.xml.buffered.AddElementIfAbsent;
-import company.handlers.xml.buffered.BufferXmlEventOperator;
-import company.handlers.xml.buffered.BufferedXmlEventHandler;
-import company.handlers.xml.buffered.ComplexBufferXmlEventOperator;
+import company.handlers.xml.buffered.*;
 import company.handlers.xml.insert.SimpleXmlEventSupplier;
 import company.handlers.xml.insert.XmlEventInserter;
 import company.handlers.xml.insert.XmlEventSupplier;
 import company.providers.FileXMLEventReaderProvider;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.XMLEvent;
@@ -51,9 +49,9 @@ public class ModifierXmlEventHandlerProvider {
         handlers.add(new XmlEventFilter(new ModifyTextData((old) -> old.equals("0") ? "10000" : old ), new InElementCondition("price")));
 
         TreeSet<String> forbiddenWords = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
-        forbiddenWords.add("опт");
-        forbiddenWords.add("опт.");
-        forbiddenWords.add("оптом");
+        forbiddenWords.add("���");
+        forbiddenWords.add("���.");
+        forbiddenWords.add("�����");
 
         handlers.add(new XmlEventFilter(new ModifyTextData(new ReplaceWordsOperator(forbiddenWords)), new InElementCondition("description").or(new InElementCondition("name"))));
 
@@ -66,29 +64,41 @@ public class ModifierXmlEventHandlerProvider {
         if (config.isModifyDescription())
             operators.add(provideDescriptionModification());
 
-        operators.add(new AddElementIfAbsent("categoryId", xmlEventFactory, Optional.of(config.getRemovedCategoryId())));
-        operators.add(new AddElementIfAbsent("currencyId", xmlEventFactory, Optional.of("RUR")));
-        operators.add(new AddElementIfAbsent("description", xmlEventFactory, Optional.empty()));
-
-      //  String removedStr = Charset.forName(config.getEncoding()).toString().equals("UTF-8") ?
-      //          "Удалено" : new String("Удалено".getBytes(), config.getEncoding());              //don't work! wrong encoding
-        String removedStr = new String("Удалено".getBytes(), config.getEncoding());
-                operators.add(new AddElementIfAbsent("name", xmlEventFactory, Optional.of(removedStr)));
-        operators.add(new AddElementIfAbsent("model", xmlEventFactory, Optional.of(removedStr))); // always add Удалено, model is abset
-        operators.add(new AddElementIfAbsent("price", xmlEventFactory, Optional.of("10000")));
-        operators.add(new AddElementIfAbsent("url", xmlEventFactory, Optional.of("http://kupi-na-dom.ru")));
-        operators.add(new AddElementIfAbsent("vendor", xmlEventFactory, Optional.empty()));
+        operators.add(getOperatorsForDeletedOffers());
 
         handler = new BufferedXmlEventHandler(handler, new StartElement("offer"), new EndElement("offer"), new ComplexBufferXmlEventOperator(operators) );
 
         XmlEventSupplier xmlEventSupplier = new SimpleXmlEventSupplier(
                 (event)-> event.isEndElement() && event.asEndElement().getName().getLocalPart().equals("shop"),
-                ()->Arrays.asList(xmlEventFactory.createEndElement("", "", "offers")));
+                () -> Arrays.asList(xmlEventFactory.createEndElement("", "", "offers")));
+
         handler = new XmlEventInserter(handler, xmlEventSupplier);
 
         handler = new XmlEventFilter(handler, new StartElement("deleted_offers").or(new EndElement("deleted_offers")).or(new EndElement("offers")).negate());
 
         return handler;
+    }
+
+    private BufferXmlEventOperator getOperatorsForDeletedOffers() throws UnsupportedEncodingException {
+        List<BufferXmlEventOperator> operators = new ArrayList<>();
+
+        operators.add(new AddElementIfAbsent("categoryId", xmlEventFactory, Optional.of(config.getRemovedCategoryId())));
+        operators.add(new AddElementIfAbsent("currencyId", xmlEventFactory, Optional.of("RUR")));
+        operators.add(new AddElementIfAbsent("description", xmlEventFactory, Optional.empty()));
+
+        String removedStr = new String("�������".getBytes(), config.getEncoding());
+
+        operators.add(new AddElementIfAbsent("name", xmlEventFactory, Optional.of(removedStr)));
+        operators.add(new AddElementIfAbsent("model", xmlEventFactory, Optional.of(removedStr)));
+        operators.add(new AddElementIfAbsent("price", xmlEventFactory, Optional.of("10000")));
+        operators.add(new AddElementIfAbsent("url", xmlEventFactory, Optional.of("http://kupi-na-dom.ru")));
+        operators.add(new AddElementIfAbsent("vendor", xmlEventFactory, Optional.empty()));
+
+        BufferXmlEventOperator operator = new ComplexBufferXmlEventOperator(operators);
+
+        return new PredicateOperator(operator, (events) -> events.get(0).asStartElement().getAttributeByName(QName.valueOf("available")) == null ||
+                !events.get(0).asStartElement().getAttributeByName(QName.valueOf("available")).getValue().equals("true"));
+
     }
 
     private XmlEventHandler getOutputHandler() throws XMLStreamException {
