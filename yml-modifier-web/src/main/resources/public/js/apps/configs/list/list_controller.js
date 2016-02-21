@@ -24,6 +24,15 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
                   model.destroy();
               });
 
+              configListView.on("itemview:config:modify", function(childView, model){
+                  $.ajax({
+                      type: "POST",
+                      url: "/modifierService/" + model.get("id") + "/modify",
+                      success : function(){ alert("Процес успешно запущен")},
+                      error : function(){ alert("Произошла ошибка")}
+                  });
+              });
+
               configListView.on("itemview:config:show", function(childView, model){
                   ConfigManager.trigger("config:show", model.get("id"));
               });

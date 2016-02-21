@@ -5,6 +5,7 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
 
         events: {
             "click button.js-delete" : "deleteClicked",
+            "click button.js-modify" : "modifyClicked",
             "click a.js-show" : "showConfig",
             "click a.js-edit" : "editConfig"
         },
@@ -12,6 +13,11 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
         deleteClicked: function(e){
             e.stopPropagation();
             this.trigger("config:delete", this.model);
+        },
+
+        modifyClicked: function(e){
+            e.stopPropagation();
+            this.trigger("config:modify", this.model);
         },
 
         showConfig: function(e){
