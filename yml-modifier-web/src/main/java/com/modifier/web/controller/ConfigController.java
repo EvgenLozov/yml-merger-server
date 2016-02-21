@@ -27,28 +27,35 @@ public class ConfigController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<ModifierConfig> list() {
-        return configRepository.list();
+        List<ModifierConfig> configs = configRepository.list();
+        for(ModifierConfig config : configs){
+            config.setPsw(null);
+        }
+        return configs;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ModifierConfig get(@PathVariable String id) {
-        return configRepository.get(id);
+        ModifierConfig config = configRepository.get(id);
+        config.setPsw(null);
+        return config;
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public ModifierConfig create(@RequestBody ModifierConfig config) throws SchedulerException {
-        configRepository.create(config);
-
         if(config.getInputFileURL()!=null)
             tasksScheduler.schedule(new ModifyQuartzTask(config));
 
+        configRepository.create(config);
+        config.setPsw(null);
         return config;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ModifierConfig save(@PathVariable String id, @RequestBody ModifierConfig config) throws SchedulerException {
-        configRepository.save(config);
+
         ModifyQuartzTask task = new ModifyQuartzTask(config);
+        configRepository.save(config);
 
         if(config.getInputFileURL()!=null){
             if (tasksScheduler.isScheduled(task))
@@ -56,6 +63,7 @@ public class ConfigController {
             tasksScheduler.schedule(task);}
         else
             tasksScheduler.delete(task);
+        config.setPsw(null);
         return config;
     }
 

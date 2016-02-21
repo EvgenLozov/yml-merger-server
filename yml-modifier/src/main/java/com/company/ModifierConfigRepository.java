@@ -3,6 +3,7 @@ package com.company;
 import company.config.ConfigRepository;
 import company.config.PswSecurity;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -26,13 +27,18 @@ public class ModifierConfigRepository implements ConfigRepository<ModifierConfig
 
     @Override
     public void save(ModifierConfig config) {
+        String dir = "prices/"+config.getName().replaceAll("/", "-").replaceAll(":", "-");
+        new File(dir).mkdirs();
+        config.setOutputDir(dir);
         pswSecurity.encodePsw(config);
         configRepository.save(config);
     }
 
     @Override
     public ModifierConfig create(ModifierConfig config) {
-        config.setOutputDir("price/"+config.getName());
+        String dir = "prices/"+config.getName().replaceAll("/", "-").replaceAll(":", "-");
+        new File(dir).mkdirs();
+        config.setOutputDir(dir);
         pswSecurity.encodePsw(config);
         return  configRepository.create(config);
     }
@@ -44,6 +50,8 @@ public class ModifierConfigRepository implements ConfigRepository<ModifierConfig
 
     @Override
     public ModifierConfig get(String id) {
-        return configRepository.get(id);
+        ModifierConfig config = configRepository.get(id);
+        pswSecurity.decodePsw(config);
+        return config;
     }
 }
