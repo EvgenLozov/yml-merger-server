@@ -85,7 +85,7 @@ public class JsonBasedConfigRepository<T extends Config> implements ConfigReposi
                 return config;
         }
 
-        throw new RuntimeException("Unable to find config by id");
+        throw new ConfigNotFoundException("Unable to find config by id");
     }
 
     private void updateStorageFile(List<T> configList) {
@@ -96,6 +96,7 @@ public class JsonBasedConfigRepository<T extends Config> implements ConfigReposi
                 configFile.createNewFile();
             } catch (IOException e) {
                 throw new RuntimeException("Unable to create " + configFileName);
+
             }
 
         try {

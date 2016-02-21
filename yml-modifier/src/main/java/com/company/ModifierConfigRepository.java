@@ -29,6 +29,7 @@ public class ModifierConfigRepository implements ConfigRepository<ModifierConfig
     public void save(ModifierConfig config) {
         String dir = "prices/"+config.getName().replaceAll("/", "-").replaceAll(":", "-");
         new File(dir).mkdirs();
+        config.setOutputDir(dir);
         pswSecurity.encodePsw(config);
         configRepository.save(config);
     }
