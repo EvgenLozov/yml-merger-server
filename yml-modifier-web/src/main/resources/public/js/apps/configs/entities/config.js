@@ -14,7 +14,6 @@ ConfigManager.module("Entities", function(Entities, ConfigManager,  Backbone, Ma
             "modifyOfferId": false,
             "name": "",
             "offerIdPrefix": "",
-            "outputDir": null,
             "period": 1,
             "psw": "",
             "removedCategoryId": "",
@@ -39,10 +38,6 @@ ConfigManager.module("Entities", function(Entities, ConfigManager,  Backbone, Ma
 
             if (! attrs.encoding){
                 errors.encoding = "Укажите кодировку"
-            }
-
-            if (! attrs.outputDir){
-                errors.outputDir = "Укажите папку для результатов"
             }
 
             if (! attrs.inputFile && !attrs.inputFileURL){
