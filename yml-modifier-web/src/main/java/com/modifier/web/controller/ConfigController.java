@@ -28,9 +28,6 @@ public class ConfigController {
     @RequestMapping(method = RequestMethod.GET)
     public List<ModifierConfig> list() {
         List<ModifierConfig> configs = configRepository.list();
-        for(ModifierConfig config : configs){
-            config.setPsw(null);
-        }
         return configs;
     }
 
