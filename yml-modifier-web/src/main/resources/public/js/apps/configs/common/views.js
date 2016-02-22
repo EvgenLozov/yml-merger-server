@@ -3,13 +3,20 @@ ConfigManager.module("ConfigsApp.Common.Views", function(Views,  ConfigManager, 
         template: "#config-form",
 
         events: {
-            "click button.js-submit" : "submitClicked"
+            "click button.js-submit" : "submitClicked",
+            "click button.js-cancel" : "cancelClicked"
         },
 
         submitClicked: function(e){
             e.preventDefault();
             var data = Backbone.Syphon.serialize(this);
+            data.template = this.$el.find("textarea").val();
             this.trigger("form:submit", data);
+        },
+
+        cancelClicked: function(e){
+            e.preventDefault();
+            this.trigger("form:cancel");
         },
 
         onRender: function(){

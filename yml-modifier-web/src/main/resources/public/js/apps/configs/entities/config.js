@@ -32,17 +32,13 @@ ConfigManager.module("Entities", function(Entities, ConfigManager,  Backbone, Ma
                 errors.user = "Укажите имя пользователя"
             }
 
-            if (! attrs.psw){
-                errors.psw = "Укажите пароль"
-            }
-
             if (! attrs.encoding){
                 errors.encoding = "Укажите кодировку"
             }
 
             if (! attrs.inputFile && !attrs.inputFileURL){
                 errors.inputFile = "Укажите путь к исходному файлу";
-                errors.inputFileURL = "Укажите ссылку на исходный файл"
+                errors.inputFileURL = "или ссылку на исходный файл"
             }
 
             if (! attrs.filesCount){

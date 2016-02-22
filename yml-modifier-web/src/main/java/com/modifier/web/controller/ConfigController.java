@@ -43,7 +43,7 @@ public class ConfigController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ModifierConfig create(@RequestBody ModifierConfig config) throws SchedulerException {
-        if(config.getInputFileURL()!=null)
+        if(config.getInputFileURL()!=null && !config.getInputFileURL().isEmpty())
             tasksScheduler.schedule(new ModifyQuartzTask(config));
 
         configRepository.create(config);

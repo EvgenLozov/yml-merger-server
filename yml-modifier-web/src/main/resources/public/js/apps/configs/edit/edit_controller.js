@@ -24,6 +24,10 @@ ConfigManager.module("ConfigsApp.Edit", function(Edit,  ConfigManager,  Backbone
 
                 });
 
+                configView.on("form:cancel", function () {
+                    ConfigManager.trigger("configs:list");
+                });
+
                 ConfigManager.mainRegion.show(configView);
             });
         }

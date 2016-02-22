@@ -33,6 +33,24 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
                   });
               });
 
+              configListView.on("itemview:config:copy", function(childView, model){
+                  var attributes = _.clone(model.attributes);
+                  attributes.id = null;
+                  attributes.name = model.get("name") + "(Копия)";
+
+                  var newConfig = new ConfigManager.Entities.Config();
+
+                  newConfig.save(attributes, { success: function()
+                                                      {
+                                                          configs.add(newConfig);
+                                                          configListView.children.findByModel(newConfig).
+                                                              flash("success");
+                                                      }
+                                            }
+                                 );
+
+              });
+
               configListView.on("itemview:config:show", function(childView, model){
                   ConfigManager.trigger("config:show", model.get("id"));
               });
@@ -64,6 +82,10 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
 
                   });
 
+                  view.on("form:cancel", function () {
+                      ConfigManager.dialogRegion.close();
+                  });
+
                   ConfigManager.dialogRegion.show(view);
               });
 
@@ -83,10 +105,13 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
                     }
                   });
 
+                  view.on("form:cancel", function () {
+                      ConfigManager.dialogRegion.close();
+                  });
+
                   ConfigManager.dialogRegion.show(view);
 
               });
-
 
               ConfigManager.mainRegion.show(configsListLayout);
           });
