@@ -3,4 +3,6 @@ rootProject.name = 'yml-merger-server'
 include 'yml-common'
 include 'yml-merge'
 include 'yml-merger-web'
+include 'yml-modifier'
+include 'yml-modifier-web'
 

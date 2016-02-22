@@ -1,9 +1,11 @@
 package com.merger.controller;
 
-import com.company.config.Config;
+import com.company.config.MergerConfig;
 import com.company.logger.ProcessLogger;
-import com.company.repository.ConfigRepository;
-import com.company.scheduler.SchedulerService;
+import com.company.scheduler.MergeQuartzTaskFactory1;
+import company.config.ConfigRepository;
+import company.scheduler.QuartzTask;
+import company.scheduler.QuartzTasksScheduler;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,39 +22,47 @@ import java.util.*;
 public class ConfigController {
 
     @Autowired
-    private SchedulerService schedulerService;
+    private QuartzTasksScheduler taskScheduler;
+
+    private MergeQuartzTaskFactory1 quartzTaskFactory = new MergeQuartzTaskFactory1();
 
     @Autowired
-    private ConfigRepository configRepository;
+    private ConfigRepository<MergerConfig> configRepository;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Config> list() {
+    public List<MergerConfig> list() {
         return configRepository.list();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Config get(@PathVariable String id) {
+    public MergerConfig get(@PathVariable String id) {
         return configRepository.get(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Config create(@RequestBody Config config) throws SchedulerException {
-        Config newConfig = configRepository.create(config);
+    public MergerConfig create(@RequestBody MergerConfig config) throws SchedulerException {
+        config.setNextFireTime(0L);
+        MergerConfig newConfig = configRepository.create(config);
 
         if (config.isAutoMerge())
-            schedulerService.addTask(newConfig);
+            taskScheduler.schedule(quartzTaskFactory.create(newConfig));
 
         return config;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Config save(@PathVariable String id, @RequestBody Config config) throws SchedulerException {
+    public MergerConfig save(@PathVariable String id, @RequestBody MergerConfig config) throws SchedulerException {
+        config.setNextFireTime(0L);
         configRepository.save(config);
+        QuartzTask task = quartzTaskFactory.create(config);
 
-        if (config.isAutoMerge())
-            schedulerService.addTask(config);
+        if (config.isAutoMerge()) {
+            if (taskScheduler.isScheduled(task))
+                taskScheduler.delete(task);
+            taskScheduler.schedule(task);
+        }
         else
-            schedulerService.deleteTask(config);
+            taskScheduler.delete(task);
 
         return config;
     }
@@ -60,7 +70,8 @@ public class ConfigController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity delete(@PathVariable String id) throws SchedulerException {
-        schedulerService.deleteTask(configRepository.get(id));
+        QuartzTask task = quartzTaskFactory.create(configRepository.get(id));
+        taskScheduler.delete(task);
         configRepository.delete(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

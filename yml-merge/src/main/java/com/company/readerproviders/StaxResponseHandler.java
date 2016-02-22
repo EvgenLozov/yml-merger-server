@@ -1,6 +1,6 @@
 package com.company.readerproviders;
 
-import com.company.http.HttpResponseHandler;
+import company.http.HttpResponseHandler;
 import com.company.readerproviders.exception.IOResponseHandleException;
 import com.company.readerproviders.exception.XmlProcessingException;
 import org.apache.http.client.methods.CloseableHttpResponse;

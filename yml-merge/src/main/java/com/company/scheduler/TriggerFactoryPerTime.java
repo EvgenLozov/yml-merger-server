@@ -1,6 +1,8 @@
 package com.company.scheduler;
 
-import com.company.config.Config;
+import com.company.config.MergerConfig;
+import company.scheduler.JobKeyFactory;
+import company.scheduler.TriggerFactory;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 
@@ -16,22 +18,27 @@ import static org.quartz.DateBuilder.tomorrowAt;
  */
 public class TriggerFactoryPerTime implements TriggerFactory {
 
+    private MergerConfig config;
     private JobKeyFactory jobKeyFactory;
 
-    public TriggerFactoryPerTime(JobKeyFactory jobKeyFactory) {
+    public TriggerFactoryPerTime(MergerConfig config, JobKeyFactory jobKeyFactory) {
+        this.config = config;
         this.jobKeyFactory = jobKeyFactory;
     }
 
     @Override
-    public Trigger get(Config config) {
+    public Trigger get() {
         Integer hours = Integer.valueOf(config.getTime().split(":")[0]);
         Integer minutes = Integer.valueOf(config.getTime().split(":")[1]);
 
         TriggerBuilder triggerBuilder = TriggerBuilder
                 .newTrigger()
-                .withIdentity(jobKeyFactory.get(config).getName())
+                .withIdentity(jobKeyFactory.get().getName())
                 .withSchedule(calendarIntervalSchedule()
                 .withIntervalInDays(config.getPeriod()));
+
+        if (config.getNextFireTime() > 0 && (new Date(config.getNextFireTime()).after(new Date())))
+            return triggerBuilder.startAt(new Date(config.getNextFireTime())).build();
 
         if (isBefore(hours, minutes, new Date()))
             return triggerBuilder.startAt(todayAt(hours, minutes, 0)).build();

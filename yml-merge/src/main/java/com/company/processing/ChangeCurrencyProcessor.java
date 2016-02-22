@@ -1,7 +1,7 @@
 package com.company.processing;
 
 import com.company.factories.handler.*;
-import com.company.readerproviders.ByteArrayXmlEventReaderProvider;
+import company.providers.ByteArrayXmlEventReaderProvider;
 import company.Currency;
 import company.Factory;
 import company.StAXService;

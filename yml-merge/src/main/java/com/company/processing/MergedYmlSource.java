@@ -2,11 +2,11 @@ package com.company.processing;
 
 import com.company.allowedcategories.AllCategoriesProvider;
 import com.company.allowedcategories.IncludedCategoriesProvider;
-import com.company.config.Config;
+import com.company.config.MergerConfig;
 import com.company.factories.handler.*;
 import company.Factory;
 import company.StAXService;
-import company.XMLEventReaderProvider;
+import company.providers.XMLEventReaderProvider;
 import company.bytearray.ByteArraySource;
 import company.handlers.xml.XmlEventHandler;
 
@@ -19,10 +19,10 @@ import java.util.*;
 
 public class MergedYmlSource implements ByteArraySource {
 
-    Config config;
+    MergerConfig config;
     List<XMLEventReaderProvider> readerProviders;
 
-    public MergedYmlSource(Config config, List<XMLEventReaderProvider> readerProviders) {
+    public MergedYmlSource(MergerConfig config, List<XMLEventReaderProvider> readerProviders) {
         this.config = config;
         this.readerProviders = readerProviders;
     }

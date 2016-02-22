@@ -13,15 +13,18 @@ import org.quartz.spi.TriggerFiredBundle;
 public class MergeJobFactory extends SimpleJobFactory{
 
     private MergeService mergeService;
+    private NextFireTimeStorage storage;
 
-    public MergeJobFactory(MergeService mergeService) {
+    public MergeJobFactory(MergeService mergeService, NextFireTimeStorage storage) {
         this.mergeService = mergeService;
+        this.storage = storage;
     }
 
     @Override
     public Job newJob(TriggerFiredBundle bundle, Scheduler scheduler) throws SchedulerException {
         MergeJob job = (MergeJob) super.newJob(bundle, scheduler);
         job.setMergeService(mergeService);
+        job.setStorage(storage);
 
         return job;
     }

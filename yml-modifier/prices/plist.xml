@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf8" standalone="yes"?>
+<!DOCTYPE yml_catalog SYSTEM "shops.dtd">
+<yml_catalog date="2015-11-01 11:17">
+	<shop>
+		<name>bilasad</name>
+        <company>bilasad</company>
+        <url>http://bilasad.com/</url>
+        <currencies>
+            <currency id="UAH" rate="1"/>
+            <currency id="RUB" rate="0.333"/>
+        </currencies>
+        <categories>
+            <category id="22" parentId="10">Женские</category>
+            <category id="67" parentId="48">Пальто</category>
+            <category id="68" parentId="48">Плащи</category>
+            <category id="69" parentId="48">Куртки</category>
+            <category id="130" parentId="126">Школьные блузки</category>
+            <category id="131" parentId="126">Школьные жакеты</category>
+            <category id="132" parentId="126">Школьные сарафаны</category>
+            <category id="90" parentId="44">Юбки миди</category>
+            <category id="91" parentId="44">Юбки мини</category>
+            <category id="92" parentId="44">Юбки макси</category>
+            <category id="93" parentId="52">Гольф и водолазки</category>
+            <category id="71" parentId="48">Пончо</category>
+            <category id="95" parentId="46">Пиджаки и жилеты</category>
+            <category id="74" parentId="42">Деловые платья</category>
+            <category id="96" parentId="46">Костюмы с юбкой</category>
+            <category id="75" parentId="42">Платья-миди</category>
+            <category id="97" parentId="46">Костюмы с брюками</category>
+            <category id="76" parentId="42">Платья-мини</category>
+            <category id="98" parentId="46">Костюмы с платьем</category>
+            <category id="99" parentId="51">Футболки</category>
+            <category id="77" parentId="42">Платья-макси</category>
+            <category id="78" parentId="42">Сарафаны</category>
+            <category id="121" parentId="39">Девочка</category>
+            <category id="122" parentId="42">Туники</category>
+            <category id="100" parentId="51">Топ и майки</category>
+            <category id="123" parentId="54">Вечерние наряды</category>
+            <category id="102" parentId="53">Комплекты</category>
+            <category id="124" parentId="36">Новый год</category>
+            <category id="125" parentId="36">РАСПРОДАЖА</category>
+            <category id="127" parentId="126">Школьные юбки</category>
+            <category id="128" parentId="126">Школьные костюмы</category>
+            <category id="129" parentId="126">Школьные брюки</category>
+            <category id="81" parentId="47">Кофты и кардиганы</category>
+            <category id="82" parentId="43">Блузы и блузоны</category>
+            <category id="83" parentId="43">Рубашки</category>
+            <category id="84" parentId="45">Брюки</category>
+            <category id="40" parentId="10">Детские</category>
+            <category id="85" parentId="45">Леггинсы</category>
+            <category id="64" parentId="54">Спортивные костюмы</category>
+            <category id="86" parentId="45">Комбинезоны</category>
+            <category id="44" parentId="36">Юбки</category>
+            <category id="45" parentId="36">Брюки и комбинезоны</category>
+            <category id="46" parentId="36">Пиджаки и костюмы</category>
+            <category id="47" parentId="36">Джемперы и кардиганы</category>
+            <category id="48" parentId="36">Верхняя одежда</category>
+            <category id="51" parentId="36">Футболки и майки</category>
+            <category id="52" parentId="36">Водолазки и толстовки</category>
+            <category id="53" parentId="36">Одежда для дома</category>
+            <category id="10" parentId="3">Сумки</category>
+            <category id="54" parentId="36">Одежда для полных</category>
+            <category id="36" parentId="35">Для женщин</category>
+            <category id="39" parentId="35">Для детей</category>
+            <category id="126" parentId="121">Школьная форма для девочек</category>
+            <category id="42" parentId="36">Платья и сарафаны</category>
+            <category id="43" parentId="36">Блузы и рубашки</category>
+            <category id="35" parentId="3">Одежда</category>
+            <category id="3">Каталог</category>
+        </categories>
+        <offers>
+            <offer id="1220" available="false">
+                <url>http://bilasad.com/trikotazhnyj-komplekt-dvojka-mirazh-48-72-rs-bg-975.html</url>
+                <price>1030.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>102</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/r/s/rs-bg_975-3.jpg</picture>
+                <name>Трикотажный комплект двойка "Мираж" (48-72), RS-BG_975</name>
+                <vendor>Ukraine</vendor>
+                <description>Трикотажный комплект двойка "Мираж" хорош своей универсальностью, он мало похож на классическую спортивную одежду, поэтому его уместно надевать и в любых других случаях. Костюм состоит из трикотажного реглана с шифоновой вставкой и свободных брюк. Реглан </description>
+            </offer>
+            <offer id="1462" available="false">
+                <url>http://bilasad.com/trikotazhnoe-plat-e-ol-vija-jelektrik-48-72-rs-bg-416.html</url>
+                <price>590.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>75</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/r/s/rs-bg_416-7.jpg</picture>
+                <name>Трикотажное платье "Ольвия Электрик" (48-72), RS-BG_416</name>
+                <vendor>Ukraine</vendor>
+                <description>Трикотажное платье "Ольвия Электрик" минималистического дизайна, обеспечит прекрасную посадку по фигуре. Модель прямого кроя, округлый вырез горловины декорирован "Каплей", цельнокроеный рукав у основания приподнят на "защипы". Ткань: французский трикотаж</description>
+            </offer>
+            <offer id="1461" available="false">
+                <url>http://bilasad.com/trikotazhnoe-plat-e-ol-vija-48-72-rs-bg-416.html</url>
+                <price>590.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>75</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/r/s/rs-bg_416-1.jpg</picture>
+                <name>Трикотажное платье "Ольвия" (48-72), RS-BG_416</name>
+                <vendor>Ukraine</vendor>
+                <description>Трикотажное платье "Ольвия" минималистического дизайна, обеспечит прекрасную посадку по фигуре. Модель прямого кроя, округлый вырез горловины декорирован "Каплей", цельнокроеный рукав у основания приподнят на "защипы". Ткань: французский трикотаж</description>
+            </offer>
+            <offer id="1460" available="false">
+                <url>http://bilasad.com/trikotazhnoe-plat-e-2-v-1-robin-48-72-rs-bg-415.html</url>
+                <price>650.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>75</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/r/s/rs-bg_415-1.jpg</picture>
+                <name>Трикотажное платье 2 в 1 "Робин" (48-72), RS-BG_415</name>
+                <vendor>Ukraine</vendor>
+                <description>Трикотажное платье 2 в 1 "Робин" пошито из мягкого эластичного французского трикотажа с отделкой рукавов из сетки. Воротник стойка, короткий втачной рукав эффектно удлиннет сеткой, создавая эффект гольфа. Благодаря кокетке выше линии груди, выгодно подчёр</description>
+            </offer>
+            <offer id="1217" available="false">
+                <url>http://bilasad.com/trikotazhnyj-komplekt-kalifornija-zebra-48-72-rs-bg-582.html</url>
+                <price>750.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>102</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/r/s/rs-bg_582-2_1.jpg</picture>
+                <name>Трикотажный комплект "Калифорния зебра" (48-72), RS-BG_582</name>
+                <vendor>Ukraine</vendor>
+                <description>Трикотажный комплект "Калифорния зебра"</description>
+            </offer>
+            <offer id="1459" available="false">
+                <url>http://bilasad.com/trikotazhnoe-plat-e-2-v-1-sharlotta-48-72-rs-bg-414.html</url>
+                <price>750.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>75</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/r/s/rs-bg_414-6.jpg</picture>
+                <name>Трикотажное платье 2 в 1 "Шарлотта" (48-72), RS-BG_414</name>
+                <vendor>Ukraine</vendor>
+                <description>Трикотажное платье 2 в 1 "Шарлотта" пошито из мягкого эластичного французского трикотажа с отделкой из штапеля. В нём очень грамотно подобраны абсолютно разные цвета ткани — однотонный и благородный цветочный принт, благодаря чему платье приобретает наряд</description>
+            </offer>
+            <offer id="1458" available="false">
+                <url>http://bilasad.com/korallovoe-trikotazhnoe-plat-e-teddi-48-72-rs-bg-412.html</url>
+                <price>630.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>75</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/r/s/rs-bg_412-9.jpg</picture>
+                <name>Коралловое трикотажное платье "Тедди" (48-72), RS-BG_412</name>
+                <vendor>Ukraine</vendor>
+                <description>Коралловое трикотажное платье "Тедди" создает чудесный силуэт и дарит неповторимый комфорт. Модель с округлым вырезом горловины, рукавами длиной до линии локтя. Кокетка оформлена мелкими складками, которые создают свободный силуэт и дарят больше комфорта.</description>
+            </offer>
+            <offer id="1215" available="false">
+                <url>http://bilasad.com/molodezhnyj-kostjum-dlja-otdyha-roksi-cream-40-56-alv3018.html</url>
+                <price>1350.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>64</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/a/l/alve_3018_cream-2.jpg</picture>
+                <name>Молодежный костюм для отдыха "Рокси cream" (40-56), ALV3018</name>
+                <vendor>Ukraine</vendor>
+                <description>Молодежный костюм для отдыха "Рокси cream" состоящий кофты и брюк из натуральной трикотажной ткани. Кофта свободного покроя с вырезом горловины Лодочка. Длинный рукав формы «летучая мышь» переходит в широкий зауженный манжет. На полочке аппликация из цифр</description>
+            </offer>
+            <offer id="1457" available="false">
+                <url>http://bilasad.com/trikotazhnoe-plat-e-rouz-48-72-rs-bg-413.html</url>
+                <price>660.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>75</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/r/s/rs-bg_413-4.jpg</picture>
+                <name>Трикотажное платье "Роуз" (48-72), RS-BG_413</name>
+                <vendor>Ukraine</vendor>
+                <description>Трикотажное платье "Роуз" пошито из мягкой, эластичной трикотажной ткани. В нём очень грамотно подобраны абсолютно разные цвета ткани — однотонный и благородный цветочный принт, благодаря чему платье приобретает нарядный и очень эффектный вид. Контрастные</description>
+            </offer>
+            <offer id="1214" available="false">
+                <url>http://bilasad.com/sportivnyj-kostjum-mishel-40-62-alv3003-1229.html</url>
+                <price>1350.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>64</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/a/l/alve_3018_blue-3.jpg</picture>
+                <name>Молодежный костюм для отдыха "Рокси blue" (40-56), ALV3018</name>
+                <vendor>Ukraine</vendor>
+                <description>Молодежный костюм для отдыха "Рокси blue" состоящий кофты и брюк из натуральной трикотажной ткани. Кофта свободного покроя с вырезом горловины Лодочка. Длинный рукав формы «летучая мышь» переходит в широкий зауженный манжет. На полочке аппликация из цифр.</description>
+            </offer>
+            <offer id="1456" available="false">
+                <url>http://bilasad.com/trikotazhnoe-plat-e-s-kapjushonom-tokio-48-72-rs-bg-412.html</url>
+                <price>630.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>75</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/r/s/rs-bg_412-2.jpg</picture>
+                <name>Белое трикотажное платье "Тедди" (48-72), RS-BG_412</name>
+                <vendor>Ukraine</vendor>
+                <description>Белое трикотажное платье "Тедди" создает чудесный силуэт и дарит неповторимый комфорт. Модель с округлым вырезом горловины, рукавами длиной до линии локтя. Кокетка оформлена мелкими складками, которые создают свободный силуэт и дарят больше комфорта. Низ </description>
+            </offer>
+            <offer id="1213" available="false">
+                <url>http://bilasad.com/sportivnyj-kostjum-mishel-40-62-alv3003.html</url>
+                <price>1600.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>64</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/a/l/alve_3003.jpg</picture>
+                <name>Спортивный костюм "Мишель" (40-62), ALV3003</name>
+                <vendor>Ukraine</vendor>
+                <description>Спортивный костюм "Мишель" созданный из 100% хлопка и украшенный жемчужным Мишкой, подарит Вам массу комфорта! Удобные свободные брюки и реглан отлично подходят для отдыха с друзьями или вечерних прогулок. Спортивная куртка с капюшоном, застежка вдоль пол</description>
+            </offer>
+            <offer id="1455" available="false">
+                <url>http://bilasad.com/trikotazhnoe-plat-e-s-kapjushonom-tokio-48-72-rs-bg-411.html</url>
+                <price>650.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>75</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/r/s/rs-bg_411-2.jpg</picture>
+                <name>Трикотажное платье с капюшоном "Токио" (48-72), RS-BG_411</name>
+                <vendor>Ukraine</vendor>
+                <description>Трикотажное платье с капюшоном "Токио" - для девушек, которые предпочитают комфорт и стиль casual! Оригинальный крой и фасон делают это платье идеальным для повседневных комплектов. Низ изделия оформлен манжетой, что обеспечивает надежную фиксацию.</description>
+            </offer>
+            <offer id="1212" available="false">
+                <url>http://bilasad.com/sportivnyj-kostjum-margarita-40-62-alv3004.html</url>
+                <price>1600.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>64</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/a/l/alve_3004.jpg</picture>
+                <name>Спортивный костюм "Маргарита" (40-62), ALV3004</name>
+                <vendor>Ukraine</vendor>
+                <description>Спортивный костюм "Маргарита" созданный из 100% хлопка и украшенный жемчужными вставками, подарит Вам массу комфорта! Спортивная кофта прямого кроя с капюшоном, имеет длинный рукав, по центру карман Кенгуру, рукава и низ изделия оформлены манжетом. Брюки </description>
+            </offer>
+            <offer id="1454" available="false">
+                <url>http://bilasad.com/bezhevoe-trikotazhnoe-plat-e-gerda-48-72-rs-bg-410.html</url>
+                <price>640.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>75</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/r/s/rs-bg_410-6.jpg</picture>
+                <name>Бежевое трикотажное платье "Герда" (48-72), RS-BG_410</name>
+                <vendor>Ukraine</vendor>
+                <description>Комфортное Бежевое трикотажное платье "Герда" прямого полуприлегающего силуэта, линия горловины изящно подчёркивается округлым вырезом. Рукав – прямой, полусвободный, длиною «3/4», выполнен из качественного кожзама. Пикантности этой модели придают два нак</description>
+            </offer>
+            <offer id="1211" available="false">
+                <url>http://bilasad.com/sinij-sportivnyj-kostjum-jerika-40-62-alv3017.html</url>
+                <price>1870.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>64</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/a/l/alve_3017_dark_blue-6.jpg</picture>
+                <name>Синий спортивный костюм "Эрика" (40-62), ALV3017</name>
+                <vendor>Ukraine</vendor>
+                <description>Синий спортивный костюм "Эрика" состоит из кофты и брюк. Кофта прямого свободного силуэта с капюшоном, имеет удобную застёжку на металлической молнии в форме «косуха», удачно гармонирующей с кантом с противоположной стороны и врезными карманами на молнии</description>
+            </offer>
+            <offer id="1210" available="false">
+                <url>http://bilasad.com/seryj-sportivnyj-kostjum-jerika-40-62-alv3017.html</url>
+                <price>1870.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>64</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/a/l/alve_3017_grey-3.jpg</picture>
+                <name>Серый спортивный костюм "Эрика" (40-62), ALV3017</name>
+                <vendor>Ukraine</vendor>
+                <description>Черный спортивный костюм "Эрика" состоит из кофты и брюк. Кофта прямого свободного силуэта с капюшоном, имеет удобную застёжку на металлической молнии в форме «косуха», удачно гармонирующей с кантом с противоположной стороны и врезными карманами на молнии</description>
+            </offer>
+            <offer id="1452" available="false">
+                <url>http://bilasad.com/trikotazhnaja-jubka-karandash-laura-48-72-rs-bg-721.html</url>
+                <price>540.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>91</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/r/s/rs-bg_721-2.jpg</picture>
+                <name>Трикотажная юбка-карандаш "Лаура" (48-72), RS-BG_721</name>
+                <vendor>Ukraine</vendor>
+                <description>Классическая Трикотажная юбка-карандаш "Лаура" является традиционной для офисной одежды. Юбка верху на поясе, по бокам декорирована вставками из качественного кожзама, что визуально делает фигуру стройнее. Застежка сзади на пуговицу и потайную молнию. Для</description>
+            </offer>
+            <offer id="1219" available="false">
+                <url>http://bilasad.com/veljurovyj-sportivnyj-kostjum-pirs-leo-48-72-rs-bg-970.html</url>
+                <price>1280.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>102</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/r/s/rs-bg_970-l_1.jpg</picture>
+                <name>Велюровый спортивный костюм "Пирс Лео" (48-72), RS-BG_970</name>
+                <vendor>Ukraine</vendor>
+                <description>Велюровый спортивный костюм "Пирс Лео" является превосходной гармонией отменного стиля. Блузон с рукавом 3/4, вырез горловины Лодочка, втачной рукав 3/4, длина до линии бедра. Полочка модели из принтового трикотажа, рукава и низ изделия в тон брюкам. Б</description>
+            </offer>
+            <offer id="1218" available="false">
+                <url>http://bilasad.com/trikotazhnyj-kombinezon-leo-48-72-rs-bg-590.html</url>
+                <price>670.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>102</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/r/s/rs-bg_590-2.jpg</picture>
+                <name>Трикотажный комбинезон "Лео" (48-72), RS-BG_590</name>
+                <vendor>Ukraine</vendor>
+                <description>Трикотажный комбинезон "Лео" благодаря удобству и стильному дизайну подходит для прогулок по городу, активного отдыха и выезда на природу. Данная модель станет отличным вариантом одежды на каждый день. Мягкая ткань дарит чувство комфорта, а крой и дизайн </description>
+            </offer>
+            <offer id="1231" available="false">
+                <url>http://bilasad.com/temno-sinij-trikotazhnyj-kostjum-mikki-48-72-rs-bg-977.html</url>
+                <price>1010.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>102</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/r/s/rs-bg_977-s-4_2.jpg</picture>
+                <name>Темно-синий трикотажный костюм "Микки" (48-72), RS-BG_977</name>
+                <vendor>Ukraine</vendor>
+                <description>Темно-синий трикотажный костюм "Микки" состоит из реглана и брюк, эффектно декорированных вставками из принтованного трикотажа. Реглан прямого кроя с капюшоном, длинный рукав Реглан, рукава и низ оформлены манжетой, на полочке аппликация Микки. </description>
+            </offer>
+            <offer id="1473" available="false">
+                <url>http://bilasad.com/narjadnaja-tunika-karamel-setka-48-72-rs-bg-1473.html</url>
+                <price>700.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>124</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/r/s/rs-bg_1473-s-2.jpg</picture>
+                <name>Нарядная туника "Карамель Сетка" (48-72), RS-BG_1473</name>
+                <vendor>Ukraine</vendor>
+                <description>Нарядная туника "Карамель Сетка" красиво сочетается с облегающими леггинсами и брюками-стрейч. Модель состоит из двух частей - это трикотажная майка на тоненьких бретельках и свободного покроя туника из сетки. Туника имеет ассиметричный вырез горловины, р</description>
+            </offer>
+            <offer id="1230" available="false">
+                <url>http://bilasad.com/trikotazhnyj-komplekt-lajm-mentol-48-72-rs-bg-976.html</url>
+                <price>950.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>102</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/r/s/rs-bg_976-m.jpg</picture>
+                <name>Трикотажный комплект "Лайм Ментол" (48-72), RS-BG_976</name>
+                <vendor>Ukraine</vendor>
+                <description>Трикотажный комплект "Лайм Ментол" состоит из реглана и брюк, эффектно декорированных вставками из трикотажа цвета Персик. Реглан ассиметричного кроя с цельнокроеным рукавом, вырез горловины Лодочка, на спинке по всей длине застежка на молнию. Брюки зау</description>
+            </offer>
+            <offer id="1472" available="false">
+                <url>http://bilasad.com/trikotazhnaja-tunika-minelli-48-70-rs-bg-1472.html</url>
+                <price>680.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>122</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/r/s/rs-bg_1472-3.jpg</picture>
+                <name>Трикотажная туника "Минелли" (48-70), RS-BG_1472</name>
+                <vendor>Ukraine</vendor>
+                <description>Трикотажная туника "Минелли" красиво сочетается с облегающими леггинсами и брюками-стрейч. Модель с завышенной линий талии ассиметричного кроя, слегка расширенный низ имеет глубокие закругленные разрезы по бокам. Нарядных ноток модели придаёт углубленный </description>
+            </offer>
+            <offer id="1471" available="false">
+                <url>http://bilasad.com/trikotazhnyj-kardigan-s-kozhzamom-amelija-48-72-rs-bg-1470.html</url>
+                <price>770.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>81</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/i/m/img_1014.jpg</picture>
+                <name>Трикотажный кардиган с кожзамом "Амелия" (48-72), RS-BG_1470</name>
+                <vendor>Ukraine</vendor>
+                <description>Трикотажный кардиган с кожзамом "Амелия" модного расклешенного силуэта с рукавами Реглан из кожзама, непременно понравиться всем без исключения! Эта модель идеально подойдёт как для деловых леди, так и для модниц, предпочитающих свободный, непринуждённый </description>
+            </offer>
+            <offer id="1470" available="false">
+                <url>http://bilasad.com/trikotazhnoe-plat-e-anzhelika-48-72-rs-bg-422-1470.html</url>
+                <price>650.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>75</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/r/s/rs-bg_423-2.jpg</picture>
+                <name>Трикотажное платье "Моника" (48-72), RS-BG_423</name>
+                <vendor>Ukraine</vendor>
+                <description>Идеальное классическое Трикотажное платье "Моника" найдет достойное место в гардеробе каждой женщины. Округлый широкий вырез горловины, спереди декорированный встречной вкладой, соблазнительно оголяет плечи. Спущенное плечо создаёт мягкую линию плеча, что</description>
+            </offer>
+            <offer id="1228" available="false">
+                <url>http://bilasad.com/trikotazhnyj-komplekt-lajm-persik-48-72-rs-bg-976.html</url>
+                <price>950.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>102</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/r/s/rs-bg_976-p.jpg</picture>
+                <name>Трикотажный комплект "Лайм Персик" (48-72), RS-BG_976</name>
+                <vendor>Ukraine</vendor>
+                <description>Трикотажный комплект "Лайм Персик" состоит из реглана и брюк, эффектно декорированных вставками из трикотажа цвета Персик. Реглан ассиметричного кроя с цельнокроеным рукавом, вырез горловины Лодочка, на спинке по всей длине застежка на молнию. Брюки зау</description>
+            </offer>
+            <offer id="1227" available="false">
+                <url>http://bilasad.com/trikotazhnyj-komplekt-trojka-bridzhit-48-72-rs-bg-598.html</url>
+                <price>998.0</price>
+                <currencyId>UAH</currencyId>
+                <categoryId>102</categoryId>
+                <picture>http://bilasad.com/media/catalog/product/r/s/rs-bg_598-3.jpg</picture>
+                <name>Трикотажный комплект тройка "Бриджит" (48-72), RS-BG_598</name>
+                <vendor>Ukraine</vendor>
+                <description>Трикотажный комплект тройка "Бриджит" благодаря удобству и стильному дизайну подходит для отдыха или прогулок с друзьями по городу, он станет отличным вариантом одежды на каждый день. Мягкая ткань дарит чувство комфорта, а крой и дизайн модели подчеркнет </description>
+            </offer>
+		</offers>
+	</shop>
+</yml_catalog>

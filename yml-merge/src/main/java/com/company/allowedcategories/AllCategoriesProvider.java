@@ -1,10 +1,10 @@
 package com.company.allowedcategories;
 
-import com.company.config.Config;
-import com.company.http.HttpClientProvider;
-import com.company.http.HttpService;
+import com.company.config.MergerConfig;
+import company.http.HttpClientProvider;
+import company.http.HttpService;
 import com.company.logger.ProcessLogger;
-import com.company.readerproviders.DownloadPriceListRequest;
+import company.http.DownloadPriceListRequest;
 import com.company.readerproviders.ExtractCategory;
 import org.apache.http.impl.client.CloseableHttpClient;
 
@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Logger;
 
 /**
  * @author Yevhen
@@ -21,9 +20,9 @@ import java.util.logging.Logger;
 public class AllCategoriesProvider {
     private static final ProcessLogger logger = ProcessLogger.INSTANCE;
 
-    private Config config;
+    private MergerConfig config;
 
-    public AllCategoriesProvider(Config config) {
+    public AllCategoriesProvider(MergerConfig config) {
         this.config = config;
     }
 

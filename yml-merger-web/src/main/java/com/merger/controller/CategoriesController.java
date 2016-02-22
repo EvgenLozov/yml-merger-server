@@ -2,9 +2,9 @@ package com.merger.controller;
 
 import com.company.allowedcategories.Category;
 import com.company.config.CategoryIdsPair;
-import com.company.config.Config;
+import com.company.config.MergerConfig;
 import com.company.repository.CategoryRepository;
-import com.company.repository.ConfigRepository;
+import company.config.ConfigRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +22,7 @@ import java.util.Set;
 public class CategoriesController {
 
     @Autowired
-    private ConfigRepository configRepository;
+    private ConfigRepository<MergerConfig> configRepository;
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -32,7 +32,7 @@ public class CategoriesController {
                               @PathVariable String categoryId,
                               @RequestParam String parentId, HttpServletResponse response) throws XMLStreamException {
 
-        Config config = configRepository.get(id);
+        MergerConfig config = configRepository.get(id);
 
         List<CategoryIdsPair> pairs = config.getParentIds();
 
@@ -60,7 +60,7 @@ public class CategoriesController {
 
     @RequestMapping(value = "/{categoryId}/children", method = RequestMethod.GET)
     public Set<Category> children(@PathVariable String id, @PathVariable String categoryId) throws XMLStreamException {
-        Config config = configRepository.get(id);
+        MergerConfig config = configRepository.get(id);
 
         Set<Category> categories = categoryRepository.children(config.getId(), categoryId);
 
@@ -71,7 +71,7 @@ public class CategoriesController {
 
     @RequestMapping(method = RequestMethod.POST)
     public void updateCache(@PathVariable String id) {
-        Config config = configRepository.get(id);
+        MergerConfig config = configRepository.get(id);
 
         new Thread(() -> {
             try {
@@ -84,7 +84,7 @@ public class CategoriesController {
 
     @RequestMapping(value = "/cache", method = RequestMethod.GET)
     public long cacheDate(@PathVariable String id) {
-        Config config = configRepository.get(id);
+        MergerConfig config = configRepository.get(id);
 
         Date date = categoryRepository.getCacheDate(config.getId());
         if (date == null)

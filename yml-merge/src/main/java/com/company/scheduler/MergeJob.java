@@ -1,9 +1,10 @@
 package com.company.scheduler;
 
+import com.company.config.MergerConfig;
 import com.company.logger.ProcessLogger;
 import com.company.service.MergeService;
-import com.company.config.Config;
 import com.google.gson.Gson;
+import company.config.ConfigRepository;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
@@ -19,16 +20,18 @@ public class MergeJob implements Job {
     private static final ProcessLogger logger = ProcessLogger.INSTANCE;
 
     private MergeService mergeService;
-    private Gson gson = new Gson();
+    private NextFireTimeStorage storage;
+
+    public MergeJob() {
+    }
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        JobDataMap dataMap = context.getJobDetail().getJobDataMap();
-        String configJson = dataMap.getString("config");
-
-        Config config = gson.fromJson(configJson, Config.class);
+        MergerConfig config = new ExtractMergeConfigFromJobDetail().extract(context.getJobDetail());
 
         ProcessLogger.INSTANCE.set(config.getId());
+
+        storage.saveNextFireTime(config.getId(), context.getNextFireTime().getTime());
 
         try {
             mergeService.process(config);
@@ -40,5 +43,9 @@ public class MergeJob implements Job {
 
     public void setMergeService(MergeService mergeService) {
         this.mergeService = mergeService;
+    }
+
+    public void setStorage(NextFireTimeStorage storage) {
+        this.storage = storage;
     }
 }

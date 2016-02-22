@@ -1,0 +1,38 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.4.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+jar {
+    baseName = 'yml-modifier-server'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-test")
+    compile("io.springfox:springfox-swagger2:2.3.0")
+    compile("io.springfox:springfox-swagger-ui:2.3.0")
+    compile("org.webjars:bootstrap:3.3.6")
+
+    compile project(':yml-modifier')
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
