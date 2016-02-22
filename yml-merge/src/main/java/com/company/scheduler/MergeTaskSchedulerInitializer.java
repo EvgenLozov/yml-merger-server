@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class MergeTaskSchedulerInitializer {
 
-    private MergeQuartzTaskFactory1 factory = new MergeQuartzTaskFactory1();
+    private MergeQuartzTaskFactory factory = new MergeQuartzTaskFactory();
 
     private ConfigRepository<MergerConfig> configRepository;
 

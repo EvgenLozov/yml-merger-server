@@ -37,7 +37,6 @@ public class ConfigController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ModifierConfig get(@PathVariable String id) {
         ModifierConfig config = configRepository.get(id);
-        config.setPsw(null);
         return config;
     }
 
@@ -47,8 +46,8 @@ public class ConfigController {
             tasksScheduler.schedule(new ModifyQuartzTask(config));
 
         configRepository.create(config);
-        config.setPsw(null);
-        return config;
+        return configRepository.get(config.getId());
+
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -63,8 +62,8 @@ public class ConfigController {
             tasksScheduler.schedule(task);}
         else
             tasksScheduler.delete(task);
-        config.setPsw(null);
-        return config;
+
+        return configRepository.get(config.getId());
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

@@ -31,7 +31,7 @@ public class ModifierController {
                 ModifyService modifyService = new ModifyService();
                 modifyService.process(config);
             }catch(ConfigNotFoundException e){
-                response.setStatus(404);
+                response.setStatus(400);
             }
         };
 
