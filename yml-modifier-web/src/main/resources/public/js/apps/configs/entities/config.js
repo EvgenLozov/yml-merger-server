@@ -32,6 +32,10 @@ ConfigManager.module("Entities", function(Entities, ConfigManager,  Backbone, Ma
                 errors.user = "Укажите имя пользователя"
             }
 
+            if (! attrs.psw){
+                errors.psw = "Укажите пароль"
+            }
+
             if (! attrs.encoding){
                 errors.encoding = "Укажите кодировку"
             }

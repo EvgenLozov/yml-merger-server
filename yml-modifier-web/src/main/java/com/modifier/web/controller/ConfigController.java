@@ -53,7 +53,7 @@ public class ConfigController {
         ModifyQuartzTask task = new ModifyQuartzTask(config);
         configRepository.save(config);
 
-        if(config.getInputFileURL()!=null){
+        if(config.getInputFileURL()!=null && !config.getInputFileURL().isEmpty()){
             if (tasksScheduler.isScheduled(task))
                     tasksScheduler.delete(task);
             tasksScheduler.schedule(task);}

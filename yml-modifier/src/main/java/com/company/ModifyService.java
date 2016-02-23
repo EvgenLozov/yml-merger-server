@@ -21,7 +21,7 @@ public class ModifyService {
 
     public void process(ModifierConfig config)  {
 
-        if (config.getInputFileURL()!= null){
+        if (config.getInputFileURL()!=null && !config.getInputFileURL().isEmpty()){
 
             try {
                 CloseableHttpClient httpClient;

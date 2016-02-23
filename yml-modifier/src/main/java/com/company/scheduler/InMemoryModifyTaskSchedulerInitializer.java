@@ -24,7 +24,7 @@ public class InMemoryModifyTaskSchedulerInitializer {
         InMemoryQuartzTasksScheduler quartzTasksScheduler = new InMemoryQuartzTasksScheduler(scheduler);
         List<ModifierConfig> modifierConfigList = configRepository.list();
         for(ModifierConfig config: modifierConfigList){
-            if(config.getInputFileURL()!=null)
+            if(config.getInputFileURL()!=null && !config.getInputFileURL().isEmpty())
                 quartzTasksScheduler.schedule(new ModifyQuartzTask(config));
 
         }
