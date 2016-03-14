@@ -28,14 +28,6 @@ ConfigManager.module("Entities", function(Entities, ConfigManager,  Backbone, Ma
                 errors.name = "Укажите название"
             }
 
-            if (! attrs.user){
-                errors.user = "Укажите имя пользователя"
-            }
-
-            if (! attrs.psw){
-                errors.psw = "Укажите пароль"
-            }
-
             if (! attrs.encoding){
                 errors.encoding = "Укажите кодировку"
             }
@@ -73,7 +65,7 @@ ConfigManager.module("Entities", function(Entities, ConfigManager,  Backbone, Ma
                         defer.resolve(data);
                     }
                 });
-            }, 1000);
+            }, 300);
 
             return defer.promise();
         },
@@ -91,7 +83,7 @@ ConfigManager.module("Entities", function(Entities, ConfigManager,  Backbone, Ma
                         defer.resolve(undefined);
                     }
                 });
-            }, 1000);
+            }, 300);
 
             return defer.promise();
         }
