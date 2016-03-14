@@ -39,10 +39,12 @@ public class ConfigController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ModifierConfig create(@RequestBody ModifierConfig config) throws SchedulerException {
-        if(config.getInputFileURL()!=null && !config.getInputFileURL().isEmpty())
-            tasksScheduler.schedule(new ModifyQuartzTask(config));
-
         configRepository.create(config);
+
+        if(config.getInputFileURL()!=null && !config.getInputFileURL().isEmpty()) {
+            tasksScheduler.schedule(new ModifyQuartzTask(config));
+        }
+
         return configRepository.get(config.getId());
 
     }
@@ -50,8 +52,9 @@ public class ConfigController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ModifierConfig save(@PathVariable String id, @RequestBody ModifierConfig config) throws SchedulerException {
 
-        ModifyQuartzTask task = new ModifyQuartzTask(config);
         configRepository.save(config);
+
+        ModifyQuartzTask task = new ModifyQuartzTask(config);
 
         if(config.getInputFileURL()!=null && !config.getInputFileURL().isEmpty()){
             if (tasksScheduler.isScheduled(task))
