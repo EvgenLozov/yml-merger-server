@@ -3,6 +3,10 @@ package company.http;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpRequestBase;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+
 /**
  * Created by user50 on 21.06.2015.
  */
@@ -21,6 +25,10 @@ public class DownloadPriceListRequest implements HttpRequestProvider {
 
     @Override
     public String getHost() {
-        return "www.apishops.com";
+        try {
+            return new URL(url).getHost();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
