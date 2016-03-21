@@ -47,7 +47,7 @@ public class ConfigController {
         if (config.isAutoMerge())
             taskScheduler.schedule(quartzTaskFactory.create(newConfig));
 
-        return config;
+        return configRepository.get(config.getId());
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -64,7 +64,7 @@ public class ConfigController {
         else
             taskScheduler.delete(task);
 
-        return config;
+        return configRepository.get(config.getId());
     }
 
 
