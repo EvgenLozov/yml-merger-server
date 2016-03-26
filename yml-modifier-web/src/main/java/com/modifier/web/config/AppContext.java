@@ -1,7 +1,6 @@
 package com.modifier.web.config;
 
-import com.company.ModifierConfig;
-import com.company.ModifierConfigRepository;
+import com.company.*;
 import com.company.scheduler.InMemoryModifyTaskSchedulerInitializer;
 import company.scheduler.InMemoryQuartzTasksScheduler;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,4 +37,13 @@ public class AppContext {
         return qtSchedulerInitializer.getScheduler();
     }
 
+    @Bean
+    public EpocheService epocheService(ConfigRepository<ModifierConfig> configRepository){
+        return new EpocheService(configRepository);
+    }
+
+    @Bean
+    public EpochalModifyService epochalModifyService(ConfigRepository<ModifierConfig> configRepository){
+        return new EpochalModifyService(configRepository, new ModifyService());
+    }
 }

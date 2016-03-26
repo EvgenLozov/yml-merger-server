@@ -22,7 +22,25 @@ public class ModifierConfig implements Config {
     private String user;
     private String psw;
     private String name;
+    private long epocheStart;
+    private long epochePeriod;
 
+
+    public long getEpocheStart() {
+        return epocheStart;
+    }
+
+    public void setEpocheStart(long epocheStart) {
+        this.epocheStart = epocheStart;
+    }
+
+    public long getEpochePeriod() {
+        return epochePeriod;
+    }
+
+    public void setEpochePeriod(long epochePeriod) {
+        this.epochePeriod = epochePeriod;
+    }
 
     public String getOutputDir() {
         return outputDir;

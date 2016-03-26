@@ -32,10 +32,10 @@ public class SaveIntoFileHttpResponseHandler implements HttpResponseHandler<Stri
             output.close();
             scanner.close();
 
+            return fileName;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        return fileName;
     }
 }
