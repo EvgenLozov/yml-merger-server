@@ -2,6 +2,7 @@ package com.modifier.web.config;
 
 import com.company.*;
 import com.company.scheduler.InMemoryModifyTaskSchedulerInitializer;
+import com.company.scheduler.ModifyJobFactory;
 import company.scheduler.InMemoryQuartzTasksScheduler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -28,9 +29,11 @@ public class AppContext {
     }
 
     @Bean
-    public InMemoryQuartzTasksScheduler tasksScheduler() throws SchedulerException {
+    public InMemoryQuartzTasksScheduler tasksScheduler(ModifyJobFactory jobFactory) throws SchedulerException {
         Scheduler scheduler = new StdSchedulerFactory().getScheduler();
+        scheduler.setJobFactory(jobFactory);
         scheduler.start();
+
         InMemoryModifyTaskSchedulerInitializer qtSchedulerInitializer =
                 new InMemoryModifyTaskSchedulerInitializer(scheduler, configRepository());
 
@@ -45,5 +48,10 @@ public class AppContext {
     @Bean
     public EpochalModifyService epochalModifyService(ConfigRepository<ModifierConfig> configRepository){
         return new EpochalModifyService(configRepository, new ModifyService());
+    }
+
+    @Bean
+    public ModifyJobFactory modifyJobFactory(EpochalModifyService service){
+        return new ModifyJobFactory(service);
     }
 }

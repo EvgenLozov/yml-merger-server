@@ -1,6 +1,7 @@
 package com.company.scheduler;
 
 
+import com.company.EpochalModifyService;
 import com.company.ModifierConfig;
 import com.company.ModifyService;
 import com.google.gson.Gson;
@@ -13,17 +14,18 @@ import org.quartz.JobExecutionException;
  * Created by Naya on 20.01.2016.
  */
 public class ModifyJob implements Job {
-    private ModifyService modifyService= new ModifyService();
-    private Gson gson = new Gson();
+    private EpochalModifyService service;
 
+    public ModifyJob() {
+    }
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         JobDataMap dataMap = context.getJobDetail().getJobDataMap();
-        String configJson = dataMap.getString("config");
+        service.process(dataMap.getString("configId"));
+    }
 
-        ModifierConfig modifierConfig = gson.fromJson(configJson, ModifierConfig.class);
-
-        modifyService.process(modifierConfig);
+    public void setService(EpochalModifyService service) {
+        this.service = service;
     }
 }
