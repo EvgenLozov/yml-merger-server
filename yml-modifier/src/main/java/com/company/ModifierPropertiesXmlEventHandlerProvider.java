@@ -1,6 +1,6 @@
 package com.company;
 
-import com.company.functions.ReplaceWordsOperator;
+import com.company.functions.RemoveWordsOperator;
 import com.company.handlers.OffersCategoryIdModifier;
 import com.company.handlers.OffersSeparator;
 import com.company.handlers.ProgressHandler;
@@ -55,7 +55,7 @@ public class ModifierPropertiesXmlEventHandlerProvider {
         forbiddenWords.add("опт.");
         forbiddenWords.add("оптом");
 
-        handlers.add(new XmlEventFilter(new ModifyTextData(new ReplaceWordsOperator(forbiddenWords)), new InElementCondition("description").or(new InElementCondition("name"))));
+        handlers.add(new XmlEventFilter(new ModifyTextData(new RemoveWordsOperator(forbiddenWords)), new InElementCondition("description").or(new InElementCondition("name"))));
 
         handlers.add(getOutputHandler());
 
