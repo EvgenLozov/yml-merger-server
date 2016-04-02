@@ -6,13 +6,13 @@ public class PswSecurity {
 
     String randomString = "qwrr2rf-312";
 
-    public void encodePsw(Config config)
+    public void encodePsw(PswConfig config)
     {
         byte[] pswBytes = Base64.getEncoder().encode((config.getPsw() + randomString).getBytes());
         config.setPsw(new String(pswBytes));
     }
 
-    public void decodePsw(Config config)
+    public void decodePsw(PswConfig config)
     {
         byte[] pswBytes = Base64.getDecoder().decode(config.getPsw());
 
