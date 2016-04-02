@@ -8,10 +8,10 @@ import java.util.function.UnaryOperator;
 
 public class ModifyTextData implements XmlEventHandler {
 
-    UnaryOperator<String> textModificator;
+    UnaryOperator<String> testModificationOperator;
 
-    public ModifyTextData(UnaryOperator<String> textModificator) {
-        this.textModificator = textModificator;
+    public ModifyTextData(UnaryOperator<String> testModificationOperator) {
+        this.testModificationOperator = testModificationOperator;
     }
 
     @Override
@@ -21,6 +21,6 @@ public class ModifyTextData implements XmlEventHandler {
 
         String oldText = ((CharacterEvent) event).getData();
 
-        ((CharacterEvent) event).setData(textModificator.apply(oldText));
+        ((CharacterEvent) event).setData(testModificationOperator.apply(oldText));
     }
 }

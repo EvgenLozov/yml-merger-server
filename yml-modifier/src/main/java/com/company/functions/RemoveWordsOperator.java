@@ -5,11 +5,11 @@ import java.util.Set;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
-public class ReplaceWordsOperator implements UnaryOperator<String> {
+public class RemoveWordsOperator implements UnaryOperator<String> {
 
     Set<String> words;
 
-    public ReplaceWordsOperator(Set<String> words) {
+    public RemoveWordsOperator(Set<String> words) {
         this.words = words;
     }
 
