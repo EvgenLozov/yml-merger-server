@@ -11,7 +11,7 @@ import com.company.service.SingleProcessMergeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import company.config.ConfigRepository;
-import company.config.JsonBasedConfigRepository;
+import company.config.JsonConfigRepository;
 import company.scheduler.InMemoryQuartzTasksScheduler;
 import company.scheduler.PersistentQuartzTasksScheduler;
 import company.scheduler.QuartzTasksScheduler;
@@ -32,7 +32,7 @@ public class AppContext {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
-        return new MergerConfigRepository(new JsonBasedConfigRepository<>("config/config.json",MergerConfig.class,mapper));
+        return new MergerConfigRepository(new JsonConfigRepository<>("config/config.json",MergerConfig.class,mapper));
     }
 
     @Bean
