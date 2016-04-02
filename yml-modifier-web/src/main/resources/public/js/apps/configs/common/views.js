@@ -11,6 +11,7 @@ ConfigManager.module("ConfigsApp.Common.Views", function(Views,  ConfigManager, 
             e.preventDefault();
             var data = Backbone.Syphon.serialize(this);
             data.template = this.$el.find("textarea").val();
+            data.epochePeriod = this.$el.find("#config-epochePeriod").val()*60*1000;
             this.trigger("form:submit", data);
         },
 

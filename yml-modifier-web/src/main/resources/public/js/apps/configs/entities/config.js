@@ -19,7 +19,8 @@ ConfigManager.module("Entities", function(Entities, ConfigManager,  Backbone, Ma
             "removedCategoryId": "",
             "template": "",
             "time": "00:00",
-            "user": ""
+            "user": "",
+            "epochePeriod" : ""
         },
 
         validate: function(attrs, options){
