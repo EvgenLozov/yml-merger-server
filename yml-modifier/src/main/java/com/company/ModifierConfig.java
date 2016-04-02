@@ -2,8 +2,9 @@ package com.company;
 
 
 import company.config.Config;
+import company.config.PswConfig;
 
-public class ModifierConfig implements Config {
+public class ModifierConfig implements Config, PswConfig {
     private String id;
     private String inputFileURL;
     private String inputFile;

@@ -1,6 +1,6 @@
 package com.company;
 
-import com.company.functions.ReplaceWordsOperator;
+import com.company.functions.RemoveWordsOperator;
 import com.company.handlers.OffersCategoryIdModifier;
 import com.company.handlers.OffersSeparator;
 import com.company.handlers.ProgressHandler;
@@ -51,11 +51,11 @@ public class ModifierPropertiesXmlEventHandlerProvider {
         handlers.add(new XmlEventFilter(new ModifyTextData((old) -> old.equals("0") ? "10000" : old ), new InElementCondition("price")));
 
         TreeSet<String> forbiddenWords = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
-        forbiddenWords.add("РѕРїС‚");
-        forbiddenWords.add("РѕРїС‚.");
-        forbiddenWords.add("РѕРїС‚РѕРј");
+        forbiddenWords.add("опт");
+        forbiddenWords.add("опт.");
+        forbiddenWords.add("оптом");
 
-        handlers.add(new XmlEventFilter(new ModifyTextData(new ReplaceWordsOperator(forbiddenWords)), new InElementCondition("description").or(new InElementCondition("name"))));
+        handlers.add(new XmlEventFilter(new ModifyTextData(new RemoveWordsOperator(forbiddenWords)), new InElementCondition("description").or(new InElementCondition("name"))));
 
         handlers.add(getOutputHandler());
 
@@ -70,10 +70,10 @@ public class ModifierPropertiesXmlEventHandlerProvider {
         operators.add(new AddElementIfAbsent("currencyId", xmlEventFactory, Optional.of("RUR")));
         operators.add(new AddElementIfAbsent("description", xmlEventFactory, Optional.empty()));
 
-        String removedStr = new String("РЈРґР°Р»РµРЅРѕ".getBytes(), config.getEncoding());
+        String removedStr = new String("Удалено".getBytes(), config.getEncoding());
 
        // String removedStr = Charset.forName(config.getEncoding()).toString().equals("UTF-8") ?
-         //       "РЈРґР°Р»РµРЅРѕ" : new String("РЈРґР°Р»РµРЅРѕ".getBytes(), config.getEncoding());
+         //       "Удалено" : new String("Удалено".getBytes(), config.getEncoding());
 
         operators.add(new AddElementIfAbsent("name", xmlEventFactory, Optional.of(removedStr)));
         operators.add(new AddElementIfAbsent("model", xmlEventFactory, Optional.of(removedStr)));
