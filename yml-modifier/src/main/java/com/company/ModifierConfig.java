@@ -3,6 +3,9 @@ package com.company;
 
 import company.config.Config;
 import company.config.PswConfig;
+import company.domain.Replace;
+
+import java.util.List;
 
 public class ModifierConfig implements Config, PswConfig {
     private String id;
@@ -23,6 +26,8 @@ public class ModifierConfig implements Config, PswConfig {
     private String user;
     private String psw;
     private String name;
+    private List<Replace> replaces;
+
 
 
     public String getOutputDir() {
@@ -174,5 +179,13 @@ public class ModifierConfig implements Config, PswConfig {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Replace> getReplaces() {
+        return replaces;
+    }
+
+    public void setReplaces(List<Replace> replaces) {
+        this.replaces = replaces;
     }
 }

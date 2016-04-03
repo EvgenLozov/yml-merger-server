@@ -1,4 +1,4 @@
-package com.company.config;
+package company.domain;
 
 import java.util.Set;
 
