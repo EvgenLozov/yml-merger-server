@@ -3,6 +3,7 @@ package com.company;
 import com.company.ModifierConfig;
 import com.company.ModifierXmlEventHandlerProvider;
 import company.StAXService;
+import company.handlers.xml.WriteToLimitSizeFile;
 import company.handlers.xml.XmlEventHandler;
 import company.http.*;
 import company.providers.FileXMLEventReaderProvider;
@@ -46,9 +47,10 @@ public class ModifyService {
         StAXService stAXService = new StAXService( readerProvider );
 
         try {
-            XmlEventHandler handler = new ModifierXmlEventHandlerProvider(config).get();
+           // XmlEventHandler handler = new ModifierXmlEventHandlerProvider(config).get();
+            XmlEventHandler handler = new WriteToLimitSizeFile(config.getOutputDir(),config.getEncoding(),800000l);
             stAXService.process(handler);
-        } catch (FileNotFoundException | UnsupportedEncodingException | XMLStreamException e) {
+        } catch (/*FileNotFoundException | UnsupportedEncodingException |*/ XMLStreamException e) {
             e.printStackTrace();
         }
 
