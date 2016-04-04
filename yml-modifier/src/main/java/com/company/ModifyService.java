@@ -1,18 +1,25 @@
 package com.company;
 
-import com.company.ModifierConfig;
-import com.company.ModifierXmlEventHandlerProvider;
+import com.company.providers.ModifierXmlEventHandlerProvider;
+import com.company.providers.SplitXmlEventHandlerProvider;
 import company.StAXService;
 import company.handlers.xml.XmlEventHandler;
 import company.http.*;
 import company.providers.FileXMLEventReaderProvider;
 import company.providers.XMLEventReaderProvider;
+import company.stream.ChainInputStreamOperator;
+import company.stream.InputStreamOperator;
+import company.stream.XmlInputStreamOperator;
+import company.stream.storage.InMemoryStorage;
 import org.apache.http.impl.client.CloseableHttpClient;
 
 import javax.xml.stream.XMLStreamException;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Naya on 20.01.2016.
@@ -41,13 +48,14 @@ public class ModifyService {
             }
         }
 
-        XMLEventReaderProvider readerProvider = new FileXMLEventReaderProvider(config.getInputFile(), config.getEncoding());
-
-        StAXService stAXService = new StAXService( readerProvider );
-
         try {
-            XmlEventHandler handler = new ModifierXmlEventHandlerProvider(config).get();
-            stAXService.process(handler);
+            List<InputStreamOperator> operatorChain = new ArrayList<>();
+            operatorChain.add(new XmlInputStreamOperator(config.getEncoding(), new ModifierXmlEventHandlerProvider(config).get(), new InMemoryStorage()));
+            operatorChain.add(new XmlInputStreamOperator(config.getEncoding(), new SplitXmlEventHandlerProvider(config).get(), new InMemoryStorage()));
+
+            InputStreamOperator resultOperator = new ChainInputStreamOperator(operatorChain);
+
+            resultOperator.apply(new FileInputStream(config.getInputFile()));
         } catch (FileNotFoundException | UnsupportedEncodingException | XMLStreamException e) {
             e.printStackTrace();
         }

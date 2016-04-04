@@ -17,4 +17,5 @@ public class RemoveWordsOperator implements UnaryOperator<String> {
     public String apply(String fragment) {
         return Arrays.asList(fragment.split(" ")).stream().filter( (word) -> !words.contains(word)).collect(Collectors.joining(" "));
     }
+
 }

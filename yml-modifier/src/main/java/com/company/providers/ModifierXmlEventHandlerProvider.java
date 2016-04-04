@@ -1,11 +1,14 @@
-package com.company;
+package com.company.providers;
 
+import com.company.ModifierConfig;
+import com.company.OfferAttributeModificator;
+import com.company.OfferDescriptionProvider;
 import com.company.functions.RemoveWordsOperator;
 import com.company.handlers.OffersCategoryIdModifier;
 import com.company.handlers.OffersSeparator;
 import com.company.handlers.ProgressHandler;
-import com.company.operators.AddContentToDescription;
-import com.company.operators.ModifyOfferDescription;
+import com.company.operators.event.AddContentToDescription;
+import com.company.operators.event.ModifyOfferDescription;
 import company.StAXService;
 import company.conditions.*;
 import company.handlers.xml.*;
@@ -102,21 +105,7 @@ public class ModifierXmlEventHandlerProvider {
     }
 
     private XmlEventHandler getOutputHandler() throws XMLStreamException {
-        int offerCount = getOfferCount();
-
-        List<XmlEventHandler> fileXmlEventWriters = new ArrayList<>();
-        Predicate<XMLEvent> closeCondition = (event) -> event.isEndElement() && event.asEndElement().getName().getLocalPart().equals("yml_catalog");
-        for (int i = 0; i < config.getFilesCount(); i++)
-            fileXmlEventWriters.add(new WriteEventToFile(config.getOutputDir() + "/output"+i+".xml", config.getEncoding(), closeCondition));
-
-        List<XmlEventHandler> handlers = new ArrayList<>();
-        for (XmlEventHandler fileXmlEventWriter : fileXmlEventWriters)
-            handlers.add(new XmlEventFilter(fileXmlEventWriter, new InElementCondition("offers").negate()));
-
-        handlers.add(new XmlEventFilter(new OffersSeparator( fileXmlEventWriters, offerCount/config.getFilesCount() ), new InElementCondition("offers") ));
-        handlers.add(new ProgressHandler(offerCount));
-
-        return new SuccessiveXmlEventHandler(handlers);
+        return new SplitXmlEventHandlerProvider().get();
     }
 
     private BufferXmlEventOperator provideDescriptionModification()
@@ -130,16 +119,5 @@ public class ModifierXmlEventHandlerProvider {
 
         return new ComplexBufferXmlEventOperator(operators);
     }
-
-    private int getOfferCount() throws XMLStreamException {
-        EventCounter eventCounter = new EventCounter(new InElementCondition("offers").and((event) -> event.isStartElement()
-                && event.asStartElement().getName().getLocalPart().equals("offer")));
-
-        new StAXService(new FileXMLEventReaderProvider(config.getInputFile(), config.getEncoding())).process(eventCounter);
-
-        return eventCounter.getCount();
-    }
-
-
 
 }
