@@ -9,6 +9,7 @@ import company.providers.FileXMLEventReaderProvider;
 import company.providers.XMLEventReaderProvider;
 import company.stream.ChainInputStreamOperator;
 import company.stream.InputStreamOperator;
+import company.stream.ReplaceFragmentsOperator;
 import company.stream.XmlInputStreamOperator;
 import company.stream.storage.InMemoryStorage;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -51,6 +52,7 @@ public class ModifyService {
         try {
             List<InputStreamOperator> operatorChain = new ArrayList<>();
             operatorChain.add(new XmlInputStreamOperator(config.getEncoding(), new ModifierXmlEventHandlerProvider(config).get(), new InMemoryStorage()));
+            operatorChain.add(new ReplaceFragmentsOperator(config.getEncoding(), config.getReplaces()));
             operatorChain.add(new XmlInputStreamOperator(config.getEncoding(), new SplitXmlEventHandlerProvider(config).get(), new InMemoryStorage()));
 
             InputStreamOperator resultOperator = new ChainInputStreamOperator(operatorChain);
