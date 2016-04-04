@@ -58,8 +58,6 @@ public class ModifierXmlEventHandlerProvider {
 
         handlers.add(new XmlEventFilter(new ModifyTextData(new RemoveWordsOperator(forbiddenWords)), new InElementCondition("description").or(new InElementCondition("name"))));
 
-        handlers.add(getOutputHandler());
-
         XmlEventHandler handler = new SuccessiveXmlEventHandler(handlers);
 
         List<BufferXmlEventOperator> operators = new ArrayList<>();
@@ -102,10 +100,6 @@ public class ModifierXmlEventHandlerProvider {
         return new PredicateOperator(operator, (events) -> events.get(0).asStartElement().getAttributeByName(QName.valueOf("available")) == null ||
                 !events.get(0).asStartElement().getAttributeByName(QName.valueOf("available")).getValue().equals("true"));
 
-    }
-
-    private XmlEventHandler getOutputHandler() throws XMLStreamException {
-        return new SplitXmlEventHandlerProvider().get();
     }
 
     private BufferXmlEventOperator provideDescriptionModification()
