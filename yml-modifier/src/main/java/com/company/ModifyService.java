@@ -7,20 +7,15 @@ import company.handlers.xml.XmlEventHandler;
 import company.http.*;
 import company.providers.FileXMLEventReaderProvider;
 import company.providers.XMLEventReaderProvider;
-import company.stream.ChainInputStreamOperator;
-import company.stream.InputStreamOperator;
-import company.stream.ReplaceFragmentsOperator;
-import company.stream.XmlInputStreamOperator;
+import company.stream.*;
 import company.stream.storage.InMemoryStorage;
 import org.apache.http.impl.client.CloseableHttpClient;
 
 import javax.xml.stream.XMLStreamException;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Created by Naya on 20.01.2016.
@@ -50,14 +45,13 @@ public class ModifyService {
         }
 
         try {
-            List<InputStreamOperator> operatorChain = new ArrayList<>();
-            operatorChain.add(new XmlInputStreamOperator(config.getEncoding(), new ModifierXmlEventHandlerProvider(config).get(), new InMemoryStorage()));
-            operatorChain.add(new ReplaceFragmentsOperator(config.getEncoding(), config.getReplaces()));
-            operatorChain.add(new XmlInputStreamOperator(config.getEncoding(), new SplitXmlEventHandlerProvider(config).get(), new InMemoryStorage()));
+            InputStreamOperator modify = new XmlInputStreamOperator(config.getEncoding(), new ModifierXmlEventHandlerProvider(config).get(), new InMemoryStorage());
+            InputStreamOperator replace = new ReplaceFragmentsOperator(config.getEncoding(), config.getReplaces());
 
-            InputStreamOperator resultOperator = new ChainInputStreamOperator(operatorChain);
+            InputStream modifiedXmlFile = modify.andThen(replace).apply(new FileInputStream(config.getInputFile()));
 
-            resultOperator.apply(new FileInputStream(config.getInputFile()));
+            XmlInputStreamConsumer splitAndStore = new XmlInputStreamConsumer(config.getEncoding(), new SplitXmlEventHandlerProvider(config).get());
+            splitAndStore.accept(modifiedXmlFile);
         } catch (FileNotFoundException | UnsupportedEncodingException | XMLStreamException e) {
             e.printStackTrace();
         }
