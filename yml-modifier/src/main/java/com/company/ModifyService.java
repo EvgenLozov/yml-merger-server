@@ -39,8 +39,7 @@ public class ModifyService {
                 HttpResponseHandler<String> responseHandler = new SaveIntoFileHttpResponseHandler(config.getEncoding());
                 config.setInputFile(httpService.execute(requestProvider, responseHandler));
             } catch (IOException e) {
-                e.printStackTrace();
-                throw new RuntimeException("Unable to do auto merge of " + config.getId());
+                throw new RuntimeException("Unable to do auto merge of " + config.getId(), e);
             }
         }
 
@@ -53,7 +52,7 @@ public class ModifyService {
             XmlInputStreamConsumer splitAndStore = new XmlInputStreamConsumer(config.getEncoding(), new SplitXmlEventHandlerProvider(config).get());
             splitAndStore.accept(modifiedXmlFile);
         } catch (FileNotFoundException | UnsupportedEncodingException | XMLStreamException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
     }
