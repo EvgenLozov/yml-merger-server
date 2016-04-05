@@ -1,5 +1,6 @@
 package com.merger.config;
 
+import com.company.config.ConfigGroup;
 import com.company.config.MergerConfig;
 import com.company.repository.CategoryRepository;
 import com.company.repository.CategorySource;
@@ -38,6 +39,14 @@ public class AppContext {
     @Bean
     public CategoryRepository categoryRepository(ConfigRepository<MergerConfig> configRepository){
         return new CategoryRepository(new CategorySource(configRepository));
+    }
+
+    @Bean
+    public ConfigRepository<ConfigGroup> configGroupRepository(){
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+        return new JsonConfigRepository<>("config/configGroup.json",ConfigGroup.class,mapper);
     }
 
     @Bean

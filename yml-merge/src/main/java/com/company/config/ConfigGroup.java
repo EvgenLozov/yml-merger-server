@@ -41,11 +41,11 @@ public class ConfigGroup implements Config {
 
     @Override
     public String getId() {
-        return null;
+        return id;
     }
 
     @Override
     public void setId(String id) {
-
+        this.id = id;
     }
 }
