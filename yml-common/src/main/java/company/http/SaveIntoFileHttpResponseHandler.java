@@ -20,7 +20,7 @@ public class SaveIntoFileHttpResponseHandler implements HttpResponseHandler<Stri
 
     @Override
     public String handle(CloseableHttpResponse httpResponse) {
-        String fileName = "D:\\Java\\yml-merger-server\\yml-merger-server\\yml-modifier-web\\tmp" + UUID.randomUUID().toString(); //tmp!!!
+        String fileName = "tmp\\" + UUID.randomUUID().toString(); //tmp!!!
 
         try {
             Scanner scanner = new Scanner(httpResponse.getEntity().getContent(), encoding);

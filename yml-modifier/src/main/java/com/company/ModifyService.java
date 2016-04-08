@@ -48,7 +48,7 @@ public class ModifyService {
 
         try {
            // XmlEventHandler handler = new ModifierXmlEventHandlerProvider(config).get();
-            XmlEventHandler handler = new WriteToLimitSizeFile(config.getOutputDir(),config.getEncoding(),800000l);
+            XmlEventHandler handler = new WriteToLimitSizeFile(config.getOutputDir(),config.getEncoding(),1500000l);
             stAXService.process(handler);
         } catch (/*FileNotFoundException | UnsupportedEncodingException |*/ XMLStreamException e) {
             e.printStackTrace();

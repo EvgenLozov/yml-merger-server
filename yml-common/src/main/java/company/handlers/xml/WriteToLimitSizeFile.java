@@ -72,6 +72,7 @@ public class WriteToLimitSizeFile implements XmlEventHandler {
                           //  eventWriter.add(new CharacterEvent("/n/t/t"));
                             for(XMLEvent xmlEvent: commonPart2EventList ){
                                 eventWriter.add(xmlEvent);
+
                             }
                             eventWriter.close();
                         }
@@ -82,9 +83,10 @@ public class WriteToLimitSizeFile implements XmlEventHandler {
 
                 }
                 else {
-                    if(outputStreamsForWriters.get(i-1).toByteArray().length>limitSize-500){
+                    if((outputStreamsForWriters.get(i-1).toByteArray().length+5600)>limitSize){    // 5600 = maxOfferSize + maxCloseInf
                         if(event.isEndElement() && event.asEndElement().getName().getLocalPart().equals("offer")){
                             xmlEventWriters.get(i-1).add(event);
+                            System.out.println("outputStream length is "+ outputStreamsForWriters.get(i-1).toByteArray().length);
 
                             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
