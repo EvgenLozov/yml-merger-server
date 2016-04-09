@@ -22,6 +22,7 @@ public class ModifierConfig implements Config {
     private String user;
     private String psw;
     private String name;
+    private long limitSize;
 
 
     public String getOutputDir() {
@@ -173,5 +174,13 @@ public class ModifierConfig implements Config {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public long getLimitSize() {
+        return limitSize;
+    }
+
+    public void setLimitSize(long limitSize) {
+        this.limitSize = limitSize;
     }
 }

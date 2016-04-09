@@ -1,9 +1,7 @@
 package company.handlers.xml;
 
 
-import com.sun.xml.internal.stream.events.CharacterEvent;
 import company.conditions.InElementCondition;
-
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -19,7 +17,6 @@ import java.util.function.Predicate;
 public class WriteToLimitSizeFile implements XmlEventHandler {
     String outputDir;
     String encoding;
-    ByteArrayOutputStream commonPart1;
     List<XMLEvent> commonPart1EventList;
     List<XMLEvent> commonPart2EventList;
     long limitSize;
@@ -34,9 +31,6 @@ public class WriteToLimitSizeFile implements XmlEventHandler {
         this.outputDir = outputDir;
         this.encoding = encoding;
         this.limitSize = limitSize;
-        commonPart1 = new ByteArrayOutputStream();
-
-
         conditionToClose = (event) -> event.isEndElement() && event.asEndElement().getName().getLocalPart().equals("yml_catalog");
         commonPartCondition = new InElementCondition("offers").negate();
         commonPart1EventList = new ArrayList<>();
@@ -59,7 +53,7 @@ public class WriteToLimitSizeFile implements XmlEventHandler {
                     ByteArrayOutputStream outputStream = new ByteArrayOutputStream(); // fix iniwriter method
 
                     System.out.print("CommonPart1 has been write");
-                    initWriter(outputStream);
+                    initWriter();
                 }
             }else {
                 if (commonPartCondition.test(event)) {
@@ -69,10 +63,8 @@ public class WriteToLimitSizeFile implements XmlEventHandler {
                         System.out.println("CommonPart2 has been write");
 
                         for (XMLEventWriter eventWriter: xmlEventWriters) {
-                          //  eventWriter.add(new CharacterEvent("/n/t/t"));
                             for(XMLEvent xmlEvent: commonPart2EventList ){
                                 eventWriter.add(xmlEvent);
-
                             }
                             eventWriter.close();
                         }
@@ -88,9 +80,8 @@ public class WriteToLimitSizeFile implements XmlEventHandler {
                             xmlEventWriters.get(i-1).add(event);
                             System.out.println("outputStream length is "+ outputStreamsForWriters.get(i-1).toByteArray().length);
 
-                            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-                            initWriter(outputStream);
+                            initWriter();
                         }else{
                             xmlEventWriters.get(i-1).add(event);
                            // System.out.println("event is added");
@@ -110,10 +101,11 @@ public class WriteToLimitSizeFile implements XmlEventHandler {
         }
     }
 
-    private XMLEventWriter initWriter(ByteArrayOutputStream outputStream) throws  XMLStreamException {
+    private XMLEventWriter initWriter() throws  XMLStreamException {
 
         XMLEventWriter xmlEventWriter = null;
         try {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             Writer writer = new OutputStreamWriter(outputStream, encoding);
             XMLOutputFactory oFactory = XMLOutputFactory.newFactory();
             xmlEventWriter = oFactory.createXMLEventWriter(writer);
