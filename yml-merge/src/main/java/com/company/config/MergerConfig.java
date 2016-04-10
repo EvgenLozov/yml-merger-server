@@ -2,6 +2,7 @@ package com.company.config;
 
 import company.Currency;
 import company.config.Config;
+import company.config.PswConfig;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -11,7 +12,7 @@ import java.util.Set;
 /**
  * Created by user50 on 21.06.2015.
  */
-public class MergerConfig implements Config {
+public class MergerConfig implements Config, PswConfig {
 
     private String id;
     private String name;
