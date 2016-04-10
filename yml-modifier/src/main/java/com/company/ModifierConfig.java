@@ -23,6 +23,7 @@ public class ModifierConfig implements Config, PswConfig {
     private String user;
     private String psw;
     private String name;
+    private long limitSize;
     private long epocheStart;
     private long epochePeriod;
 
@@ -192,5 +193,13 @@ public class ModifierConfig implements Config, PswConfig {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public long getLimitSize() {
+        return limitSize;
+    }
+
+    public void setLimitSize(long limitSize) {
+        this.limitSize = limitSize;
     }
 }
