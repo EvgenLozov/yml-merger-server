@@ -260,7 +260,7 @@
                         Период подмены файлов-результатов, мин.:</label>
                     <div class="col-sm-6">
                         <input id="config-epochePeriod" name="epochePeriod" class="form-control"
-                               type="text" value="<%= epochePeriod %>" disabled/>
+                               type="text" value="<%= epochePeriod / 3600%>" disabled/>
                     </div>
         </div>
 
@@ -482,10 +482,10 @@
 
         <div class="form-group">
             <label for="config-epochePeriod" class="col-sm-2 control-label">
-                Период подмены файлов-результатов:</label>
+                Период подмены файлов-результатов, мин.:</label>
             <div class="col-sm-6">
                 <input id="config-epochePeriod" name="epochePeriod" class="form-control"
-                       type="text" value="<%= epochePeriod %>"/>
+                       type="text" value="<%= epochePeriod / 3600 %>"/>
             </div>
         </div>
 

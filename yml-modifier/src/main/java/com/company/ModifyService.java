@@ -36,7 +36,7 @@ public class ModifyService {
                 stAXService.process(handler);
             }
             else {
-                XmlEventHandler handler = new ModifierXmlEventHandlerProvider(config).get();
+                XmlEventHandler handler = new ModifierXmlEventHandlerProvider(config, readerProvider).get();
                 stAXService.process(handler);
             }
 
