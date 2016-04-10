@@ -30,7 +30,7 @@ public class WriteToLimitSizeFile implements XmlEventHandler {
     public WriteToLimitSizeFile(String outputDir, String encoding, long limitSize) throws XMLStreamException {
         this.outputDir = outputDir;
         this.encoding = encoding;
-        this.limitSize = limitSize;
+        this.limitSize = (limitSize/8129-1)*8129;
         conditionToClose = (event) -> event.isEndElement() && event.asEndElement().getName().getLocalPart().equals("yml_catalog");
         commonPartCondition = new InElementCondition("offers").negate();
         commonPart1EventList = new ArrayList<>();
@@ -47,11 +47,8 @@ public class WriteToLimitSizeFile implements XmlEventHandler {
             if (xmlEventWriters.isEmpty()) {
                 if (commonPartCondition.test(event)) {
                     commonPart1EventList.add(event);
-
                 }
                 else {
-                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream(); // fix iniwriter method
-
                     System.out.print("CommonPart1 has been write");
                     initWriter();
                 }
@@ -75,7 +72,7 @@ public class WriteToLimitSizeFile implements XmlEventHandler {
 
                 }
                 else {
-                    if((outputStreamsForWriters.get(i-1).toByteArray().length+5600)>limitSize){    // 5600 = maxOfferSize + maxCloseInf
+                    if((outputStreamsForWriters.get(i-1).toByteArray().length) >= limitSize-7000){    // 5600 = maxOfferSize + maxCloseInf
                         if(event.isEndElement() && event.asEndElement().getName().getLocalPart().equals("offer")){
                             xmlEventWriters.get(i-1).add(event);
                             System.out.println("outputStream length is "+ outputStreamsForWriters.get(i-1).toByteArray().length);
@@ -85,7 +82,6 @@ public class WriteToLimitSizeFile implements XmlEventHandler {
                         }else{
                             xmlEventWriters.get(i-1).add(event);
                            // System.out.println("event is added");
-
 
                         }
                     }else{
