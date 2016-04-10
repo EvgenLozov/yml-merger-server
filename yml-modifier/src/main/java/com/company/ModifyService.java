@@ -47,10 +47,16 @@ public class ModifyService {
         StAXService stAXService = new StAXService( readerProvider );
 
         try {
-           // XmlEventHandler handler = new ModifierXmlEventHandlerProvider(config).get();
-            XmlEventHandler handler = new WriteToLimitSizeFile(config.getOutputDir(),config.getEncoding(),config.getLimitSize());
-            stAXService.process(handler);
-        } catch (/*FileNotFoundException | UnsupportedEncodingException |*/ XMLStreamException e) {
+            if (config.getLimitSize() >= 0) {
+                XmlEventHandler handler = new WriteToLimitSizeFile(config.getOutputDir(), config.getEncoding(), config.getLimitSize());
+                stAXService.process(handler);
+            }
+            else {
+                XmlEventHandler handler = new ModifierXmlEventHandlerProvider(config).get();
+                stAXService.process(handler);
+            }
+
+        } catch (FileNotFoundException | UnsupportedEncodingException | XMLStreamException e) {
             e.printStackTrace();
         }
 

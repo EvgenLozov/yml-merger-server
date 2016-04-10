@@ -30,7 +30,7 @@ public class WriteToLimitSizeFile implements XmlEventHandler {
     public WriteToLimitSizeFile(String outputDir, String encoding, long limitSize) throws XMLStreamException {
         this.outputDir = outputDir;
         this.encoding = encoding;
-        this.limitSize = (limitSize/8129-1)*8129;
+        this.limitSize = (limitSize/8129)*8129;             //(limitSize/8129-1)*8129
         conditionToClose = (event) -> event.isEndElement() && event.asEndElement().getName().getLocalPart().equals("yml_catalog");
         commonPartCondition = new InElementCondition("offers").negate();
         commonPart1EventList = new ArrayList<>();
@@ -72,22 +72,17 @@ public class WriteToLimitSizeFile implements XmlEventHandler {
 
                 }
                 else {
-                    if((outputStreamsForWriters.get(i-1).toByteArray().length) >= limitSize-7000){    // 5600 = maxOfferSize + maxCloseInf
+                    if((outputStreamsForWriters.get(i-1).toByteArray().length+8129) >= limitSize){    // 5600 = maxOfferSize + maxCloseInf
                         if(event.isEndElement() && event.asEndElement().getName().getLocalPart().equals("offer")){
                             xmlEventWriters.get(i-1).add(event);
                             System.out.println("outputStream length is "+ outputStreamsForWriters.get(i-1).toByteArray().length);
 
-
                             initWriter();
                         }else{
                             xmlEventWriters.get(i-1).add(event);
-                           // System.out.println("event is added");
-
                         }
                     }else{
                         xmlEventWriters.get(i-1).add(event);
-                       // System.out.println("event is added");
-
                     }
                 }
             }
@@ -99,12 +94,11 @@ public class WriteToLimitSizeFile implements XmlEventHandler {
 
     private XMLEventWriter initWriter() throws  XMLStreamException {
 
-        XMLEventWriter xmlEventWriter = null;
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             Writer writer = new OutputStreamWriter(outputStream, encoding);
             XMLOutputFactory oFactory = XMLOutputFactory.newFactory();
-            xmlEventWriter = oFactory.createXMLEventWriter(writer);
+            XMLEventWriter xmlEventWriter = oFactory.createXMLEventWriter(writer);
             outputStreamsForWriters.add(outputStream);
             xmlEventWriters.add(xmlEventWriter);
             for(XMLEvent xmlEvent: commonPart1EventList){
@@ -112,10 +106,13 @@ public class WriteToLimitSizeFile implements XmlEventHandler {
             }
             i++;
             System.out.println("xmlWriter"+i +"has been created");
+
+            return xmlEventWriter;
+
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("Error of the writers creating ");
         }
-        return xmlEventWriter;
+
     }
 
     private void writeToFiles() throws IOException {
