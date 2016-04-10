@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.exception.ModifierException;
 import company.config.ConfigRepository;
 import company.epoche.EpocheSupplier;
 
@@ -21,7 +22,7 @@ public class EpocheService {
 
         if(config.getEpocheStart() == 0 ||
             config.getEpochePeriod() == 0)
-                throw new RuntimeException("Process has never been started/finished or epochePeriod is not set!");
+                throw new ModifierException("Process has never been started/finished or epochePeriod is not set!");
 
         File outputDir = new File(config.getOutputDir());
 
