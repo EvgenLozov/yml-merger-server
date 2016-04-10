@@ -7,6 +7,7 @@ ConfigManager.module("Entities", function(Entities, ConfigManager,  Backbone, Ma
             "categoryIdPrefix": "",
             "encoding": "UTF-8",
             "filesCount": 1,
+            "limitSize": 0,
             "inputFile": "",
             "inputFileURL": "",
             "modifyCategoryId": false,
