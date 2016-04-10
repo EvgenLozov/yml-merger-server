@@ -1,7 +1,9 @@
 package com.modifier.web.controller;
 
 import com.company.ModifierConfig;
+import com.company.ModifierConfigValidator;
 import com.company.scheduler.ModifyQuartzTask;
+import company.config.Validator;
 import company.scheduler.InMemoryQuartzTasksScheduler;
 import company.config.ConfigRepository;
 import org.quartz.SchedulerException;
@@ -25,6 +27,8 @@ public class ConfigController {
     @Autowired
     private ConfigRepository<ModifierConfig> configRepository;
 
+    private Validator<ModifierConfig> validator = new ModifierConfigValidator();
+
     @RequestMapping(method = RequestMethod.GET)
     public List<ModifierConfig> list() {
         List<ModifierConfig> configs = configRepository.list();
@@ -39,6 +43,7 @@ public class ConfigController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ModifierConfig create(@RequestBody ModifierConfig config) throws SchedulerException {
+        validator.validate(config);
         configRepository.create(config);
 
         if(config.getInputFileURL()!=null && !config.getInputFileURL().isEmpty()) {
@@ -51,7 +56,7 @@ public class ConfigController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ModifierConfig save(@PathVariable String id, @RequestBody ModifierConfig config) throws SchedulerException {
-
+        validator.validate(config);
         configRepository.save(config);
 
         ModifyQuartzTask task = new ModifyQuartzTask(config);
