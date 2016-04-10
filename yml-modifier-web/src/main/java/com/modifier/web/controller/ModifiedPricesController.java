@@ -33,7 +33,7 @@ public class ModifiedPricesController {
             return null;
         }
 
-        response.setHeader("Content-Disposition", String.format("attachment; filename=%s", configId));
+        response.setHeader("Content-Disposition", String.format("attachment; filename=%s.xml", configId));
         return new FileSystemResource(file);
     }
 }
