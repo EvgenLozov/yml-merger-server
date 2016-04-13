@@ -1,70 +1,22 @@
 [ {
-  "id" : "1b84cc4e-dec0-4ad6-8dec-08db0376b3c7",
-  "name" : "test config",
-  "user" : "user50",
-  "psw" : "Ym1WMWMyVnlOVEE9cXdycjJyZi0zMTI=",
-  "urls" : [ "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462822&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462826&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462391&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462395&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462401&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462763&addPictures=2" ],
+  "id" : "5c02539b-5b1c-4f61-9511-39f07ffb1360",
+  "name" : "test",
+  "user" : "query_manager",
+  "psw" : "Y1hWbGNubGZiV0Z1WVdkbGNnPT1xd3JyMnJmLTMxMg==",
+  "urls" : [ "http://www.superstroy.ru/files/blizko_city_41.xml", "http://www.allpromsnab.ru/yml_second.xml" ],
   "files" : [ ],
-  "encoding" : "cp1251",
-  "outputFile" : "prices/test config",
-  "categoryIds" : [ ],
-  "parentIds" : [ {
-    "categoryId" : "967",
-    "parentId" : "114"
-  }, {
-    "categoryId" : "1026",
-    "parentId" : "114"
-  }, {
-    "categoryId" : "1376",
-    "parentId" : "114"
-  }, {
-    "categoryId" : "1578",
-    "parentId" : "114"
-  }, {
-    "categoryId" : "631",
-    "parentId" : "114"
-  }, {
-    "categoryId" : "2683",
-    "parentId" : "114"
-  }, {
-    "categoryId" : "2756",
-    "parentId" : "704"
-  }, {
-    "categoryId" : "919",
-    "parentId" : "704"
-  }, {
-    "categoryId" : "941",
-    "parentId" : "704"
-  } ],
-  "currencies" : [ "RUR", "BYR", "KZT" ],
-  "replaces" : [ ],
-  "oldPrice" : 0.3,
-  "lastMerge" : 1455285754048,
-  "autoMerge" : true,
-  "period" : 1,
-  "time" : "18:00",
-  "periodInHours" : 0,
-  "notAllowedWords" : [ "ваып ыва", "ывап", "вап ывап", "ваыпвыа", "пва" ],
-  "nextFireTime" : 1458921600000
-}, {
-  "id" : "72f15921-4601-45d9-ad2b-f0389a048995",
-  "name" : "test config 9-45",
-  "user" : "user50",
-  "psw" : "Ym1WMWMyVnlOVFV3cXdycjJyZi0zMTI=",
-  "urls" : [ "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462382&addPictures=2", "http://www.apishops.com/websiteAction?action=getPriceTiu&id=462391&addPictures=2" ],
-  "files" : [ ],
-  "encoding" : "windows-1251",
-  "outputFile" : "prices/test config 9-45",
+  "encoding" : "Windows-1251",
+  "outputFile" : "prices/test",
   "categoryIds" : [ ],
   "parentIds" : [ ],
-  "currencies" : [ "RUR", "BYR", "KZT" ],
+  "currencies" : [ "RUR" ],
   "replaces" : [ ],
-  "oldPrice" : 0.3,
-  "lastMerge" : 1454870915219,
-  "autoMerge" : true,
-  "period" : 1,
-  "time" : "09:45",
-  "periodInHours" : 2,
+  "oldPrice" : 0.0,
+  "lastMerge" : 1460401001998,
+  "autoMerge" : false,
+  "period" : 0,
+  "time" : null,
+  "periodInHours" : 0,
   "notAllowedWords" : [ ],
-  "nextFireTime" : 1458928223858
+  "nextFireTime" : 0
 } ]

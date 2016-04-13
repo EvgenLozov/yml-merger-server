@@ -1,0 +1,553 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Прайс генератор</title>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.3/zepto.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+
+  <!-- load our scripts -->
+  <script type="text/javascript" src="js/config_router.js"></script>
+  <script type="text/javascript" src="js/models/config_model.js"></script>
+  <script type="text/javascript" src="js/models/categoryIdsPair_model.js"></script>
+    <script type="text/javascript" src="js/models/replace_model.js"></script>
+    <script type="text/javascript" src="js/models/category_model.js"></script>
+    <script type="text/javascript" src="js/views/config_index.js"></script>
+    <script type="text/javascript" src="js/views/config_row.js"></script>
+    <script type="text/javascript" src="js/views/config_new.js"></script>
+    <script type="text/javascript" src="js/views/config_edit.js"></script>
+    <script type="text/javascript" src="js/views/config_show.js"></script>
+    <script type="text/javascript" src="js/views/categories_view.js"></script>
+    <script type="text/javascript" src="js/views/newparentsview.js"></script>
+    <script type="text/javascript" src="js/breadcrumbs.js"></script>
+  <script type="text/javascript" src="js/views/replace_view.js"></script>
+  <script type="text/javascript" src="js/views/parentIds_view.js"></script>
+</head>
+<body>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8" id="primary-content">
+        <!-- the container that gets populated with the index -->
+      </div>
+    </div>
+  </div>
+
+  <!-- the form, used for create and edit -->
+  <script type="text/jst" id="formTemplate">
+    <div class="well">
+      <div class="alert alert-danger fade in" style="display:none;"></div>
+            <form class="form-horizontal" id="configForm">
+                 <div class="form-group">
+                    <label for="name" class="col-md-4 control-label">Название</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="name" name="name" value="<%= name %>" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="user" class="col-md-4 control-label">Логин для ApiShops</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="user" name="user" value="<%= user %>" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="psw" class="col-md-4 control-label">Пароль для ApiShops</label>
+                    <div class="col-md-8">
+                        <input type="password" class="form-control" id="psw" name="psw" value="<%= atob(psw) %>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="encoding" class="col-md-4 control-label">Кодировка</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="encoding" name="encoding" value="<%= encoding %>">
+                    </div>
+                </div>
+                <div class="form-group">
+                <label class="col-md-4 control-label">Валюта</label>
+                    <div class="col-md-8">
+                            <label class="checkbox-inline"><input type="checkbox" name="currency" value="RUR">Рубли (рус.)</label>
+                            <label class="checkbox-inline"><input type="checkbox" name="currency" value="UAH">Гривны</label>
+                            <label class="checkbox-inline"><input type="checkbox" name="currency" value="BYR">Рубли (бел.)</label>
+                            <label class="checkbox-inline"><input type="checkbox" name="currency" value="KZT">Тенге</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="urls" class="col-md-4 control-label">Ссылки на прайсы</label>
+                    <div class="col-md-8">
+                        <textarea class="form-control" rows="2" id="urls" name="urls"><%= urls %></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="files" class="col-md-4 control-label">Пути к прайсам на диске</label>
+                    <div class="col-md-8">
+                        <textarea class="form-control" rows="2" id="files" name="files"><%= files %></textarea>
+                    </div>
+                </div>
+                <% if (typeof id !== "undefined") { %>
+                <div class="form-group">
+                    <label for="categories" class="col-md-4 control-label">Категории для прайса</label>
+                    <div class="col-md-8">
+                        <a id="categories" href="#">Выбрать категории из списка (кнфиг будет сохранен)</a>
+                    </div>
+                </div>
+                <% } %>
+                <div class="form-group">
+                    <label for="categoryIds" class="col-md-4 control-label">ID категорий для прайса</label>
+                    <div class="col-md-8">
+                        <textarea class="form-control" rows="2" id="categoryIds" name="categoryIds"><%= categoryIds %></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Родительские категории</label>
+                    <div class="col-md-8">
+                        <table  class="table">
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" id="categoryId" placeholder="ID категории">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" id="parentId" placeholder="ID родительской категории"">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button class="addCategoryIdsPair btn btn-sm btn-info pull-right" type="button">Добавить</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-8" id="parentIdsDiv">
+                        <table class="table table-striped" id="parentIdsTable">
+                        </table>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="replaces" class="col-md-4 control-label">Замена слов</label>
+                    <div class="col-md-8">
+                    <table  class="table">
+                    <tr>
+                        <td>
+                            <textarea class="form-control" rows="2" id="wordsToReplace" placeholder="Что заменить"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="form-control" id="replacement" placeholder="На что заменить"">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button class="addReplace btn btn-sm btn-info pull-right" type="button">Добавить</button>
+                        </td>
+                    </tr>
+                    </table>
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-8" id="replacesDiv">
+                    <table class="table table-striped" id="replacesTable">
+
+                    </table>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="notAllowedWords" class="col-md-4 control-label">Удалить офферы, содержащие в названии след. слова или фразы </label>
+                    <div class="col-md-8">
+                        <textarea class="form-control" rows="2" id="notAllowedWords" name="categoryIds"><%= notAllowedWords %></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="oldPrice" class="col-md-4 control-label">Наценка для старой цены, %</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="oldPrice" name="oldPrice" value="<%= oldPrice*100 %>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="autoMerge" class="col-md-4 control-label">Обновлять автоматически</label>
+                    <div class="col-md-2">
+                        <% if (autoMerge) { %>
+                        <input type="checkbox" id="autoMerge" name="autoMerge" checked>
+                        <% } else { %>
+                        <input type="checkbox" id="autoMerge" name="autoMerge">
+                        <% } %>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="period" class="col-md-4 control-label">Обновлять каждые, дней</label>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" id="period" name="period" value="<%= period %>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="time" class="col-md-4 control-label">Время обновления ( 24-часовой формат, напр. 18:20)</label>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" id="time" name="time" value="<%= time %>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="periodInHours" class="col-md-4 control-label">Обновлять каждые, часов</label>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" id="periodInHours" name="period" value="<%= periodInHours %>">
+                    </div>
+                </div>
+            </div>
+            </form>
+
+        <button class="save btn btn-large btn-info" type="submit">Сохранить</button>
+        <a href="#configs/index" class="btn btn-large">Вернуться</a>
+    </div>
+  </script>
+
+  <script type="text/template" id="replaceTemplate">
+      <td width="50%">
+          <%= wordsToReplace %>
+      </td>
+      <td width="30%">
+          <% if (replacement == "") {
+            print("[Пустая строка]")
+          } else {
+            print(replacement)
+          } %>
+      </td>
+      <td width="20%">
+          <a href="#" class="delete btn btn-danger btn-sm">Удалить</a>
+      </td>
+  </script>
+
+  <script type="text/template" id="categoryPairTemplate">
+      <td width="40%">
+          <%= categoryId %>
+      </td>
+      <td width="40%">
+          <%= parentId %>
+      </td>
+      <td width="20%">
+          <a href="#" class="delete btn btn-danger btn-sm">Удалить</a>
+      </td>
+  </script>
+
+  <!-- the index container -->
+  <script type="text/template" id="indexTemplate">
+    <div class="well">
+      <a class="btn btn-info" href="#config/new">Создать новый конфиг</a>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th width="40%">Название</th>
+          <th>Посл. обновление</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </script>
+
+  <!-- edit categories -->
+  <script type="text/template" id="editCategoriesTpl">
+      <ol class="breadcrumb">
+          <li class="active">Настрока категорий для конфига "<%= name %>"</li>
+      </ol>
+      <div class="panel panel-default">
+          <div class="panel-body">
+              <a href="#" class="backToConfig">Вернуться к редактированию конфига</a>
+          </div>
+      </div>
+      <div class="panel panel-default">
+          <div class="panel-body">
+              <form class="form-inline">
+                  <button type="button" for="cacheDate" class="cacheStatus btn btn-default">Статус кеша</button>
+                  <!--<div class="form-group">-->
+                      <!--<label for="cacheDate">Статус кеша</label>-->
+                      <!--<input type="text" class="form-control" id="cacheDate" disabled>-->
+                  <!--</div>-->
+                  <button type="button" class="updateCache btn btn-primary">Обновить</button>
+                  <button type="button" class="showCategory btn btn-default">Показать категории</button>
+              </form>
+          </div>
+      </div>
+      <div class="panel panel-default">
+          <div class="panel-body">
+              <div class="form-group">
+                  <div class="col-md-4">
+                    <button type="button" class="moveCategories btn btn-default">Переместить выбранные в :</button>
+                  </div>
+                  <div class="col-md-8" id="newparents">
+                  </div>
+              </div>
+          </div>
+      </div>
+  </script>
+  <script type="text/template" id="breadcrumbs">
+          <% _.each(collection, function(model) { %>
+             <li><a class="checkParent" myId="<%= model.id %>" href="#"><%= model.name %></a></li>
+          <% }); %>
+  </script>
+
+  <script type="text/template" id="newParentsTpl">
+      <% _.each(collection, function(model) { %>
+      <option myId="<%= model.id %>"><%= model.name %></option>
+      <% }); %>
+  </script>
+
+  <script type="text/template" id="categoryTpl">
+      <td>
+          <input id="<%= id %>" type="checkbox" class="categoryCheck">
+      </td>
+      <td>
+          <input type="checkbox" class="selectToMove">
+      </td>
+      <td>
+          <a class="category" href="#" myId="<%=id%>"><%= name %></a>
+      </td>
+  </script>
+
+  <!-- the row template, renders once for each item in the index -->
+  <script type="text/template" id="rowTemplate">
+    <td>
+      <a href="#config/<%= id %>/view"><%= name %></a>
+    </td>
+    <td>
+        <%
+        if (lastMerge == 0 ){
+            print ('Отсувствует');
+        }
+        else {
+            var today = new Date(lastMerge);
+            var hh = today.getHours();
+            var MM = today.getMinutes();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+
+            if(dd<10) {
+            dd='0'+dd
+            }
+
+            if(mm<10) {
+            mm='0'+mm
+            }
+
+            if(MM<10) {
+            MM='0'+MM
+            }
+
+            today = dd+'/'+mm+'/'+yyyy + " " + hh + ":" + MM;
+
+            print (today);
+        }
+        %>
+    </td>
+    <td>
+        <a href="#" class="merge btn btn-success btn-sm">Объеденить</a>
+    </td>
+    <td>
+        <div class="dropdown">
+            <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="downloadMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Скачать
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="downloadMenu">
+                <% if (_.contains(currencies, "RUR")) %>
+                    <li><a href="#" class="download" currencyVal="RUR">RUR</a></li>
+                <% if (_.contains(currencies, "UAH")) %>
+                <li><a href="#" class="download" currencyVal="UAH">UAH</a></li>
+                <% if (_.contains(currencies, "BYR")) %>
+                <li><a href="#" class="download" currencyVal="BYR">BYR</a></li>
+                <% if (_.contains(currencies, "KZT")) {%>
+                <li><a href="#" class="download" currencyVal="KZT">KZT</a></li> <% } %>
+            </ul>
+        </div>
+    </td>
+    <td>
+        <button type="button" class="copy btn btn-primary btn-sm" data-toggle="tooltip" data-placement="left" title="Создать копию" aria-label="Copy">
+            <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+        </button>
+    </td>
+    <td>
+      <a href="#" class="delete btn btn-danger btn-sm">Удалить</a>
+    </td>
+    <td>
+        <!--<button type="button" class="logs btn btn-default btn-sm" data-toggle="tooltip" data-placement="left" title="Показать логи" aria-label="Logs">-->
+            <!--<span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>-->
+        <!--</button>-->
+        <a href="#" class="logs btn btn-default btn-sm">Логи</a>
+    </td>
+  </script>
+
+  <!-- the show template -->
+  <script type="text/template" id="showTemplate">
+    <ol class="breadcrumb">
+      <li>
+        <a href="#configs/index">Список конфигов</a>
+      </li>
+      <li class="active">Просмотр конфига <%= name %></li>
+    </ol>
+
+    <h3>
+      <%= name %>
+    </h3>
+
+    <form class="form-horizontal" id="configForm">
+        <div class="form-group">
+            <label for="user" class="col-md-4 control-label" >Логин для ApiShops</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="user" name="user" value="<%= user %>" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="psw" class="col-md-4 control-label">Пароль для ApiShops</label>
+            <div class="col-md-8">
+                <input type="password" class="form-control" id="psw" name="psw" value="<%= atob(psw) %>" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="encoding" class="col-md-4 control-label">Кодировка</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="encoding" name="encoding" value="<%= encoding %>" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="currency" class="col-md-4 control-label">Валюта прайса</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="currency" name="currency" value="<%= currencies %>" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="urls" class="col-md-4 control-label">Ссылки на прайсы</label>
+            <div class="col-md-8">
+                <textarea class="form-control" rows="2" id="urls" name="urls" disabled><%= urls %></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="files" class="col-md-4 control-label">Пути к прайсам на диске</label>
+            <div class="col-md-8">
+                <textarea class="form-control" rows="2" id="files" name="files" disabled><%= files %></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="categoryIds" class="col-md-4 control-label">ID категорий для прайса</label>
+            <div class="col-md-8">
+                <textarea class="form-control" rows="2" id="categoryIds" name="categoryIds" disabled><%= categoryIds %></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Родительские категории</label>
+            <div class="col-md-8">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th width="50%">ИД категории</th>
+                        <th width="50%">ИД категории-родителя</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% _.each(parentIds, function(idsPair) { %>
+                    <tr>
+                        <td> <%= idsPair.categoryId %> </td>
+                        <td> <%= idsPair.parentId %></td>
+                    </tr>
+                    <% } ) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Замена слов</label>
+            <div class="col-md-8">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th width="70%">Что заменить</th>
+                        <th width="30%">На что заменить</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% _.each(replaces, function(replace)
+                        { %>
+                        <tr>
+                        <td> <%= replace.wordsToReplace %> </td>
+                        <% if (replace.replacement != "") { %>
+                                <td> <%= replace.replacement %></td>
+                                <% } else { %>
+                                <td> [Пустая строка] </td> <% } %>
+                            </tr>
+                        <% }
+                      ); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="notAllowedWords" class="col-md-4 control-label">Удалить офферы, содержащие в названии след. слова или фразы </label>
+            <div class="col-md-8">
+                <textarea class="form-control" rows="2" id="notAllowedWords" name="categoryIds" disabled><%= notAllowedWords %></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="oldPrice" class="col-md-4 control-label">Наценка для старой цены, %</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="oldPrice" name="oldPrice" value="<%= oldPrice*100 %>" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="autoMerge" class="col-md-4 control-label">Обновлять автоматически</label>
+            <div class="col-md-2">
+                <% if (autoMerge) { %>
+                <input type="checkbox" id="autoMerge" name="autoMerge" checked disabled>
+                <% } else { %>
+                <input type="checkbox" id="autoMerge" name="autoMerge" disabled>
+                <% } %>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="period" class="col-md-4 control-label">Обновлять каждые, дней</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="period" name="period" value="<%= period %>" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="time" class="col-md-4 control-label">Время обновления ( 24-часовой формат, напр. 18:20)</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="time" name="time" value="<%= time %>" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="periodInHours" class="col-md-4 control-label">Обновлять каждые, часов</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="periodInHours" name="period" value="<%= periodInHours %>" disabled>
+            </div>
+        </div>
+        </form>
+    <hr/>
+    <a class="btn btn-info" href="#config/<%= id %>/edit">Редактировать</a>
+  </script>
+
+  <!-- kick off the app -->
+  <script type="text/javascript">
+    var router = new APP.ConfigRouter({
+      configs: new APP.ConfigCollection()
+    });
+
+    router.configs.fetch({reset: true});
+    
+    // now that everyting is setup we tell backbone to watch the urls
+    Backbone.history.start();
+  </script>
+</body>
+</html>
