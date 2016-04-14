@@ -19,4 +19,25 @@
   "periodInHours" : 0,
   "notAllowedWords" : [ ],
   "nextFireTime" : 0
+}, {
+  "id" : "96b19d0e-4ce9-41f0-90cc-e5f31f80f078",
+  "name" : "Новый список",
+  "user" : "test",
+  "psw" : "dGVzdHF3cnIycmYtMzEy",
+  "urls" : [ "sdfg", "sdfgsdfg", "ssdfgsdfgsdfg" ],
+  "files" : [ ],
+  "encoding" : "windows-1251",
+  "outputFile" : "prices/Новый список",
+  "categoryIds" : [ ],
+  "parentIds" : null,
+  "currencies" : [ "RUR" ],
+  "replaces" : [ ],
+  "oldPrice" : 0.01,
+  "lastMerge" : 0,
+  "autoMerge" : false,
+  "period" : 1,
+  "time" : "00:00",
+  "periodInHours" : 0,
+  "notAllowedWords" : [ ],
+  "nextFireTime" : 0
 } ]
