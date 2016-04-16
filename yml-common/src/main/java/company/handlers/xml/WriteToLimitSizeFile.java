@@ -1,6 +1,7 @@
 package company.handlers.xml;
 
 
+import company.bytearray.RenamingSaveIntoFile;
 import company.conditions.InElementCondition;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLOutputFactory;
@@ -117,10 +118,11 @@ public class WriteToLimitSizeFile implements XmlEventHandler {
 
     private void writeToFiles() throws IOException {
         for(int k = 0; k < i; k++){
-            OutputStream fou = new FileOutputStream(outputDir+"/output"+k+".xml");
-           outputStreamsForWriters.get(k).writeTo(fou);
+           // OutputStream fou = new FileOutputStream(outputDir+"/output"+k+".xml");
+          // outputStreamsForWriters.get(k).writeTo(fou);
+            new RenamingSaveIntoFile(outputDir+"/output"+k+".xml").process(outputStreamsForWriters.get(k).toByteArray());
             System.out.println(outputStreamsForWriters.get(k).toByteArray().length);
-            fou.close();
+           // fou.close();
         }
     }
 

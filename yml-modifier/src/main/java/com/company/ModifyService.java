@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.ModifierConfig;
 import com.company.ModifierXmlEventHandlerProvider;
+import company.DeleteOldPrices;
 import company.StAXService;
 import company.config.Config;
 import company.handlers.xml.WriteToLimitSizeFile;
@@ -39,7 +40,8 @@ public class ModifyService {
                 XmlEventHandler handler = new ModifierXmlEventHandlerProvider(config, readerProvider).get();
                 stAXService.process(handler);
             }
-
+            DeleteOldPrices deleteOldPrices = new DeleteOldPrices();
+            deleteOldPrices.delete(config.getOutputDir());
         } catch (FileNotFoundException | UnsupportedEncodingException | XMLStreamException e) {
             e.printStackTrace();
         }
