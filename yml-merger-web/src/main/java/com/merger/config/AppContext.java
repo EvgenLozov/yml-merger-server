@@ -1,6 +1,7 @@
 package com.merger.config;
 
 import com.company.config.MergerConfig;
+import com.company.michel.MichelService;
 import com.company.repository.CategoryRepository;
 import com.company.repository.CategorySource;
 import com.company.repository.MergerConfigRepository;
@@ -41,8 +42,8 @@ public class AppContext {
     }
 
     @Bean
-    public MergeService mergeService(ConfigRepository<MergerConfig> configRepository){
-        return new SingleProcessMergeService(new MergeServiceImpl(configRepository));
+    public MergeService mergeService(){
+        return new SingleProcessMergeService(new MichelService());
     }
     @Bean
     public NextFireTimeStorage nextFireTimeStorage(ConfigRepository<MergerConfig> configRepository){

@@ -21,11 +21,11 @@ import java.util.function.Predicate;
  */
 public class ElementWriterHandlerFactory implements Factory<XmlEventHandler>{
 
-    List<XMLEventReaderProvider> readerProviders;
+    List<? extends XMLEventReaderProvider> readerProviders;
     String afterElementName;
     Factory<XmlEventHandler> handlerFactory;
 
-    public ElementWriterHandlerFactory(List<XMLEventReaderProvider> readerProviders,
+    public ElementWriterHandlerFactory(List<? extends XMLEventReaderProvider> readerProviders,
                                        String afterElementName,
                                        Factory<XmlEventHandler> handlerFactory) {
         this.readerProviders = readerProviders;

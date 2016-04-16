@@ -14,6 +14,7 @@ APP.NoteModel = Backbone.Model.extend({
     "currencies" : ["RUR"],
     "outputFile" : "",
     "categoryIds" : [],
+    "parentIds" : [],
     "oldPrice" : 0.01,
     "replaces": [],
     "notAllowedWords" : [],
