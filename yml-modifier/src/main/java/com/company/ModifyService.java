@@ -32,7 +32,7 @@ public class ModifyService {
         StAXService stAXService = new StAXService( readerProvider );
 
         try {
-            if (config.getLimitSize() >= 0) {
+            if (config.getLimitSize() > 0) {
                 XmlEventHandler handler = new WriteToLimitSizeFile(config.getOutputDir(), config.getEncoding(), config.getLimitSize());
                 stAXService.process(handler);
             }
