@@ -20,7 +20,7 @@ public class SaveIntoFileHttpResponseHandler implements HttpResponseHandler<Stri
 
     @Override
     public String handle(CloseableHttpResponse httpResponse) {
-        String fileName = "tmp/" + UUID.randomUUID().toString();
+        String fileName = "tmp\\" + UUID.randomUUID().toString(); //tmp!!!
 
         try {
             Scanner scanner = new Scanner(httpResponse.getEntity().getContent(), encoding);
@@ -32,10 +32,10 @@ public class SaveIntoFileHttpResponseHandler implements HttpResponseHandler<Stri
             output.close();
             scanner.close();
 
+            return fileName;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        return fileName;
     }
 }

@@ -23,7 +23,26 @@ public class ModifierConfig implements Config, PswConfig {
     private String user;
     private String psw;
     private String name;
+    private long limitSize;
+    private long epocheStart;
+    private long epochePeriod;
 
+
+    public long getEpocheStart() {
+        return epocheStart;
+    }
+
+    public void setEpocheStart(long epocheStart) {
+        this.epocheStart = epocheStart;
+    }
+
+    public long getEpochePeriod() {
+        return epochePeriod;
+    }
+
+    public void setEpochePeriod(long epochePeriod) {
+        this.epochePeriod = epochePeriod;
+    }
 
     public String getOutputDir() {
         return outputDir;
@@ -174,5 +193,13 @@ public class ModifierConfig implements Config, PswConfig {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public long getLimitSize() {
+        return limitSize;
+    }
+
+    public void setLimitSize(long limitSize) {
+        this.limitSize = limitSize;
     }
 }

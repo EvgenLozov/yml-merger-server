@@ -127,6 +127,14 @@
             </div>
         </div>
         <div class="form-group">
+            <label for="config-limitSize" class="col-sm-2 control-label">
+                Макс-ый размер файлов-результатов, Кб.:</label>
+            <div class="col-sm-6">
+                <input id="config-limitSize" name="limitSize" class="form-control"
+                       type="text" value="<%= limitSize/1024 %>" disabled/>
+            </div>
+        </div>
+        <div class="form-group">
             <label for="config-time" class="col-sm-2 control-label">
                 Время авт. обновления:</label>
             <div class="col-sm-6">
@@ -248,6 +256,23 @@
         </div>
 
         <div class="form-group">
+                    <label for="config-epochePeriod" class="col-sm-2 control-label">
+                        Период подмены файлов-результатов, мин.:</label>
+                    <div class="col-sm-6">
+                        <input id="config-epochePeriod" name="epochePeriod" class="form-control"
+                               type="text" value="<%= epochePeriod / 3600%>" disabled/>
+                    </div>
+        </div>
+
+        <div class="form-group">
+            <label for="config-epocheLink" class="col-sm-2 control-label">
+                Ссылка файлов-результатов:</label>
+            <div class="col-sm-6">
+                <a id="config-epocheLink" href="/prices/<%= id %>" target="_blank">/prices/<%= id %></a>
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-sm-10">
                 <a href="#configs/<%= id %>/edit" class="btn btn-default btn-small js-edit">
                     Редактировать
@@ -324,6 +349,14 @@
             <div class="col-sm-6">
                 <input id="config-filesCount" name="filesCount" class="form-control"
                        type="text" value="<%= filesCount %>"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="config-limitSize" class="col-sm-2 control-label">
+                Макс-ый размер файлов-результатов, Кб.:</label>
+            <div class="col-sm-6">
+                <input id="config-limitSize" name="limitSize" class="form-control"
+                       type="text" value="<%= limitSize/1024 %>" />
             </div>
         </div>
         <div class="form-group">
@@ -444,6 +477,15 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="config-epochePeriod" class="col-sm-2 control-label">
+                Период подмены файлов-результатов, мин.:</label>
+            <div class="col-sm-6">
+                <input id="config-epochePeriod" name="epochePeriod" class="form-control"
+                       type="text" value="<%= epochePeriod / 3600 %>"/>
             </div>
         </div>
 

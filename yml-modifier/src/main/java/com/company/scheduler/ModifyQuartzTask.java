@@ -6,6 +6,8 @@ import company.scheduler.QuartzTask;
 import org.quartz.*;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.quartz.CalendarIntervalScheduleBuilder.calendarIntervalSchedule;
 import static org.quartz.DateBuilder.todayAt;
@@ -33,7 +35,7 @@ public class ModifyQuartzTask implements QuartzTask {
     public JobDetail jobDetail() {
         return JobBuilder.newJob(ModifyJob.class)
                 .withIdentity(jobKey().getName())
-                .usingJobData("config", gson.toJson(config))
+                .usingJobData("configId", config.getId())
                 .build();
     }
 

@@ -14,6 +14,7 @@ import company.handlers.xml.insert.SimpleXmlEventSupplier;
 import company.handlers.xml.insert.XmlEventInserter;
 import company.handlers.xml.insert.XmlEventSupplier;
 import company.providers.FileXMLEventReaderProvider;
+import company.providers.XMLEventReaderProvider;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventFactory;
@@ -27,11 +28,13 @@ import java.util.function.Predicate;
 public class ModifierXmlEventHandlerProvider {
 
     ModifierConfig config;
+    XMLEventReaderProvider readerProvider;
 
     private XMLEventFactory xmlEventFactory = XMLEventFactory.newFactory();
 
-    public ModifierXmlEventHandlerProvider(ModifierConfig config) {
+    public ModifierXmlEventHandlerProvider(ModifierConfig config, XMLEventReaderProvider readerProvider) {
         this.config = config;
+        this.readerProvider = readerProvider;
     }
 
     public XmlEventHandler get() throws FileNotFoundException, UnsupportedEncodingException, XMLStreamException {
@@ -135,7 +138,7 @@ public class ModifierXmlEventHandlerProvider {
         EventCounter eventCounter = new EventCounter(new InElementCondition("offers").and((event) -> event.isStartElement()
                 && event.asStartElement().getName().getLocalPart().equals("offer")));
 
-        new StAXService(new FileXMLEventReaderProvider(config.getInputFile(), config.getEncoding())).process(eventCounter);
+        new StAXService(readerProvider).process(eventCounter);
 
         return eventCounter.getCount();
     }
