@@ -4,7 +4,31 @@ ConfigManager.module("ConfigsApp.Common.Views", function(Views,  ConfigManager, 
 
         events: {
             "click button.js-submit" : "submitClicked",
-            "click button.js-cancel" : "cancelClicked"
+            "click button.js-cancel" : "cancelClicked",
+            "click button.addReplace": "addReplace"
+        },
+
+        initialize: function(){
+            this.replaces = new ConfigManager.Entities.ReplaceCollection(this.model.get("replaces"));
+            this.replacesView = new Views.Replaces({collection: this.replaces});
+        },
+
+        addReplace: function(){
+            var replacement = this.$el.find('#replacement').val();
+            var wordsToReplace = this.$el.find('#wordsToReplace').val().split(",");
+            wordsToReplace = wordsToReplace.filter(function(e){return e.trim()});
+
+            _.each(wordsToReplace, function(word){
+                word.trim();
+            });
+
+            var replace = new ConfigManager.Entities.Replace();
+            replace.set({replacement : replacement, wordsToReplace: wordsToReplace});
+
+            this.replaces.add(replace);
+
+            this.$el.find('#replacement').val("");
+            this.$el.find('#wordsToReplace').val("");
         },
 
         submitClicked: function(e){
@@ -14,6 +38,8 @@ ConfigManager.module("ConfigsApp.Common.Views", function(Views,  ConfigManager, 
             data.epochePeriod = this.$el.find("#config-epochePeriod").val()*3600;
 
             data.limitSize = this.$el.find("#config-limitSize").val() * 1024;
+
+            data.replaces = Views.Util.Replaces.parseReplaces(this.$el.find("#replacesTable").find('tbody').children());
 
             this.trigger("form:submit", data);
         },
@@ -28,6 +54,9 @@ ConfigManager.module("ConfigsApp.Common.Views", function(Views,  ConfigManager, 
                 var $title = $("<h3>", { text: this.title });
                 this.$el.prepend($title);
             }
+
+            this.$el.find("#replacesTable").append(this.replacesView.$el);
+            this.replacesView.render();
         },
 
         onShow : function(){
@@ -73,4 +102,31 @@ ConfigManager.module("ConfigsApp.Common.Views", function(Views,  ConfigManager, 
             _.each(errors, markErrors);
         }
     });
+
+
+    Views.Replace = Marionette.ItemView.extend({
+        tagName : "tr",
+
+        events: {
+            "click a.delete": "destroy"
+        },
+
+        destroy: function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            this.model.destroy();
+        },
+
+        render: function () {
+            this.$el.html(_.template($('#replaceTemplate').html(), this.model.toJSON()));
+            return this;
+        }
+    });
+
+    Views.Replaces = Marionette.CollectionView.extend({
+        tagName : "tbody",
+        itemView: Views.Replace
+    });
+
 });

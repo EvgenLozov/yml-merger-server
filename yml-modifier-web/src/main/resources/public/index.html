@@ -38,6 +38,22 @@
     </tbody>
 </script>
 
+<script type="text/template" id="replaceTemplate">
+    <td width="50%">
+        <%= wordsToReplace %>
+    </td>
+    <td width="30%">
+        <% if (replacement == "") {
+        print("[Пустая строка]")
+        } else {
+        print(replacement)
+        } %>
+    </td>
+    <td width="20%">
+        <a href="#" class="delete btn btn-danger btn-sm">Удалить</a>
+    </td>
+</script>
+
 <script type="text/template" id="config-list-item">
     <td><%- name %></td>
     <td>
@@ -252,6 +268,34 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Замена слов</label>
+            <div class="col-sm-6">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th width="70%">Что заменить</th>
+                        <th width="30%">На что заменить</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% _.each(replaces, function(replace)
+                    { %>
+                    <tr>
+                        <td> <%= replace.wordsToReplace %> </td>
+                        <% if (replace.replacement != "") { %>
+                        <td> <%= replace.replacement %></td>
+                        <% } else { %>
+                        <td> [Пустая строка] </td> <% } %>
+                    </tr>
+                    <% }
+                    ); %>
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -480,6 +524,39 @@
             </div>
         </div>
 
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Замена слов</label>
+                    <div class="col-sm-4">
+                        <table  class="table">
+                            <tr>
+                                <td>
+                                    <textarea class="form-control" rows="2" id="wordsToReplace" placeholder="Что заменить"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" id="replacement" placeholder="На что заменить"">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button class="addReplace btn btn-sm btn-info pull-right" type="button">Добавить</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="col-sm-6" id="replacesDiv">
+                        <table class="table table-striped" id="replacesTable">
+                            <!--replaces table content-->
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="form-group">
             <label for="config-epochePeriod" class="col-sm-2 control-label">
                 Период подмены файлов-результатов, мин.:</label>
@@ -532,6 +609,7 @@
 <script src="./js/apps/configs/edit/edit_view.js"></script>
 <script src="./js/apps/configs/edit/edit_controller.js"></script>
 <script src="./js/apps/configs/new/new_view.js"></script>
+<script src="js/apps/configs/common/util.js"></script>
 
 <script type="text/javascript">
     ConfigManager.start();

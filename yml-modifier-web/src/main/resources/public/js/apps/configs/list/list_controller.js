@@ -90,7 +90,7 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
               });
 
               configListView.on("itemview:config:edit", function(childView, model){
-                  var view = new ConfigManager.ConfigsApp.Edit.Config({
+/*                  var view = new ConfigManager.ConfigsApp.Edit.Config({
                       model: model,
                       asModal: true
                   });
@@ -109,7 +109,8 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
                       ConfigManager.dialogRegion.close();
                   });
 
-                  ConfigManager.dialogRegion.show(view);
+                  ConfigManager.dialogRegion.show(view);*/
+                  ConfigManager.trigger("config:edit", model.get("id"));
 
               });
 

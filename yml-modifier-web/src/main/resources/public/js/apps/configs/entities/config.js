@@ -56,6 +56,12 @@ ConfigManager.module("Entities", function(Entities, ConfigManager,  Backbone, Ma
         url: "configs"
     });
 
+    Entities.Replace = Backbone.Model.extend({});
+
+    Entities.ReplaceCollection = Backbone.Collection.extend({
+        model: Entities.Replace
+    });
+
     var API = {
         getConfigEntities: function(){
             var configs = new Entities.Configs();
