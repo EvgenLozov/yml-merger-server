@@ -1,5 +1,6 @@
 package com.modifier.web.controller;
 
+import com.company.EpochalModifyService;
 import com.company.ModifierConfig;
 import com.company.ModifyService;
 import company.config.ConfigNotFoundException;
@@ -20,16 +21,14 @@ import javax.xml.stream.XMLStreamException;
 public class ModifierController {
 
     @Autowired
-    private ConfigRepository<ModifierConfig> configRepository;
+    private EpochalModifyService epochalModifyService;
 
     @RequestMapping(value = "{id}/modify", method = RequestMethod.POST)
     public void modify(@PathVariable final String id, HttpServletResponse response) throws XMLStreamException {
         Runnable modifyTask = () -> {
 
             try{
-                ModifierConfig config = configRepository.get(id);
-                ModifyService modifyService = new ModifyService();
-                modifyService.process(config);
+                epochalModifyService.process(id);
             }catch(ConfigNotFoundException e){
                 response.setStatus(400);
             }
