@@ -105,8 +105,9 @@ public class ModifierXmlEventHandlerProvider {
     }
 
     private XmlEventHandler getOutputHandler() throws XMLStreamException {
+
         if (config.getLimitSize() > 0) {
-            return new WriteToLimitSizeFile(config.getOutputDir(), config.getEncoding(), config.getLimitSize());
+            return  new OldResultsCleanerXmlEventHandler(config.getOutputDir()+"/output0.xml",new WriteToLimitSizeFile(config.getOutputDir(), config.getEncoding(), config.getLimitSize()));
         }
 
         int offerCount = getOfferCount();
@@ -123,7 +124,7 @@ public class ModifierXmlEventHandlerProvider {
         handlers.add(new XmlEventFilter(new OffersSeparator( fileXmlEventWriters, offerCount/config.getFilesCount() ), new InElementCondition("offers") ));
         handlers.add(new ProgressHandler(offerCount));
 
-        return new SuccessiveXmlEventHandler(handlers);
+        return new OldResultsCleanerXmlEventHandler(config.getOutputDir()+"/output0.xml", new SuccessiveXmlEventHandler(handlers));
     }
 
     private BufferXmlEventOperator provideDescriptionModification()

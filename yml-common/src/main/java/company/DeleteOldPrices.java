@@ -7,11 +7,11 @@ import java.io.File;
  */
 public class DeleteOldPrices {
 
-    public void delete(String Dir){
-        File dir = new File(Dir);
-        if (dir.isDirectory()){
-            File first = new File(Dir+"/output0.xml");
-            long lastModifyDate = first.lastModified();
+    public void delete(String firstFileName){
+        File firstFile = new File(firstFileName);
+        File dir = firstFile.getParentFile();
+        if (dir!=null){
+            long lastModifyDate = firstFile.lastModified();
             if (dir.list().length>0) {
                 for (File file : dir.listFiles()) {
                     if (file.lastModified() < lastModifyDate)
