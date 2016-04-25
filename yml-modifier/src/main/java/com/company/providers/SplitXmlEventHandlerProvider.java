@@ -23,6 +23,10 @@ public class SplitXmlEventHandlerProvider {
     }
 
     public XmlEventHandler get() throws XMLStreamException {
+        if (config.getLimitSize() > 0) {
+            return  new OldResultsCleanerXmlEventHandler(config.getOutputDir()+"/output0.xml",new WriteToLimitSizeFile(config.getOutputDir(), config.getEncoding(), config.getLimitSize()));
+        }
+
         int offerCount = getOfferCount();
 
         List<XmlEventHandler> fileXmlEventWriters = new ArrayList<>();
@@ -37,7 +41,7 @@ public class SplitXmlEventHandlerProvider {
         handlers.add(new XmlEventFilter(new OffersSeparator( fileXmlEventWriters, offerCount/config.getFilesCount() ), new InElementCondition("offers") ));
         handlers.add(new ProgressHandler(offerCount));
 
-        return new SuccessiveXmlEventHandler(handlers);
+        return new OldResultsCleanerXmlEventHandler(config.getOutputDir()+"/output0.xml", new SuccessiveXmlEventHandler(handlers));
     }
 
     private int getOfferCount() throws XMLStreamException {
