@@ -147,7 +147,7 @@ public class ModifierConfig implements Config, PswConfig {
     }
 
     public void setFilesCount(int filesCount) {
-        if (filesCount <= 0)
+        if (filesCount < 0)
             throw new IllegalArgumentException("filesCount has to be a positive integer");
         this.filesCount = filesCount;
     }
