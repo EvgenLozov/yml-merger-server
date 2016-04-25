@@ -35,8 +35,6 @@ public class ModifyService {
             XmlEventHandler handler = new ModifierXmlEventHandlerProvider(config, readerProvider).get();
             stAXService.process(handler);
 
-            DeleteOldPrices deleteOldPrices = new DeleteOldPrices();
-            deleteOldPrices.delete(config.getOutputDir());
         } catch (FileNotFoundException | UnsupportedEncodingException | XMLStreamException e) {
             e.printStackTrace();
         }
