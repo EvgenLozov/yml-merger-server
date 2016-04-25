@@ -52,9 +52,9 @@ public class ModifierXmlEventHandlerProvider {
         handlers.add(new XmlEventFilter(new ModifyTextData((old) -> old.equals("0") ? "10000" : old ), new InElementCondition("price")));
 
         TreeSet<String> forbiddenWords = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
-        forbiddenWords.add("опт");
-        forbiddenWords.add("опт.");
-        forbiddenWords.add("оптом");
+        forbiddenWords.add("пїЅпїЅпїЅ");
+        forbiddenWords.add("пїЅпїЅпїЅ.");
+        forbiddenWords.add("пїЅпїЅпїЅпїЅпїЅ");
 
         handlers.add(new XmlEventFilter(new ModifyTextData(new RemoveWordsOperator(forbiddenWords)), new InElementCondition("description").or(new InElementCondition("name"))));
 
@@ -89,7 +89,7 @@ public class ModifierXmlEventHandlerProvider {
         operators.add(new AddElementIfAbsent("currencyId", xmlEventFactory, Optional.of("RUR")));
         operators.add(new AddElementIfAbsent("description", xmlEventFactory, Optional.empty()));
 
-        String removedStr = new String("удалено".getBytes(), config.getEncoding());
+        String removedStr = new String("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ".getBytes(), config.getEncoding());
 
         operators.add(new AddElementIfAbsent("name", xmlEventFactory, Optional.of(removedStr)));
         operators.add(new AddElementIfAbsent("model", xmlEventFactory, Optional.of(removedStr)));
@@ -105,6 +105,10 @@ public class ModifierXmlEventHandlerProvider {
     }
 
     private XmlEventHandler getOutputHandler() throws XMLStreamException {
+        if (config.getLimitSize() > 0) {
+            return new WriteToLimitSizeFile(config.getOutputDir(), config.getEncoding(), config.getLimitSize());
+        }
+
         int offerCount = getOfferCount();
 
         List<XmlEventHandler> fileXmlEventWriters = new ArrayList<>();

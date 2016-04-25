@@ -32,14 +32,9 @@ public class ModifyService {
         StAXService stAXService = new StAXService( readerProvider );
 
         try {
-            if (config.getLimitSize() > 0) {
-                XmlEventHandler handler = new WriteToLimitSizeFile(config.getOutputDir(), config.getEncoding(), config.getLimitSize());
-                stAXService.process(handler);
-            }
-            else {
-                XmlEventHandler handler = new ModifierXmlEventHandlerProvider(config, readerProvider).get();
-                stAXService.process(handler);
-            }
+            XmlEventHandler handler = new ModifierXmlEventHandlerProvider(config, readerProvider).get();
+            stAXService.process(handler);
+
             DeleteOldPrices deleteOldPrices = new DeleteOldPrices();
             deleteOldPrices.delete(config.getOutputDir());
         } catch (FileNotFoundException | UnsupportedEncodingException | XMLStreamException e) {
