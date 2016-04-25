@@ -43,13 +43,8 @@ public class ModifyService {
     private XMLEventReaderProvider getHttpReaderProvider(ModifierConfig config)
     {
         try {
-            CloseableHttpClient httpClient;
-            try {
-                httpClient = new HttpClientProvider(config.getUser(), config.getPsw()).get();
-            } catch (Exception e){
-                e.printStackTrace();
-                throw new RuntimeException("Unable to get HttpClient");
-            }
+            CloseableHttpClient httpClient = new HttpClientProvider(config.getUser(), config.getPsw()).get();
+
             HttpService httpService = new HttpService(httpClient);
             HttpRequestProvider requestProvider = new DownloadPriceListRequest(config.getInputFileURL());
             HttpResponseHandler<String> responseHandler = new SaveIntoFileHttpResponseHandler(config.getEncoding());
@@ -57,9 +52,9 @@ public class ModifyService {
             String tmpFile = httpService.execute(requestProvider, responseHandler);
 
             return new FileXMLEventReaderProvider(tmpFile, config.getEncoding());
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Unable to do auto merge of " + config.getId());
+        } catch (Exception e){
+            throw new RuntimeException("Unable to get HttpClient", e);
         }
+
     }
 }
