@@ -53,7 +53,7 @@ public class ModifyService {
 
             return new FileXMLEventReaderProvider(tmpFile, config.getEncoding());
         } catch (Exception e){
-            throw new RuntimeException("Unable to get HttpClient", e);
+            throw new RuntimeException("Unable to get http reader provider", e);
         }
 
     }
