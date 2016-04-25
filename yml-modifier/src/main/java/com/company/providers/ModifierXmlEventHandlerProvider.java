@@ -1,11 +1,14 @@
-package com.company;
+package com.company.providers;
 
+import com.company.ModifierConfig;
+import com.company.OfferAttributeModificator;
+import com.company.OfferDescriptionProvider;
 import com.company.functions.RemoveWordsOperator;
 import com.company.handlers.OffersCategoryIdModifier;
 import com.company.handlers.OffersSeparator;
 import com.company.handlers.ProgressHandler;
-import com.company.operators.AddContentToDescription;
-import com.company.operators.ModifyOfferDescription;
+import com.company.operators.event.AddContentToDescription;
+import com.company.operators.event.ModifyOfferDescription;
 import company.StAXService;
 import company.conditions.*;
 import company.handlers.xml.*;
@@ -57,8 +60,6 @@ public class ModifierXmlEventHandlerProvider {
         forbiddenWords.add("�����");
 
         handlers.add(new XmlEventFilter(new ModifyTextData(new RemoveWordsOperator(forbiddenWords)), new InElementCondition("description").or(new InElementCondition("name"))));
-
-        handlers.add(getOutputHandler());
 
         XmlEventHandler handler = new SuccessiveXmlEventHandler(handlers);
 

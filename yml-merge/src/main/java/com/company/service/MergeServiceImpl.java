@@ -2,7 +2,7 @@ package com.company.service;
 
 import com.company.config.CategoryIdsPair;
 import com.company.config.MergerConfig;
-import com.company.config.Replace;
+import company.domain.Replace;
 import company.http.HttpClientProvider;
 import company.http.HttpService;
 import com.company.processing.MergePostProcessor;
