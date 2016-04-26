@@ -60,11 +60,11 @@
   "currencies" : [ "RUR", "BYR", "KZT" ],
   "replaces" : [ ],
   "oldPrice" : 0.3,
-  "lastMerge" : 1458565259605,
+  "lastMerge" : 1461684238972,
   "autoMerge" : true,
   "period" : 1,
   "time" : "15:00",
   "periodInHours" : 5,
   "notAllowedWords" : [ ],
-  "nextFireTime" : 1459884708298
+  "nextFireTime" : 1461709488526
 } ]

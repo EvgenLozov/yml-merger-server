@@ -10,10 +10,19 @@ import java.util.List;
 public class ConfigGroup implements Config {
 
     private String id;
+    private String name;
     private List<String> mergerConfigIds;
 
     private long epocheStart;
     private long epochePeriod;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public long getEpocheStart() {
         return epocheStart;

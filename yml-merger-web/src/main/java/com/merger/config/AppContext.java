@@ -2,13 +2,16 @@ package com.merger.config;
 
 import com.company.config.ConfigGroup;
 import com.company.config.MergerConfig;
+import com.company.epoche.MergerEpocheService;
 import com.company.repository.CategoryRepository;
 import com.company.repository.CategorySource;
 import com.company.repository.MergerConfigRepository;
+import com.company.repository.SetEpocheStartConfigGroupRepository;
 import com.company.scheduler.*;
 import com.company.service.MergeService;
 import com.company.service.MergeServiceImpl;
 import com.company.service.SingleProcessMergeService;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import company.config.ConfigRepository;
@@ -46,7 +49,7 @@ public class AppContext {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
-        return new JsonConfigRepository<>("config/configGroup.json",ConfigGroup.class,mapper);
+        return new SetEpocheStartConfigGroupRepository(new JsonConfigRepository<>("config/configGroup.json",ConfigGroup.class,mapper));
     }
 
     @Bean
@@ -80,5 +83,10 @@ public class AppContext {
         new MergeTaskSchedulerInitializer(repository).init(persistentQuartzTasksScheduler);
 
         return persistentQuartzTasksScheduler;
+    }
+
+    @Bean
+    public MergerEpocheService mergerEpocheService(ConfigRepository<ConfigGroup> configGroupRepository, ConfigRepository<MergerConfig> configRepository){
+        return new MergerEpocheService(configGroupRepository, configRepository);
     }
 }

@@ -3,6 +3,7 @@ package com.modifier.web.config;
 import com.company.*;
 import com.company.scheduler.InMemoryModifyTaskSchedulerInitializer;
 import com.company.scheduler.ModifyJobFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
 import company.scheduler.InMemoryQuartzTasksScheduler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
