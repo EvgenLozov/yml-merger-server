@@ -1,4 +1,4 @@
-package com.company.operators;
+package com.company.operators.event;
 
 import com.company.OfferDescriptionProvider;
 import company.handlers.xml.buffered.BufferXmlEventOperator;

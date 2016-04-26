@@ -13,13 +13,13 @@ import javax.xml.stream.XMLStreamException;
 import java.io.*;
 import java.util.Arrays;
 
-public class InMemoryXmlInputStreamOperator implements InputStreamOperator {
+public class XmlInputStreamOperator implements InputStreamOperator {
 
     String encoding;
     XmlEventHandler xmlEventHandler;
     Storage storage;
 
-    public InMemoryXmlInputStreamOperator(String encoding, XmlEventHandler xmlEventHandler, Storage storage) {
+    public XmlInputStreamOperator(String encoding, XmlEventHandler xmlEventHandler, Storage storage) {
         this.encoding = encoding;
         this.xmlEventHandler = xmlEventHandler;
         this.storage = storage;
