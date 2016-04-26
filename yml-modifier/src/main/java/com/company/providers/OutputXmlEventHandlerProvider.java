@@ -14,11 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class SplitXmlEventHandlerProvider {
+public class OutputXmlEventHandlerProvider {
 
     ModifierConfig config;
 
-    public SplitXmlEventHandlerProvider(ModifierConfig config) {
+    public OutputXmlEventHandlerProvider(ModifierConfig config) {
         this.config = config;
     }
 

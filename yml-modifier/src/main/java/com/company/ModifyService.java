@@ -1,7 +1,7 @@
 package com.company;
 
 import com.company.providers.ModifierXmlEventHandlerProvider;
-import com.company.providers.SplitXmlEventHandlerProvider;
+import com.company.providers.OutputXmlEventHandlerProvider;
 import company.http.*;
 import company.providers.FileXMLEventReaderProvider;
 import company.providers.XMLEventReaderProvider;
@@ -32,7 +32,7 @@ public class ModifyService {
 
             InputStream modifiedXmlFile = modify.andThen(replace).apply(new FileInputStream(config.getInputFile()));
 
-            XmlInputStreamConsumer splitAndStore = new XmlInputStreamConsumer(config.getEncoding(), new SplitXmlEventHandlerProvider(config).get());
+            XmlInputStreamConsumer splitAndStore = new XmlInputStreamConsumer(config.getEncoding(), new OutputXmlEventHandlerProvider(config).get());
             splitAndStore.accept(modifiedXmlFile);
         } catch (FileNotFoundException | UnsupportedEncodingException | XMLStreamException e) {
             throw new RuntimeException(e);
