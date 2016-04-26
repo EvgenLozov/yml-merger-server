@@ -31,13 +31,11 @@ import java.util.function.Predicate;
 public class ModifierXmlEventHandlerProvider {
 
     ModifierConfig config;
-    XMLEventReaderProvider readerProvider;
 
     private XMLEventFactory xmlEventFactory = XMLEventFactory.newFactory();
 
-    public ModifierXmlEventHandlerProvider(ModifierConfig config, XMLEventReaderProvider readerProvider) {
+    public ModifierXmlEventHandlerProvider(ModifierConfig config) {
         this.config = config;
-        this.readerProvider = readerProvider;
     }
 
     public XmlEventHandler get() throws FileNotFoundException, UnsupportedEncodingException, XMLStreamException {

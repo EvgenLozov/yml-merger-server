@@ -50,6 +50,9 @@ public class ReplaceFragmentsOperator implements InputStreamOperator {
 
     private String performReplacing(String line)
     {
+        if (replaces == null)
+            return line;
+
         String result = line;
         for (Replace replace : replaces)
             for (String word : replace.getWordsToReplace()) {

@@ -22,15 +22,11 @@ public class ModifyService {
 
     public void process(ModifierConfig config)  {
 
-        XMLEventReaderProvider readerProvider = config.getInputFileURL() !=null && !config.getInputFileURL().isEmpty() ?
-                getHttpReaderProvider(config):
-                new FileXMLEventReaderProvider(config.getInputFile(), config.getEncoding());
-
         try {
-            InputStreamOperator modify = new XmlInputStreamOperator(config.getEncoding(), new ModifierXmlEventHandlerProvider(config, readerProvider).get(), new InMemoryStorage());
+            InputStreamOperator modify = new XmlInputStreamOperator(config.getEncoding(), new ModifierXmlEventHandlerProvider(config).get(), new InMemoryStorage());
             InputStreamOperator replace = new ReplaceFragmentsOperator(config.getEncoding(), config.getReplaces());
 
-            InputStream modifiedXmlFile = modify.andThen(replace).apply(new FileInputStream(config.getInputFile()));
+            InputStream modifiedXmlFile = modify.andThen(replace).apply(getInputStream(config));
 
             XmlInputStreamConsumer splitAndStore = new XmlInputStreamConsumer(config.getEncoding(), new OutputXmlEventHandlerProvider(config).get());
             splitAndStore.accept(modifiedXmlFile);
@@ -40,8 +36,10 @@ public class ModifyService {
 
     }
 
-    private XMLEventReaderProvider getHttpReaderProvider(ModifierConfig config)
-    {
+    private InputStream getInputStream(ModifierConfig config) throws FileNotFoundException {
+        if (config.getInputFileURL() ==null || config.getInputFileURL().isEmpty())
+            return new FileInputStream(config.getInputFile());
+
         try {
             CloseableHttpClient httpClient = new HttpClientProvider(config.getUser(), config.getPsw()).get();
 
@@ -51,7 +49,7 @@ public class ModifyService {
 
             String tmpFile = httpService.execute(requestProvider, responseHandler);
 
-            return new FileXMLEventReaderProvider(tmpFile, config.getEncoding());
+            return new FileInputStream(tmpFile);
         } catch (Exception e){
             throw new RuntimeException("Unable to get http reader provider", e);
         }
