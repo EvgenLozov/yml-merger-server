@@ -19,10 +19,11 @@ public class MergerPricesController {
     @Autowired
     private MergerEpocheService mergerEpocheService;
 
-    @RequestMapping(value = "/{configId}", method = RequestMethod.GET)
-    public FileSystemResource get(@PathVariable String configId, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/{currency}/{configId}", method = RequestMethod.GET)
+    public FileSystemResource get(@PathVariable String currency, @PathVariable String configId,
+                                  HttpServletResponse response) throws IOException {
 
-        File file = mergerEpocheService.get(configId);
+        File file = mergerEpocheService.get(configId, currency);
 
         if (!file.exists()){
             response.setStatus(404);
@@ -32,7 +33,7 @@ public class MergerPricesController {
             return null;
         }
 
-        response.setHeader("Content-Disposition", String.format("attachment; filename=%s", configId));
+        response.setHeader("Content-Disposition", String.format("attachment; filename=%s-%s.xml", configId, currency));
         return new FileSystemResource(file);
     }
 

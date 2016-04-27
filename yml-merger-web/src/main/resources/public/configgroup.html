@@ -11,6 +11,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
           integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
+    <script src="./js/configgroup/vendor/jquery.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
     <!--<link href="./css/bootstrap.css" rel="stylesheet">-->
     <link href="./css/application.css" rel="stylesheet">
     <link href="./css/jquery-ui-1.10.0.custom.css" rel="stylesheet">
@@ -50,7 +55,7 @@
         </div>
         <div class="form-group">
             <label for="epochePeriod" class="col-sm-3 control-label">
-                Период подмены файлов:</label>
+                Период подмены файлов, мин.:</label>
             <div class="col-sm-6">
                 <input id="epochePeriod" name="epochePeriod" class="form-control" type="text" value="<%= epochePeriod/60000 %> "/>
             </div>
@@ -81,7 +86,7 @@
         </div>
         <div class="form-group">
             <label for="epochePeriod" class="col-sm-3 control-label">
-                Период подмены файлов:</label>
+                Период подмены файлов, мин.:</label>
             <div class="col-sm-6">
                 <input id="epochePeriod" name="epochePeriod" class="form-control" type="text"/>
             </div>
@@ -117,7 +122,18 @@
 
 <script type="text/template" id="group-list-item">
     <td><%- name %></td>
-    <td><a href="/prices/<%= id %>.xml"> Ссылка </a> </td>
+    <td><div class="dropdown">
+        <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="downloadMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Скачать
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="downloadMenu">
+            <li><a href="/prices/RUR/<%= id %>.xml" class="download" currencyVal="RUR">RUR</a></li>
+            <li><a href="/prices/UAH/<%= id %>.xml" class="download" currencyVal="UAH">UAH</a></li>
+            <li><a href="/prices/BYR/<%= id %>.xml" class="download" currencyVal="BYR">BYR</a></li>
+            <li><a href="/prices/KZT/<%= id %>.xml" class="download" currencyVal="KZT">KZT</a></li>
+        </ul>
+    </div></td>
     <td>
         <button class="btn btn-default btn-sm js-show">
             <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
@@ -143,7 +159,6 @@
         </div>
 </script>
 
-<script src="./js/configgroup/vendor/jquery.js"></script>
 <script src="./js/configgroup/vendor/jquery-ui-1.10.3.js"></script>
 <script src="./js/configgroup/vendor/json2.js"></script>
 <script src="./js/configgroup/vendor/underscore.js"></script>

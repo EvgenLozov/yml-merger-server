@@ -24,18 +24,19 @@ public class MergerEpocheService {
         this.mergerConfigRepository = mergerConfigRepository;
     }
 
-    public File get(String configGroupId){
+    public File get(String configGroupId, String currency){
         ConfigGroup configGroup = configGroupRepository.get(configGroupId);
 
         List<Supplier<File>> suppliers = new ArrayList<>();
         for (String configId : configGroup.getMergerConfigIds()) {
             MergerConfig config = mergerConfigRepository.get(configId);
-            String outputFileName = config.getOutputFile();
-            File outputFile = new File(outputFileName);
-            if (!outputFile.exists())
-                throw new RuntimeException("Result file does not exists for config : " + config.getName());
 
-            suppliers.add(() -> outputFile);
+            String outputFileDir = config.getOutputFile();
+            File outputDir = new File(outputFileDir);
+            for (File file : outputDir.listFiles()) {
+                if (file.getName().contains(currency))
+                    suppliers.add(() -> file);
+            }
         }
 
         return new EpocheSupplier<>(suppliers, configGroup.getEpocheStart(), configGroup.getEpochePeriod()).get();
