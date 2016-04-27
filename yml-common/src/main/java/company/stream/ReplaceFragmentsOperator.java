@@ -1,31 +1,31 @@
-package com.company.processing;
+package company.stream;
 
 import company.domain.Replace;
-import company.bytearray.ByteArrayProcessor;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Scanner;
 
-public class ReplaceProcessing implements ByteArrayProcessor {
+public class ReplaceFragmentsOperator implements InputStreamOperator {
 
     String encoding;
     List<Replace> replaces;
 
-    public ReplaceProcessing(String encoding, List<Replace> replaces) {
+    public ReplaceFragmentsOperator(String encoding, List<Replace> replaces) {
         this.encoding = encoding;
         this.replaces = replaces;
     }
 
     @Override
-    public byte[] process(byte[] bytes) {
+    public InputStream apply(InputStream inputStream){
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PrintWriter printWriter = new PrintWriter(outputStream);
 
-        try(Scanner scanner = new Scanner(new ByteArrayInputStream(bytes), encoding))
+        try(Scanner scanner = new Scanner(inputStream, encoding))
         {
             while (scanner.hasNextLine())
             {
@@ -45,7 +45,7 @@ public class ReplaceProcessing implements ByteArrayProcessor {
 
         printWriter.close();
 
-        return outputStream.toByteArray();
+        return new ByteArrayInputStream(outputStream.toByteArray());
     }
 
     private String performReplacing(String line)

@@ -1,4 +1,4 @@
-package com.company.operators;
+package com.company.operators.event;
 
 import com.company.OfferDescriptionProvider;
 import com.sun.xml.internal.stream.events.CharacterEvent;

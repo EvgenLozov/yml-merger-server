@@ -37,7 +37,7 @@ public class AllCategoriesProvider {
         for (String url : config.getUrls())
             try {
                 logger.info("Getting categories from file: " + url);
-                categories.addAll(httpService.execute(new DownloadPriceListRequest(url), new ExtractCategory(config.getEncoding())));
+                categories.addAll(httpService.execute(new DownloadPriceListRequest(url), new ExtractCategory(config.getEncoding()), 1000 * 60, 8));
                 logger.info("Categories are extracted successfully from: " + url);
             } catch (IOException e) {
                 throw new RuntimeException(e);
