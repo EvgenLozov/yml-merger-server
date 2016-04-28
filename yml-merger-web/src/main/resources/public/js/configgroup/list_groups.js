@@ -6,13 +6,13 @@ ConfigGroupManager.module("GroupsApp.List", function(List, ConfigGroupManager,  
 
         events: {
             "click button.js-delete" : "deleteClicked",
-            "click button.js-show" : "showGroup"
+            "click button.js-edit" : "editGroup"
         },
 
-        showGroup: function(e){
+        editGroup: function(e){
             e.preventDefault();
             e.stopPropagation();
-            this.trigger("group:details", this.model);
+            this.trigger("group:edit", this.model);
         },
 
         deleteClicked: function(e){
@@ -35,8 +35,7 @@ ConfigGroupManager.module("GroupsApp.List", function(List, ConfigGroupManager,  
 
         regions: {
             panelRegion: "#panel-region",
-            groupsRegion: "#groups-region",
-            showRegion: "show-region"
+            groupsRegion: "#groups-region"
         }
     });
 

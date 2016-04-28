@@ -20,55 +20,59 @@ ConfigGroupManager.module("GroupsApp.List", function(List, ConfigGroupManager,  
                     groupListLayout.groupsRegion.show(groupsView);
                 });
 
-                groupsView.on("itemview:group:details", function(childView, model){
+                groupsView.on("itemview:group:edit", function(childView, model){
 
-                    var configIds = model.get("mergerConfigIds");
-
-                    var configNames = [];
-
-                    for (var i = 0 ; i < configIds.length; i++) {
-                        configNames.push(configsData.get(configIds[i]).get("name"));
-                    }
-
-                    model.set("configNames", configNames);
-
-                    var view = new ConfigGroupManager.GroupsApp.Show.Group({
+                    var view = new ConfigGroupManager.GroupsApp.Edit.Group({
                         model: model,
-                        asModal: true
+                        asModal: true,
+                        configs: configsData
                     });
-
-                    var title = "Просмотр списка " + model.get("name");
 
                     view.on("show", function(){
                         this.$el.dialog({
                             modal: true,
-                            title: title,
                             width: "auto"
                         });
+                    });
+
+                    view.on("form:submit", function(data){
+                        if (model.save(data)){
+                            childView.render();
+                            ConfigGroupManager.dialogRegion.close();
+                        } else {
+                            view.triggerMethod("form:data:invalid", model.validationError)
+                        }
+                    });
+
+                    view.on("form:cancel", function () {
+                        ConfigGroupManager.dialogRegion.close();
                     });
 
                     ConfigGroupManager.dialogRegion.show(view);
 
                 });
 
+                groupsView.on("itemview:group:delete", function(childView, model){
+                    model.destroy();
+                });
+
                 groupPanelView.on("group:new", function() {
                     var newGroup = new ConfigGroupManager.Entities.Group();
 
-                    var view = new List.Configs({
-                        collection: configsData,
-                        asModal: true
+                    var view = new ConfigGroupManager.GroupsApp.New.Group({
+                        model: newGroup,
+                        asModal: true,
+                        configs: configsData
                     });
 
                     view.on("show", function(){
                          this.$el.dialog({
                              modal: true,
-                             title: "Создать новую группу конфигов",
                              width: "auto"
                          });
                     });
 
-                    view.on("group:create", function (data) {
-
+                    view.on("form:submit", function (data) {
                         newGroup.save(data, { success: function()
                             {
                                 groupsData.add(newGroup);
@@ -79,11 +83,11 @@ ConfigGroupManager.module("GroupsApp.List", function(List, ConfigGroupManager,  
 
                     });
 
-                    ConfigGroupManager.dialogRegion.show(view);
-                });
+                    view.on("form:cancel", function () {
+                        ConfigGroupManager.dialogRegion.close();
+                    });
 
-                groupsView.on("itemview:group:delete", function(childView, model){
-                    model.destroy();
+                    ConfigGroupManager.dialogRegion.show(view);
                 });
 
                 ConfigGroupManager.mainRegion.show(groupListLayout);

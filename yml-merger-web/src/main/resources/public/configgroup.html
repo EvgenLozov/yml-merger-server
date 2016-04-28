@@ -108,6 +108,46 @@
     </form>
 </script>
 
+<script type="text/template" id="group-form">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="group-name" class="col-sm-3 control-label">
+                Название:</label>
+            <div class="col-sm-6">
+                <input id="group-name" name="group-name" class="form-control" type="text" value="<%= name %>"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="epochePeriod" class="col-sm-3 control-label">
+                Период подмены файлов, мин.:</label>
+            <div class="col-sm-6">
+                <input id="epochePeriod" name="epochePeriod" class="form-control" type="text" value="<%= epochePeriod/60000 %>"/>
+            </div>
+        </div>
+       <div class="form-group">
+            <label class="col-sm-3 control-label">Список конфигов</label>
+            <div class="col-sm-9">
+                <table class="table table-hover" id="configs-content">
+                    <tbody>
+                    <% _.each(configs, function(config) { %>
+                    <tr>
+                        <td><input type="checkbox" configId="<%= config.id %>"></td>
+                        <td><%= config.get("name") %></td>
+                    </tr>
+                    <% } )%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-10">
+                <button class="btn btn-default js-submit">Сохранить</button>
+                <button class="btn btn-default js-cancel">Отмена</button>
+            </div>
+        </div>
+    </form>
+</script>
+
 <script type="text/template" id="group-list">
     <thead>
     <tr>
@@ -135,9 +175,9 @@
         </ul>
     </div></td>
     <td>
-        <button class="btn btn-default btn-sm js-show">
-            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-            Показать
+        <button class="btn btn-default btn-sm js-edit">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            Редакт.
         </button>
        <button class="btn btn-default btn-sm js-delete">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
@@ -168,9 +208,10 @@
 
 <script src="./js/configgroup/app.js"></script>
 <script src="./js/configgroup/entities.js"></script>
-<script src="./js/configgroup/show.js"></script>
+<script src="./js/configgroup/form.js"></script>
+<script src="./js/configgroup/new.js"></script>
+<script src="./js/configgroup/edit.js"></script>
 <script src="./js/configgroup/list_groups.js"></script>
-<script src="./js/configgroup/list_configs.js"></script>
 <script src="./js/configgroup/list_controller.js"></script>
 <script src="./js/configgroup/router.js"></script>
 
