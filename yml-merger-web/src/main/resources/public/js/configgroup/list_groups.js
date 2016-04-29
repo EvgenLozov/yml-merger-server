@@ -26,11 +26,11 @@ ConfigGroupManager.module("GroupsApp.List", function(List, ConfigGroupManager,  
         tagName: "table",
         className: "table table-hover",
         template: "#group-list",
-        itemView: List.Group,
-        itemViewContainer: "tbody"
+        childView: List.Group,
+        childViewContainer: "tbody"
     });
 
-    List.Layout = Marionette.Layout.extend({
+    List.Layout = Marionette.LayoutView.extend({
         template: "#group-list-layout",
 
         regions: {
