@@ -60,8 +60,8 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
         tagName: "table",
         className: "table table-hover",
         template: "#config-list",
-        itemView: List.Config,
-        itemViewContainer: "tbody",
+        childView: List.Config,
+        childViewContainer: "tbody",
 
         initialize: function(){
             this.listenTo(this.collection, "reset", function(){
@@ -78,7 +78,7 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
         }
     });
 
-    List.Layout = Marionette.Layout.extend({
+    List.Layout = Marionette.LayoutView.extend({
         template: "#config-list-layout",
 
         regions: {

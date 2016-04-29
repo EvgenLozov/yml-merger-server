@@ -3,7 +3,7 @@ ConfigManager.module("ConfigsApp.Show", function(Show,  ConfigManager,  Backbone
     Show.Controller = {
         showConfig : function(id){
             var loadingView = new ConfigManager.Common.Views.Loading();
-            ConfigManager.mainRegion.show(loadingView);
+            ConfigManager.regions.main.show(loadingView);
 
             var fetchingConfig = ConfigManager.request("config:entity", id);
             $.when(fetchingConfig).done(function(config){
@@ -20,7 +20,7 @@ ConfigManager.module("ConfigsApp.Show", function(Show,  ConfigManager,  Backbone
                     });
                 }
 
-                ConfigManager.mainRegion.show(configView);
+                ConfigManager.regions.main.show(configView);
             });
         }
     }

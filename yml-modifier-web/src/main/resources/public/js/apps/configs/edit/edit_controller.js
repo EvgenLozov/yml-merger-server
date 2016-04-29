@@ -2,7 +2,7 @@ ConfigManager.module("ConfigsApp.Edit", function(Edit,  ConfigManager,  Backbone
     Edit.Controller = {
         editConfig: function(id){
             var loadingView = new ConfigManager.Common.Views.Loading();
-            ConfigManager.mainRegion.show(loadingView);
+            ConfigManager.regions.main.show(loadingView);
 
             var fetchingConfig = ConfigManager.request("config:entity", id);
             $.when(fetchingConfig).done(function(config){
@@ -11,7 +11,8 @@ ConfigManager.module("ConfigsApp.Edit", function(Edit,  ConfigManager,  Backbone
                     configView = new ConfigManager.ConfigsApp.Show.MissingConfig();
                 } else {
                     configView = new Edit.Config({
-                        model: config
+                        model: config,
+                        generateTitle: true
                     });
                 }
 
@@ -28,7 +29,7 @@ ConfigManager.module("ConfigsApp.Edit", function(Edit,  ConfigManager,  Backbone
                     ConfigManager.trigger("configs:list");
                 });
 
-                ConfigManager.mainRegion.show(configView);
+                ConfigManager.regions.main.show(configView);
             });
         }
     }

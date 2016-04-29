@@ -1,11 +1,18 @@
 ConfigManager.module("ConfigsApp.Common.Views", function(Views,  ConfigManager,  Backbone, Marionette, $, _){
-    Views.Form = Marionette.ItemView.extend({
+
+    Views.Form = Marionette.LayoutView.extend({
         template: "#config-form",
 
         events: {
-            "click button.js-submit" : "submitClicked",
-            "click button.js-cancel" : "cancelClicked",
-            "click button.addReplace": "addReplace"
+            "click button.js-submit": "submitClicked"
+        },
+
+        triggers: {
+            "click button.js-cancel": "form:cancel"
+        },
+
+        regions: {
+            'replaces-region' : "#replacesView"
         },
 
         initialize: function(){
@@ -13,62 +20,20 @@ ConfigManager.module("ConfigsApp.Common.Views", function(Views,  ConfigManager, 
             this.replacesView = new Views.Replaces({collection: this.replaces});
         },
 
-        addReplace: function(){
-            var replacement = this.$el.find('#replacement').val();
-            var wordsToReplace = this.$el.find('#wordsToReplace').val().split(",");
-            wordsToReplace = wordsToReplace.filter(function(e){return e.trim()});
-
-            _.each(wordsToReplace, function(word){
-                word.trim();
-            });
-
-            var replace = new ConfigManager.Entities.Replace();
-            replace.set({replacement : replacement, wordsToReplace: wordsToReplace});
-
-            this.replaces.add(replace);
-
-            this.$el.find('#replacement').val("");
-            this.$el.find('#wordsToReplace').val("");
+        onBeforeShow: function() {
+            this.showChildView('replaces-region', this.replacesView);
         },
 
         submitClicked: function(e){
             e.preventDefault();
+
             var data = Backbone.Syphon.serialize(this);
             data.template = this.$el.find("textarea").val();
             data.epochePeriod = this.$el.find("#config-epochePeriod").val()*3600;
-
             data.limitSize = this.$el.find("#config-limitSize").val() * 1024;
-
-            data.replaces = Views.Util.Replaces.parseReplaces(this.$el.find("#replacesTable").find('tbody').children());
+            data.replaces = this.replaces;
 
             this.trigger("form:submit", data);
-        },
-
-        cancelClicked: function(e){
-            e.preventDefault();
-            this.trigger("form:cancel");
-        },
-
-        onRender: function(){
-            if (!this.options.asModal){
-                var $title = $("<h3>", { text: this.title });
-                this.$el.prepend($title);
-            }
-
-            this.$el.find("#replacesTable").append(this.replacesView.$el);
-            this.replacesView.render();
-        },
-
-        onShow : function(){
-            if (this.options.asModal) {
-                this.$el.dialog({
-                    modal: true,
-                    title: this.title,
-                    width: 700,
-                    height: 700
-                });
-            }
-
         },
 
         onFormDataInvalid: function(errors){
@@ -103,30 +68,49 @@ ConfigManager.module("ConfigsApp.Common.Views", function(Views,  ConfigManager, 
         }
     });
 
-
     Views.Replace = Marionette.ItemView.extend({
         tagName : "tr",
+        template: "#replaceTemplate",
 
         events: {
-            "click a.delete": "destroy"
+            "click button.js-delete": "deleteClicked"
         },
 
-        destroy: function (event) {
-            event.preventDefault();
-            event.stopPropagation();
+        deleteClicked: function (e) {
+            e.preventDefault();
+            e.stopPropagation();
 
             this.model.destroy();
-        },
-
-        render: function () {
-            this.$el.html(_.template($('#replaceTemplate').html(), this.model.toJSON()));
-            return this;
         }
     });
 
-    Views.Replaces = Marionette.CollectionView.extend({
-        tagName : "tbody",
-        itemView: Views.Replace
+    Views.Replaces = Marionette.CompositeView.extend({
+        template: '#replacesView-template',
+        childView: Views.Replace,
+        childViewContainer: '#replacesTable',
+
+        events: {
+            "click button.addReplace": "addReplace"
+        },
+
+        addReplace: function(){
+            var replacement = this.$el.find('#replacement').val();
+            var wordsToReplace = this.$el.find('#wordsToReplace').val().split(",");
+            wordsToReplace = wordsToReplace.filter(function(e){return e.trim()});
+
+            _.each(wordsToReplace, function(word){
+                word.trim();
+            });
+
+            var replace = new ConfigManager.Entities.Replace();
+            replace.set({replacement : replacement, wordsToReplace: wordsToReplace});
+
+            this.collection.add(replace);
+
+            this.$el.find('#replacement').val("");
+            this.$el.find('#wordsToReplace').val("");
+        }
+
     });
 
 });

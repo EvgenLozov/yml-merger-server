@@ -3,7 +3,7 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
     List.Controller = {
       listConfigs : function(){
           var loadingView = new ConfigManager.Common.Views.Loading({title: "Loading list of configs"});
-          ConfigManager.mainRegion.show(loadingView);
+          ConfigManager.regions.main.show(loadingView);
 
           var configsListLayout = new List.Layout();
           var configsListPanel = new List.Panel();
@@ -20,11 +20,11 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
                   configsListLayout.configsRegion.show(configListView);
               });
 
-              configListView.on("itemview:config:delete", function(childView, model){
+              configListView.on("childview:config:delete", function(childView, model){
                   model.destroy();
               });
 
-              configListView.on("itemview:config:modify", function(childView, model){
+              configListView.on("childview:config:modify", function(childView, model){
                   $.ajax({
                       type: "POST",
                       url: "/modifierService/" + model.get("id") + "/modify",
@@ -33,7 +33,7 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
                   });
               });
 
-              configListView.on("itemview:config:copy", function(childView, model){
+              configListView.on("childview:config:copy", function(childView, model){
                   var attributes = _.clone(model.attributes);
                   attributes.id = null;
                   attributes.name = model.get("name") + "(Копия)";
@@ -51,7 +51,7 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
 
               });
 
-              configListView.on("itemview:config:show", function(childView, model){
+              configListView.on("childview:config:show", function(childView, model){
                   ConfigManager.trigger("config:show", model.get("id"));
               });
 
@@ -60,61 +60,39 @@ ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone,
                   var newConfig = new ConfigManager.Entities.Config();
 
                   var view = new ConfigManager.ConfigsApp.New.Config({
-                      model: newConfig,
-                      asModal: true
+                      model: newConfig
                   });
 
                   newConfig.on("invalid", function(model, error) {
                       view.triggerMethod("form:data:invalid", newConfig.validationError);
                   });
 
-                  view.on("form:submit", function (data) {
-
-                  newConfig.save(data, { success: function()
-                                            {
-                                              configs.add(newConfig);
-                                              ConfigManager.dialogRegion.close();
-                                              configListView.children.findByModel(newConfig).
-                                                  flash("success");
+                    view.on("form:submit", function (data) {
+                        newConfig.save(data, { success: function()
+                                                {
+                                                  configs.add(newConfig);
+                                                  view.trigger("dialog:close");
+                                                  configListView.children.findByModel(newConfig).
+                                                      flash("success");
+                                                }
                                             }
-                                        }
-                                );
+                                        );
 
                   });
 
                   view.on("form:cancel", function () {
-                      ConfigManager.dialogRegion.close();
+                      view.trigger("dialog:close");
                   });
 
-                  ConfigManager.dialogRegion.show(view);
+                  ConfigManager.regions.dialog.show(view);
               });
 
-              configListView.on("itemview:config:edit", function(childView, model){
-/*                  var view = new ConfigManager.ConfigsApp.Edit.Config({
-                      model: model,
-                      asModal: true
-                  });
-
-                  view.on("form:submit", function(data){
-                    if (model.save(data)){
-                        childView.render();
-                        ConfigManager.dialogRegion.close();
-                        childView.flash("info");
-                    } else {
-                        view.triggerMethod("form:data:invalid", model.validationError)
-                    }
-                  });
-
-                  view.on("form:cancel", function () {
-                      ConfigManager.dialogRegion.close();
-                  });
-
-                  ConfigManager.dialogRegion.show(view);*/
+              configListView.on("childview:config:edit", function(childView, model){
                   ConfigManager.trigger("config:edit", model.get("id"));
 
               });
 
-              ConfigManager.mainRegion.show(configsListLayout);
+              ConfigManager.regions.main.show(configsListLayout);
           });
       }
     };
