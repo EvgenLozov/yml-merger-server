@@ -20,39 +20,31 @@ ConfigGroupManager.module("GroupsApp.List", function(List, ConfigGroupManager,  
                     groupListLayout.groupsRegion.show(groupsView);
                 });
 
-                groupsView.on("itemview:group:edit", function(childView, model){
+                groupsView.on("childview:group:edit", function(childView, model){
 
                     var view = new ConfigGroupManager.GroupsApp.Edit.Group({
                         model: model,
-                        asModal: true,
                         configs: configsData
-                    });
-
-                    view.on("show", function(){
-                        this.$el.dialog({
-                            modal: true,
-                            width: "auto"
-                        });
                     });
 
                     view.on("form:submit", function(data){
                         if (model.save(data)){
                             childView.render();
-                            ConfigGroupManager.dialogRegion.close();
+                            view.trigger("dialog:close");
                         } else {
                             view.triggerMethod("form:data:invalid", model.validationError)
                         }
                     });
 
                     view.on("form:cancel", function () {
-                        ConfigGroupManager.dialogRegion.close();
+                        view.trigger("dialog:close");
                     });
 
-                    ConfigGroupManager.dialogRegion.show(view);
+                    ConfigGroupManager.regions.dialog.show(view);
 
                 });
 
-                groupsView.on("itemview:group:delete", function(childView, model){
+                groupsView.on("childview:group:delete", function(childView, model){
                     model.destroy();
                 });
 
@@ -61,22 +53,14 @@ ConfigGroupManager.module("GroupsApp.List", function(List, ConfigGroupManager,  
 
                     var view = new ConfigGroupManager.GroupsApp.New.Group({
                         model: newGroup,
-                        asModal: true,
                         configs: configsData
-                    });
-
-                    view.on("show", function(){
-                         this.$el.dialog({
-                             modal: true,
-                             width: "auto"
-                         });
                     });
 
                     view.on("form:submit", function (data) {
                         newGroup.save(data, { success: function()
                             {
                                 groupsData.add(newGroup);
-                                ConfigGroupManager.dialogRegion.close();
+                                view.trigger("dialog:close");
                             }
                             }
                         );
@@ -84,10 +68,10 @@ ConfigGroupManager.module("GroupsApp.List", function(List, ConfigGroupManager,  
                     });
 
                     view.on("form:cancel", function () {
-                        ConfigGroupManager.dialogRegion.close();
+                        view.trigger("dialog:close");
                     });
 
-                    ConfigGroupManager.dialogRegion.show(view);
+                    ConfigGroupManager.regions.dialog.show(view);
                 });
 
                 ConfigGroupManager.mainRegion.show(groupListLayout);

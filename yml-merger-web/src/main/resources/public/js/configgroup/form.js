@@ -42,11 +42,6 @@ ConfigGroupManager.module("GroupsApp.Common.Views", function(Views,  ConfigGroup
         },
 
         onRender: function(){
-            if (!this.options.asModal){
-                var $title = $("<h3>", { text: this.title });
-                this.$el.prepend($title);
-            }
-
             var checkedConfigs = this.model.get('mergerConfigIds');
 
             this.$el.find('#configs-content input').each(function(){
@@ -56,16 +51,6 @@ ConfigGroupManager.module("GroupsApp.Common.Views", function(Views,  ConfigGroup
                     inputEl.prop('checked', true);
                 }
             });
-        },
-
-        onShow : function(){
-            if (this.options.asModal) {
-                this.$el.dialog({
-                    modal: true,
-                    title: this.title
-                });
-            }
-
         },
 
         onFormDataInvalid: function(errors){

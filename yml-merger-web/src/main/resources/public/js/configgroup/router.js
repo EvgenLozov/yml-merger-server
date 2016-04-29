@@ -18,7 +18,7 @@ ConfigGroupManager.module("GroupsApp", function(GroupsApp, ConfigGroupManager,  
 
     });
 
-    ConfigGroupManager.addInitializer(function(){
+    GroupsApp.on('start', function(){
         new GroupsApp.Router({
             controller: API
         });
