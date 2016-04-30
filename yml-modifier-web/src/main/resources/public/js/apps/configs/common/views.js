@@ -15,12 +15,13 @@ ConfigManager.module("ConfigsApp.Common.Views", function(Views,  ConfigManager, 
             'replaces-region' : "#replacesView"
         },
 
-        initialize: function(){
-            this.replaces = new ConfigManager.Entities.ReplaceCollection(this.model.get("replaces"));
-            this.replacesView = new Views.Replaces({collection: this.replaces});
-        },
-
         onBeforeShow: function() {
+            var models = this.model.get('replaces');
+            this.replacesView = new Views.Replaces({collection: models});
+            this.replacesView.on("childview:replace:delete", function(childview, model){
+                model.destroy();
+            });
+
             this.showChildView('replaces-region', this.replacesView);
         },
 
@@ -31,7 +32,6 @@ ConfigManager.module("ConfigsApp.Common.Views", function(Views,  ConfigManager, 
             data.template = this.$el.find("textarea").val();
             data.epochePeriod = this.$el.find("#config-epochePeriod").val()*3600;
             data.limitSize = this.$el.find("#config-limitSize").val() * 1024;
-            data.replaces = this.replaces;
 
             this.trigger("form:submit", data);
         },
@@ -79,8 +79,7 @@ ConfigManager.module("ConfigsApp.Common.Views", function(Views,  ConfigManager, 
         deleteClicked: function (e) {
             e.preventDefault();
             e.stopPropagation();
-
-            this.model.destroy();
+            this.trigger("replace:delete", this.model);
         }
     });
 
@@ -102,8 +101,10 @@ ConfigManager.module("ConfigsApp.Common.Views", function(Views,  ConfigManager, 
                 word.trim();
             });
 
-            var replace = new ConfigManager.Entities.Replace();
-            replace.set({replacement : replacement, wordsToReplace: wordsToReplace});
+            var replace = new ConfigManager.Entities.Replace({
+                replacement : replacement,
+                wordsToReplace: wordsToReplace
+            });
 
             this.collection.add(replace);
 

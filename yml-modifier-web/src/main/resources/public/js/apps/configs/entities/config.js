@@ -1,7 +1,14 @@
 ConfigManager.module("Entities", function(Entities, ConfigManager,  Backbone, Marionette, $, _){
 
-    Entities.Config = Backbone.Model.extend({
+    Entities.Config = Backbone.NestedAttributesModel.extend({
         urlRoot: "configs",
+
+        relations: [
+            {
+                key:  'replaces',
+                relatedModel: function () { return Entities.Replace }
+            }
+        ],
 
         defaults: {
             "categoryIdPrefix": "",
@@ -56,7 +63,7 @@ ConfigManager.module("Entities", function(Entities, ConfigManager,  Backbone, Ma
         url: "configs"
     });
 
-    Entities.Replace = Backbone.Model.extend({});
+    Entities.Replace = Backbone.NestedAttributesModel.extend({});
 
     Entities.ReplaceCollection = Backbone.Collection.extend({
         model: Entities.Replace
