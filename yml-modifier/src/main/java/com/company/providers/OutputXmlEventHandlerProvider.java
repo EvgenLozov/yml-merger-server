@@ -6,20 +6,24 @@ import com.company.handlers.ProgressHandler;
 import company.StAXService;
 import company.conditions.InElementCondition;
 import company.handlers.xml.*;
-import company.providers.FileXMLEventReaderProvider;
+import company.providers.InputStreamXmlEventReaderProvider;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.XMLEvent;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class OutputXmlEventHandlerProvider {
 
     ModifierConfig config;
+    Supplier<InputStream> inputXmlFileSupplier;
 
-    public OutputXmlEventHandlerProvider(ModifierConfig config) {
+    public OutputXmlEventHandlerProvider(ModifierConfig config, Supplier<InputStream> inputXmlFileSupplier) {
         this.config = config;
+        this.inputXmlFileSupplier = inputXmlFileSupplier;
     }
 
     public XmlEventHandler get() throws XMLStreamException {
@@ -48,7 +52,7 @@ public class OutputXmlEventHandlerProvider {
         EventCounter eventCounter = new EventCounter(new InElementCondition("offers").and((event) -> event.isStartElement()
                 && event.asStartElement().getName().getLocalPart().equals("offer")));
 
-        new StAXService(new FileXMLEventReaderProvider(config.getInputFile(), config.getEncoding())).process(eventCounter);
+        new StAXService(new InputStreamXmlEventReaderProvider(inputXmlFileSupplier.get(), config.getEncoding())).process(eventCounter);
 
         return eventCounter.getCount();
     }

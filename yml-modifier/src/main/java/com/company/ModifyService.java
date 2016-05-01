@@ -3,8 +3,6 @@ package com.company;
 import com.company.providers.ModifierXmlEventHandlerProvider;
 import com.company.providers.OutputXmlEventHandlerProvider;
 import company.http.*;
-import company.providers.FileXMLEventReaderProvider;
-import company.providers.XMLEventReaderProvider;
 import company.stream.InputStreamOperator;
 import company.stream.ReplaceFragmentsOperator;
 import company.stream.XmlInputStreamConsumer;
@@ -14,6 +12,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.*;
+import java.nio.file.Files;
+import java.util.function.Supplier;
 
 /**
  * Created by Naya on 20.01.2016.
@@ -26,9 +26,11 @@ public class ModifyService {
             InputStreamOperator modify = new XmlInputStreamOperator(config.getEncoding(), new ModifierXmlEventHandlerProvider(config).get(), new InMemoryStorage());
             InputStreamOperator replace = new ReplaceFragmentsOperator(config.getEncoding(), config.getReplaces());
 
-            InputStream modifiedXmlFile = modify.andThen(replace).apply(getInputStream(config));
+            Supplier<InputStream> inputXmlFileSupplier = getInputStream(config);
+            InputStream modifiedXmlFile = modify.andThen(replace).apply(inputXmlFileSupplier.get());
 
-            XmlInputStreamConsumer splitAndStore = new XmlInputStreamConsumer(config.getEncoding(), new OutputXmlEventHandlerProvider(config).get());
+            XmlInputStreamConsumer splitAndStore = new XmlInputStreamConsumer(config.getEncoding(), new OutputXmlEventHandlerProvider(config, inputXmlFileSupplier).get());
+
             splitAndStore.accept(modifiedXmlFile);
         } catch (FileNotFoundException | UnsupportedEncodingException | XMLStreamException e) {
             throw new RuntimeException(e);
@@ -36,20 +38,20 @@ public class ModifyService {
 
     }
 
-    private InputStream getInputStream(ModifierConfig config) throws FileNotFoundException {
-        if (config.getInputFileURL() ==null || config.getInputFileURL().isEmpty())
-            return new FileInputStream(config.getInputFile());
+    private Supplier<InputStream> getInputStream(ModifierConfig config) throws FileNotFoundException {
+        if (config.getInputFileURL() ==null || config.getInputFileURL().isEmpty()) {
+            InputStream inputStream = new FileInputStream(config.getInputFile());
+            return () -> inputStream;
+        }
 
         try {
             CloseableHttpClient httpClient = new HttpClientProvider(config.getUser(), config.getPsw()).get();
 
             HttpService httpService = new HttpService(httpClient);
             HttpRequestProvider requestProvider = new DownloadPriceListRequest(config.getInputFileURL());
-            HttpResponseHandler<String> responseHandler = new SaveIntoFileHttpResponseHandler(config.getEncoding());
+            byte[] bytes = httpService.execute(requestProvider, new SaveToByteArrayHttpResponseHandler());
 
-            String tmpFile = httpService.execute(requestProvider, responseHandler);
-
-            return new FileInputStream(tmpFile);
+            return () -> new ByteArrayInputStream(bytes);
         } catch (Exception e){
             throw new RuntimeException("Unable to get http reader provider", e);
         }
