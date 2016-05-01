@@ -14,7 +14,7 @@ ConfigGroupManager.module("GroupsApp.Common.Views", function(Views,  ConfigGroup
             var data = {};
 
             data.name = this.$el.find("#group-name").val();
-            data.epochePeriod = this.$el.find("#epochePeriod").val() * 1000 * 60;
+            data.epochePeriod = this.$el.find("#group-epochePeriod").val() * 1000 * 60;
 
             var ids = [];
 
@@ -73,7 +73,7 @@ ConfigGroupManager.module("GroupsApp.Common.Views", function(Views,  ConfigGroup
             };
 
             var markErrors = function(value, key){
-                var $controlGroup1 = $view.find("#config-" + key).parent();
+                var $controlGroup1 = $view.find("#group-" + key).parent();
                 var $controlGroup = $controlGroup1.closest("div .form-group");
                 var $errorEl = $("<span>", {class: "help-block", text: value});
                 $controlGroup.append($errorEl).addClass("has-error");

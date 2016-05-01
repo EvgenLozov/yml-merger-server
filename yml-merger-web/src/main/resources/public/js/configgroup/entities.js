@@ -4,12 +4,25 @@ ConfigGroupManager.module("Entities", function(Entities, ConfigGroupManager,  Ba
 
         defaults: {
             name: "",
-            epocheStart : 0,
             epochePeriod: 0,
             mergerConfigIds : []
         },
 
-        urlRoot : "configsGroup"
+        urlRoot : "configsGroup",
+
+        validate: function(attrs){
+            var errors = {};
+            if (!attrs.name || attrs.name == ""){
+                errors.name = "Укажите название"
+            }
+
+            if (!attrs.epochePeriod || attrs.epochePeriod < 1){
+                errors.epochePeriod = "Укажите период не меньше 1 мин."
+            }
+
+            if (!_.isEmpty(errors))
+                return errors;
+        }
     });
 
     Entities.Groups = Backbone.Collection.extend({

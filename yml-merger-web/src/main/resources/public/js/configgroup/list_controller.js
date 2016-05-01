@@ -56,6 +56,10 @@ ConfigGroupManager.module("GroupsApp.List", function(List, ConfigGroupManager,  
                         configs: configsData
                     });
 
+                    newGroup.on("invalid", function(model, error) {
+                        view.triggerMethod("form:data:invalid", newGroup.validationError);
+                    });
+
                     view.on("form:submit", function (data) {
                         newGroup.save(data, { success: function()
                             {
