@@ -113,5 +113,9 @@ define(["app", "backbone.nested"], function(ConfigManager){
             return API.getConfigEntity(id);
         });
 
+        ConfigManager.reqres.setHandler("config:entity:new", function(){
+            return new Entities.Config();
+        });
+
     });
 });

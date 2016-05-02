@@ -59,36 +59,38 @@ define(["app", "apps/configs/list/list_view"], function(ConfigManager, View){
                         });
 
 
-                        //configsListPanel.on("config:new", function() {
-                        //    var newConfig = new ConfigManager.Entities.Config();
-                        //
-                        //    var view = new ConfigManager.ConfigsApp.New.Config({
-                        //        model: newConfig
-                        //    });
-                        //
-                        //    newConfig.on("invalid", function(model, error) {
-                        //        view.triggerMethod("form:data:invalid", newConfig.validationError);
-                        //    });
-                        //
-                        //    view.on("form:submit", function (data) {
-                        //        newConfig.save(data, { success: function()
-                        //            {
-                        //                configs.add(newConfig);
-                        //                view.trigger("dialog:close");
-                        //                configListView.children.findByModel(newConfig).
-                        //                    flash("success");
-                        //            }
-                        //            }
-                        //        );
-                        //
-                        //    });
-                        //
-                        //    view.on("form:cancel", function () {
-                        //        view.trigger("dialog:close");
-                        //    });
-                        //
-                        //    ConfigManager.regions.dialog.show(view);
-                        //});
+                        configsListPanel.on("config:new", function() {
+                            require(["apps/configs/new/new_view"], function(NewView) {
+                                var newConfig = ConfigManager.request("config:entity:new");
+
+                                var view = new NewView.Config({
+                                    model: newConfig
+                                });
+
+                                newConfig.on("invalid", function (model, error) {
+                                    view.triggerMethod("form:data:invalid", newConfig.validationError);
+                                });
+
+                                view.on("form:submit", function (data) {
+                                    newConfig.save(data, {
+                                            success: function () {
+                                                configs.add(newConfig);
+                                                view.trigger("dialog:close");
+                                                configListView.children.findByModel(newConfig).
+                                                    flash("success");
+                                            }
+                                        }
+                                    );
+
+                                });
+
+                                view.on("form:cancel", function () {
+                                    view.trigger("dialog:close");
+                                });
+
+                                ConfigManager.regions.dialog.show(view);
+                            });
+                        });
 
                         configListView.on("childview:config:edit", function(childView, args) {
                             require(["apps/configs/edit/edit_view"], function(EditView) {
