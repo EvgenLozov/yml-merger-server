@@ -10,7 +10,9 @@ requirejs.config({
         "jquery-ui": "vendor/jquery-ui",
         text: "vendor/text",
         tpl: "vendor/underscore-tpl",
-        underscore: "vendor/underscore"
+        underscore: "vendor/underscore",
+        spin: "vendor/spin",
+        "spin.jquery" : "vendor/spin.jquery"
     },
 
     shim: {
@@ -30,7 +32,8 @@ requirejs.config({
             exports : "Marionette"
         },
         "jquery-ui" : ["jquery"],
-        tpl: ["text"]
+        tpl: ["text"],
+        "spin.jquery" : ["spin", "jquery"]
     }
 });
 
