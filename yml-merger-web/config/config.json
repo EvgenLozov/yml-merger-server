@@ -45,7 +45,7 @@
   "time" : "18:00",
   "periodInHours" : 0,
   "notAllowedWords" : [ "ваып ыва", "ывап", "вап ывап", "ваыпвыа", "пва" ],
-  "nextFireTime" : 1458921600000
+  "nextFireTime" : 1462114800000
 }, {
   "id" : "72f15921-4601-45d9-ad2b-f0389a048995",
   "name" : "test config 9-45",
@@ -66,5 +66,5 @@
   "time" : "09:45",
   "periodInHours" : 2,
   "notAllowedWords" : [ ],
-  "nextFireTime" : 1458928223858
+  "nextFireTime" : 1462115015338
 } ]
