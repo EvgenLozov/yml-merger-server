@@ -1,8 +1,9 @@
-define(["app", "apps/configs/edit/edit_view"], function(ConfigManager, View){
+define(["jquery", "app",
+        "apps/configs/common/missing_config",
+        "apps/configs/edit/edit_view"],
+    function($, ConfigManager, MissingConfigView, EditView){
 
-    ConfigManager.module("ConfigsApp.Edit", function(Edit,  ConfigManager,  Backbone, Marionette, $, _){
-
-        Edit.Controller = {
+        return {
             editConfig: function (id) {
                 require(["entities/config/model"], function () {
 
@@ -11,9 +12,9 @@ define(["app", "apps/configs/edit/edit_view"], function(ConfigManager, View){
                     $.when(fetchingConfig).done(function (config) {
                         var configView;
                         if (config === undefined) {
-                            configView = new ConfigManager.ConfigsApp.Show.MissingConfig();
+                            configView = new MissingConfigView();
                         } else {
-                            configView = new View.Config({
+                            configView = new EditView({
                                 model: config,
                                 generateTitle: true
                             });
@@ -37,7 +38,4 @@ define(["app", "apps/configs/edit/edit_view"], function(ConfigManager, View){
                 });
             }
         }
-    });
-
-    return ConfigManager.ConfigsApp.Edit.Controller;
 });

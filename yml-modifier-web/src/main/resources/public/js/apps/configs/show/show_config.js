@@ -1,10 +1,8 @@
-define(["app",
-        "tpl!apps/configs/show/templates/config_view.tpl",
-        "tpl!apps/configs/show/templates/missing_config_view.tpl"],
-function(ConfigManager, showTpl, missingTpl){
-    ConfigManager.module("ConfigsApp.Show.View", function(View,  ConfigManager,  Backbone, Marionette, $, _){
+define(["marionette", "app",
+        "tpl!apps/configs/show/templates/config_view.tpl"],
+function(Marionette, ConfigManager, showTpl){
 
-        View.Config = Marionette.ItemView.extend({
+        var Config = Marionette.ItemView.extend({
             template: showTpl,
 
             events: {
@@ -24,10 +22,5 @@ function(ConfigManager, showTpl, missingTpl){
             }
         });
 
-        View.MissingConfig = Marionette.ItemView.extend({
-            template: missingTpl
-        });
-    });
-
-    return ConfigManager.ConfigsApp.Show.View;
+    return Config;
 });

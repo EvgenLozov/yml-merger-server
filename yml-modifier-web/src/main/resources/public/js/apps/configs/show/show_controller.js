@@ -1,17 +1,16 @@
-define(["app", "apps/configs/show/show_config"],
-function(ConfigManager, View){
-    ConfigManager.module("ConfigsApp.Show", function(Show,  ConfigManager,  Backbone, Marionette, $, _){
+define(["jquery", "app", "apps/configs/show/show_config", "apps/configs/common/missing_config"],
+function($, ConfigManager, ShowView, MissingView){
 
-        Show.Controller = {
+        return {
             showConfig: function (id) {
-                require(["entities/config"], function () {
+                require(["entities/config/model"], function () {
                     var fetchingConfig = ConfigManager.request("config:entity", id);
                     $.when(fetchingConfig).done(function (config) {
                         var configView;
                         if (config === undefined) {
-                            configView = new View.MissingConfig();
+                            configView = new MissingView();
                         } else {
-                            configView = new View.Config({
+                            configView = new ShowView({
                                 model: config
                             });
 
@@ -25,7 +24,4 @@ function(ConfigManager, View){
                 });
             }
         }
-    });
-
-    return ConfigManager.ConfigsApp.Show.Controller;
 });

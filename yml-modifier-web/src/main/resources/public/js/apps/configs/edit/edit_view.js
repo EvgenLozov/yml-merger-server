@@ -1,9 +1,9 @@
-define(["app", "apps/configs/common/views"], function(ConfigManager, CommonViews){
-    ConfigManager.module("ConfigsApp.Edit.View", function(View, ConfigManager,  Backbone, Marionette, $, _) {
-        View.Config = CommonViews.Form.extend({
+define(["jquery", "app", "../common/config_form"], function($, ConfigManager, ConfigFormView){
+
+        var EditConfigView = ConfigFormView.extend({
             initialize: function () {
                 this.title = "Редактирование конфига: " + this.model.get("name");
-                View.Config.__super__.initialize.apply(this, arguments);
+                EditConfigView.__super__.initialize.apply(this, arguments);
             },
 
             onRender: function () {
@@ -13,7 +13,6 @@ define(["app", "apps/configs/common/views"], function(ConfigManager, CommonViews
                 }
             }
         });
-    });
 
-    return ConfigManager.ConfigsApp.Edit.View;
+    return EditConfigView;
 });

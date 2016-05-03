@@ -1,11 +1,11 @@
-define(["app", "apps/configs/common/replaces_view",
+define(["jquery", "underscore", "app",
+        "apps/configs/common/replaces_view",
+        "apps/configs/common/missing_config",
         "tpl!apps/configs/common/templates/config_form.tpl",
         "backbone.syphon"],
-function(ConfigManager, ReplacesView, formTpl){
+function($, _, ConfigManager, Replaces, MissingConfigView, formTpl){
 
-    ConfigManager.module("ConfigsApp.Common.Views", function(Views,  ConfigManager,  Backbone, Marionette, $, _){
-
-        Views.Form = Marionette.LayoutView.extend({
+        var Form = Marionette.LayoutView.extend({
             template: formTpl,
 
             events: {
@@ -22,7 +22,7 @@ function(ConfigManager, ReplacesView, formTpl){
 
             onBeforeShow: function() {
                 var models = this.model.get('replaces');
-                this.replacesView = new ReplacesView.Replaces({collection: models});
+                this.replacesView = new Replaces.ReplacesView({collection: models});
                 this.replacesView.on("childview:replace:delete", function(childview, model){
                     model.destroy();
                 });
@@ -72,7 +72,6 @@ function(ConfigManager, ReplacesView, formTpl){
                 _.each(errors, markErrors);
             }
         });
-    });
 
-    return ConfigManager.ConfigsApp.Common.Views;
+    return Form;
 });

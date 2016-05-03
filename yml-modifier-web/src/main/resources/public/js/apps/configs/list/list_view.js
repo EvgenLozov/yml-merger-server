@@ -1,11 +1,11 @@
-define(["app",
+define(["jquery", "marionette", "app",
         "tpl!apps/configs/list/templates/config_list.tpl",
         "tpl!apps/configs/list/templates/config_list_item.tpl",
         "tpl!apps/configs/list/templates/config_list_layout.tpl",
         "tpl!apps/configs/list/templates/config_list_panel.tpl"],
-function(ConfigManager, listTpl, listItemTpl, listLayoutTpl, listPanelTpl){
-    ConfigManager.module("ConfigsApp.List.View", function(View, ConfigManager,  Backbone, Marionette, $, _){
-        View.Config = Marionette.ItemView.extend({
+function($, Marionette, ConfigManager, listTpl, listItemTpl, listLayoutTpl, listPanelTpl){
+
+        var Config = Marionette.ItemView.extend({
             tagName: "tr",
             template: listItemTpl,
 
@@ -35,11 +35,11 @@ function(ConfigManager, listTpl, listItemTpl, listLayoutTpl, listPanelTpl){
 
         });
 
-        View.Configs = Marionette.CompositeView.extend({
+        var Configs = Marionette.CompositeView.extend({
             tagName: "table",
             className: "table table-hover",
             template: listTpl,
-            childView: View.Config,
+            childView: Config,
             childViewContainer: "tbody",
 
             initialize: function(){
@@ -57,7 +57,7 @@ function(ConfigManager, listTpl, listItemTpl, listLayoutTpl, listPanelTpl){
             }
         });
 
-        View.Layout = Marionette.LayoutView.extend({
+        var Layout = Marionette.LayoutView.extend({
             template: listLayoutTpl,
 
             regions: {
@@ -66,7 +66,7 @@ function(ConfigManager, listTpl, listItemTpl, listLayoutTpl, listPanelTpl){
             }
         });
 
-        View.Panel = Marionette.ItemView.extend({
+        var Panel = Marionette.ItemView.extend({
             template: listPanelTpl,
 
             triggers: {
@@ -74,7 +74,10 @@ function(ConfigManager, listTpl, listItemTpl, listLayoutTpl, listPanelTpl){
             }
         });
 
-    });
-
-    return ConfigManager.ConfigsApp.List.View;
+    return {
+        Layout: Layout,
+        Panel: Panel,
+        Configs: Configs,
+        Config: Config
+    }
 });

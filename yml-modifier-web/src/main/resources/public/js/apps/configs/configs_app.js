@@ -1,7 +1,6 @@
 define(["app"],function(ConfigManager){
-    ConfigManager.module("ConfigsApp", function(ConfigsApp, ConfigManager,  Backbone, Marionette, $, _){
 
-        ConfigsApp.Router = Marionette.AppRouter.extend({
+        var AppRouter = Marionette.AppRouter.extend({
             appRoutes: {
                 "configs" : "listConfigs",
                 "configs/:id": "showConfig",
@@ -45,12 +44,10 @@ define(["app"],function(ConfigManager){
         });
 
         ConfigManager.addInitializer(function(){
-            new ConfigsApp.Router({
+            new AppRouter({
                 controller: API
             });
         });
 
-    });
-
-    return ConfigManager.ConfigsApp;
+    return AppRouter;
 });

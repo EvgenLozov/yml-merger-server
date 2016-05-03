@@ -1,12 +1,10 @@
-define(["app", "../../../entities/replace/models",
+define(["jquery", "underscore", "app", "../../../entities/replace/models",
         "tpl!apps/configs/common/templates/replace_item.tpl",
         "tpl!apps/configs/common/templates/replace_list.tpl",
         "backbone.syphon"],
-function(ConfigManager, ReplacesModel, replaceTpl, replaceListTpl) {
+function($, _, ConfigManager, ReplacesModel, replaceTpl, replaceListTpl) {
 
-    ConfigManager.module("ConfigsApp.Common.Views.ReplaceViews", function (ReplaceViews, ConfigManager, Backbone, Marionette, $, _) {
-
-        ReplaceViews.Replace = Marionette.ItemView.extend({
+        var ReplaceView = Marionette.ItemView.extend({
             tagName : "tr",
             template: replaceTpl,
 
@@ -21,9 +19,9 @@ function(ConfigManager, ReplacesModel, replaceTpl, replaceListTpl) {
             }
         });
 
-        ReplaceViews.Replaces = Marionette.CompositeView.extend({
+        var ReplacesView= Marionette.CompositeView.extend({
             template: replaceListTpl,
-            childView: ReplaceViews.Replace,
+            childView: ReplaceView,
             childViewContainer: '#replacesTable',
 
             events: {
@@ -52,7 +50,8 @@ function(ConfigManager, ReplacesModel, replaceTpl, replaceListTpl) {
 
         });
 
-    });
-
-    return ConfigManager.ConfigsApp.Common.Views.ReplaceViews;
+    return {
+        ReplaceView: ReplaceView,
+        ReplacesView: ReplacesView
+    };
 });

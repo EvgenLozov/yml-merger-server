@@ -1,18 +1,17 @@
-define(["app", "apps/configs/list/list_view"], function(ConfigManager, View){
-    ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone, Marionette, $, _){
+define(["jquery", "app", "apps/configs/list/list_view"], function($, ConfigManager, ListView){
 
-        List.Controller = {
+        return {
             listConfigs : function(){
                 require(["entities/config/collection"], function(){
 
-                    var configsListLayout = new View.Layout();
-                    var configsListPanel = new View.Panel();
+                    var configsListLayout = new ListView.Layout();
+                    var configsListPanel = new ListView.Panel();
 
                     var fetchedConfigs = ConfigManager.request("config:entities");
 
                     $.when(fetchedConfigs).done(function(configs){
 
-                        var configListView = new View.Configs({
+                        var configListView = new ListView.Configs({
                             collection: configs
                         });
 
@@ -61,7 +60,7 @@ define(["app", "apps/configs/list/list_view"], function(ConfigManager, View){
                             require(["apps/configs/new/new_view"], function(NewView) {
                                 var newConfig = ConfigManager.request("config:entity:new");
 
-                                var view = new NewView.Config({
+                                var view = new NewView({
                                     model: newConfig
                                 });
 
@@ -93,7 +92,7 @@ define(["app", "apps/configs/list/list_view"], function(ConfigManager, View){
                         configListView.on("childview:config:edit", function(childView, args) {
                             require(["apps/configs/edit/edit_view"], function(EditView) {
                                 var model = args.model;
-                                var view = new EditView.Config({
+                                var view = new EditView({
                                     model: model
                                 });
                                 view.on("form:submit", function (data) {
@@ -123,7 +122,4 @@ define(["app", "apps/configs/list/list_view"], function(ConfigManager, View){
 
             }
         };
-    });
-
-    return ConfigManager.ConfigsApp.List.Controller;
 });

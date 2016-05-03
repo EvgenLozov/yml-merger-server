@@ -1,8 +1,7 @@
-define(["app", "tpl!common/templates/loading_view.tpl", "spin.jquery"], function(ConfigManager, loadingTpl){
+define(["jquery", "marionette", "app", "tpl!common/templates/loading_view.tpl", "spin.jquery"],
+function($, Marionette, ConfigManager, loadingTpl){
 
-    ConfigManager.module("Common.Views", function(Views,  ConfigManager,  Backbone, Marionette, $, _){
-
-        Views.Loading = Marionette.ItemView.extend({
+        var Loading = Marionette.ItemView.extend({
             template: loadingTpl,
 
             initialize: function(options){
@@ -40,7 +39,6 @@ define(["app", "tpl!common/templates/loading_view.tpl", "spin.jquery"], function
                 $("#spinner").spin(opts);
             }
         });
-    });
 
-    return ConfigManager.Common.Views;
+    return Loading;
 });
