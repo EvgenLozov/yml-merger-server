@@ -1,12 +1,10 @@
-define(["app", "apps/configs/show/show_config"], function(ConfigManager, View){
+define(["app", "apps/configs/show/show_config"],
+function(ConfigManager, View){
     ConfigManager.module("ConfigsApp.Show", function(Show,  ConfigManager,  Backbone, Marionette, $, _){
 
         Show.Controller = {
             showConfig: function (id) {
-                require(["common/views", "entities/config"], function (CommonViews) {
-                    var loadingView = new CommonViews.Loading();
-                    ConfigManager.regions.main.show(loadingView);
-
+                require(["entities/config"], function () {
                     var fetchingConfig = ConfigManager.request("config:entity", id);
                     $.when(fetchingConfig).done(function (config) {
                         var configView;

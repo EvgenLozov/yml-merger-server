@@ -1,9 +1,7 @@
-define(["app",
+define(["app", "apps/configs/common/replaces_view",
         "tpl!apps/configs/common/templates/config_form.tpl",
-        "tpl!apps/configs/common/templates/replace_item.tpl",
-        "tpl!apps/configs/common/templates/replace_list.tpl",
         "backbone.syphon"],
-function(ConfigManager, formTpl, replaceTpl, replaceListTpl){
+function(ConfigManager, ReplacesView, formTpl){
 
     ConfigManager.module("ConfigsApp.Common.Views", function(Views,  ConfigManager,  Backbone, Marionette, $, _){
 
@@ -24,7 +22,7 @@ function(ConfigManager, formTpl, replaceTpl, replaceListTpl){
 
             onBeforeShow: function() {
                 var models = this.model.get('replaces');
-                this.replacesView = new Views.Replaces({collection: models});
+                this.replacesView = new ReplacesView.Replaces({collection: models});
                 this.replacesView.on("childview:replace:delete", function(childview, model){
                     model.destroy();
                 });
@@ -74,53 +72,6 @@ function(ConfigManager, formTpl, replaceTpl, replaceListTpl){
                 _.each(errors, markErrors);
             }
         });
-
-        Views.Replace = Marionette.ItemView.extend({
-            tagName : "tr",
-            template: replaceTpl,
-
-            events: {
-                "click button.js-delete": "deleteClicked"
-            },
-
-            deleteClicked: function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                this.trigger("replace:delete", this.model);
-            }
-        });
-
-        Views.Replaces = Marionette.CompositeView.extend({
-            template: replaceListTpl,
-            childView: Views.Replace,
-            childViewContainer: '#replacesTable',
-
-            events: {
-                "click button.addReplace": "addReplace"
-            },
-
-            addReplace: function(){
-                var replacement = this.$el.find('#replacement').val();
-                var wordsToReplace = this.$el.find('#wordsToReplace').val().split(",");
-                wordsToReplace = wordsToReplace.filter(function(e){return e.trim()});
-
-                _.each(wordsToReplace, function(word){
-                    word.trim();
-                });
-
-                var replace = new ConfigManager.Entities.Replace({
-                    replacement : replacement,
-                    wordsToReplace: wordsToReplace
-                });
-
-                this.collection.add(replace);
-
-                this.$el.find('#replacement').val("");
-                this.$el.find('#wordsToReplace').val("");
-            }
-
-        });
-
     });
 
     return ConfigManager.ConfigsApp.Common.Views;

@@ -3,9 +3,7 @@ define(["app", "apps/configs/list/list_view"], function(ConfigManager, View){
 
         List.Controller = {
             listConfigs : function(){
-                require(["common/views", "entities/config"], function(CommonViews){
-                    var loadingView = new CommonViews.Loading({title: "Loading list of configs"});
-                    ConfigManager.regions.main.show(loadingView);
+                require(["entities/config/collection"], function(){
 
                     var configsListLayout = new View.Layout();
                     var configsListPanel = new View.Panel();

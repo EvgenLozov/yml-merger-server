@@ -1,12 +1,13 @@
 define(["app", "apps/configs/edit/edit_view"], function(ConfigManager, View){
+
     ConfigManager.module("ConfigsApp.Edit", function(Edit,  ConfigManager,  Backbone, Marionette, $, _){
+
         Edit.Controller = {
             editConfig: function (id) {
-                require(["common/views", "entities/config"], function (CommonViews) {
-                    var loadingView = new CommonViews.Loading();
-                    ConfigManager.regions.main.show(loadingView);
+                require(["entities/config/model"], function () {
 
                     var fetchingConfig = ConfigManager.request("config:entity", id);
+
                     $.when(fetchingConfig).done(function (config) {
                         var configView;
                         if (config === undefined) {
