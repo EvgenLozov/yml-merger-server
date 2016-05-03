@@ -11,40 +11,10 @@ function(ConfigManager, listTpl, listItemTpl, listLayoutTpl, listPanelTpl){
 
             triggers: {
                 "click button.js-delete" : "config:delete",
-                "click a.js-edit" : "config:edit"
-            },
-
-            events: {
-                "click button.js-modify" : "modifyClicked",
-                "click button.js-copy" : "copyClicked",
-                "click a.js-show" : "showConfig"
-            },
-
-            deleteClicked: function(e){
-                e.stopPropagation();
-                this.trigger("config:delete", this.model);
-            },
-
-            modifyClicked: function(e){
-                e.stopPropagation();
-                this.trigger("config:modify", this.model);
-            },
-
-            copyClicked: function(e){
-                e.stopPropagation();
-                this.trigger("config:copy", this.model);
-            },
-
-            showConfig: function(e){
-                e.preventDefault();
-                e.stopPropagation();
-                this.trigger("config:show", this.model);
-            },
-
-            editConfig: function(e){
-                e.preventDefault();
-                e.stopPropagation();
-                this.trigger("config:edit", this.model);
+                "click a.js-edit" : "config:edit",
+                "click a.js-show" : "config:show",
+                "click button.js-modify" : "config:modify",
+                "click button.js-copy" : "config:copy"
             },
 
             flash: function(cssClass){

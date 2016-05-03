@@ -27,35 +27,35 @@ define(["app", "apps/configs/list/list_view"], function(ConfigManager, View){
                             args.model.destroy();
                         });
 
-                        //configListView.on("childview:config:modify", function(childView, model){
-                        //    $.ajax({
-                        //        type: "POST",
-                        //        url: "/modifierService/" + model.get("id") + "/modify",
-                        //        success : function(){ alert("Процес успешно запущен")},
-                        //        error : function(){ alert("Произошла ошибка")}
-                        //    });
-                        //});
-                        //
-                        //configListView.on("childview:config:copy", function(childView, model){
-                        //    var attributes = _.clone(model.attributes);
-                        //    attributes.id = null;
-                        //    attributes.name = model.get("name") + "(Копия)";
-                        //
-                        //    var newConfig = new ConfigManager.Entities.Config();
-                        //
-                        //    newConfig.save(attributes, { success: function()
-                        //        {
-                        //            configs.add(newConfig);
-                        //            configListView.children.findByModel(newConfig).
-                        //                flash("success");
-                        //        }
-                        //        }
-                        //    );
-                        //
-                        //});
+                        configListView.on("childview:config:modify", function(childView, args){
+                            $.ajax({
+                                type: "POST",
+                                url: "/modifierService/" + args.model.get("id") + "/modify",
+                                success : function(){ alert("Процес успешно запущен")},
+                                error : function(){ alert("Произошла ошибка")}
+                            });
+                        });
 
-                        configListView.on("childview:config:show", function(childView, model){
-                            ConfigManager.trigger("config:show", model.get("id"));
+                        configListView.on("childview:config:copy", function(childView, args){
+                            var attributes = _.clone(args.model.attributes);
+                            attributes.id = null;
+                            attributes.name = args.model.get("name") + "(Копия)";
+
+                            var newConfig = ConfigManager.request("config:entity:new");
+
+                            newConfig.save(attributes, { success: function()
+                                {
+                                    configs.add(newConfig);
+                                    configListView.children.findByModel(newConfig).
+                                        flash("success");
+                                }
+                                }
+                            );
+
+                        });
+
+                        configListView.on("childview:config:show", function(childView, args){
+                            ConfigManager.trigger("config:show", args.model.get("id"));
                         });
 
 

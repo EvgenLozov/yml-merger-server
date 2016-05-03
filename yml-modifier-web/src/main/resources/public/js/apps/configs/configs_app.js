@@ -3,9 +3,9 @@ define(["app"],function(ConfigManager){
 
         ConfigsApp.Router = Marionette.AppRouter.extend({
             appRoutes: {
-                "configs" : "listConfigs"
-                //"configs/:id": "showConfig",
-                //"configs/:id/edit": "editConfig"
+                "configs" : "listConfigs",
+                "configs/:id": "showConfig",
+                "configs/:id/edit": "editConfig"
             }
         });
 
@@ -14,15 +14,19 @@ define(["app"],function(ConfigManager){
                 require(["apps/configs/list/list_controller"], function(ListController){
                     ListController.listConfigs();
                 });
-            }
+            },
 
-            //showConfig: function(id){
-            //    ConfigsApp.Show.Controller.showConfig(id);
-            //},
-            //
-            //editConfig: function(id){
-            //    ConfigsApp.Edit.Controller.editConfig(id);
-            //}
+            showConfig: function(id){
+                require(["apps/configs/show/show_controller"], function(ShowController){
+                    ShowController.showConfig(id);
+                });
+            },
+
+            editConfig: function(id){
+                require(["apps/configs/edit/edit_controller"], function(EditController){
+                    EditController.editConfig(id);
+                });
+            }
         };
 
         ConfigManager.on("configs:list", function(){
@@ -30,16 +34,15 @@ define(["app"],function(ConfigManager){
             API.listConfigs();
         });
 
-        //ConfigManager.on("config:show", function(id){
-        //    ConfigManager.navigate("configs/" + id);
-        //    API.showConfig(id);
-        //});
-        //
-        //
-        //ConfigManager.on("config:edit", function(id){
-        //    ConfigManager.navigate("configs/" + id + "/edit");
-        //    API.editConfig(id);
-        //});
+        ConfigManager.on("config:show", function(id){
+            ConfigManager.navigate("configs/" + id);
+            API.showConfig(id);
+        });
+
+        ConfigManager.on("config:edit", function(id){
+            ConfigManager.navigate("configs/" + id + "/edit");
+            API.editConfig(id);
+        });
 
         ConfigManager.addInitializer(function(){
             new ConfigsApp.Router({
