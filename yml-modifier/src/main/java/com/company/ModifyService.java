@@ -18,9 +18,10 @@ public class ModifyService {
     public void process(ModifierConfig config)  {
         byte[] inputXmlBytes = new ModifierXmlBytesProvider(config).get();
 
-        byte[] replaceProcessedXmlBytes = new ReplaceProcessing(config.getEncoding(), config.getReplaces()).process(inputXmlBytes);
+        if (config.getReplaces() != null && !config.getReplaces().isEmpty())
+            inputXmlBytes = new ReplaceProcessing(config.getEncoding(), config.getReplaces()).process(inputXmlBytes);
 
-        XMLEventReaderProvider readerProvider = new ByteArrayXmlEventReaderProvider(replaceProcessedXmlBytes, config.getEncoding());
+        XMLEventReaderProvider readerProvider = new ByteArrayXmlEventReaderProvider(inputXmlBytes, config.getEncoding());
         StAXService stAXService = new StAXService( readerProvider );
 
         try {
