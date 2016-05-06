@@ -26,6 +26,7 @@ targetCompatibility = 1.8
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-test")
+    compile('me.chanjar:tomcat-mongo-access-log:1.0.0')
     compile("io.springfox:springfox-swagger2:2.3.0")
     compile("io.springfox:springfox-swagger-ui:2.3.0")
     compile("org.webjars:bootstrap:3.3.6")
