@@ -6,8 +6,6 @@ import company.scheduler.QuartzTask;
 import org.quartz.*;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.quartz.CalendarIntervalScheduleBuilder.calendarIntervalSchedule;
 import static org.quartz.DateBuilder.todayAt;

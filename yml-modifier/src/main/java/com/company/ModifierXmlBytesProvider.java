@@ -4,7 +4,9 @@ import company.http.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.impl.client.CloseableHttpClient;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class ModifierXmlBytesProvider {
 

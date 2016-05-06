@@ -7,7 +7,9 @@ import com.company.handlers.ProgressHandler;
 import com.company.operators.AddContentToDescription;
 import com.company.operators.ModifyOfferDescription;
 import company.StAXService;
-import company.conditions.*;
+import company.conditions.EndElement;
+import company.conditions.InElementCondition;
+import company.conditions.StartElement;
 import company.handlers.xml.*;
 import company.handlers.xml.buffered.AddElementIfAbsent;
 import company.handlers.xml.buffered.BufferXmlEventOperator;
@@ -21,10 +23,12 @@ import company.providers.FileXMLEventReaderProvider;
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.XMLEvent;
-import java.io.*;
-//import java.nio.charset.Charset;
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.function.Predicate;
+
+//import java.nio.charset.Charset;
 
 public class ModifierPropertiesXmlEventHandlerProvider {
 
@@ -51,9 +55,9 @@ public class ModifierPropertiesXmlEventHandlerProvider {
         handlers.add(new XmlEventFilter(new ModifyTextData((old) -> old.equals("0") ? "10000" : old ), new InElementCondition("price")));
 
         TreeSet<String> forbiddenWords = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
-        forbiddenWords.add("опт");
-        forbiddenWords.add("опт.");
-        forbiddenWords.add("оптом");
+        forbiddenWords.add("пїЅпїЅпїЅ");
+        forbiddenWords.add("пїЅпїЅпїЅ.");
+        forbiddenWords.add("пїЅпїЅпїЅпїЅпїЅ");
 
         handlers.add(new XmlEventFilter(new ModifyTextData(new RemoveWordsOperator(forbiddenWords)), new InElementCondition("description").or(new InElementCondition("name"))));
 
@@ -70,10 +74,10 @@ public class ModifierPropertiesXmlEventHandlerProvider {
         operators.add(new AddElementIfAbsent("currencyId", xmlEventFactory, Optional.of("RUR")));
         operators.add(new AddElementIfAbsent("description", xmlEventFactory, Optional.empty()));
 
-        String removedStr = new String("Удалено".getBytes(), config.getEncoding());
+        String removedStr = new String("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ".getBytes(), config.getEncoding());
 
        // String removedStr = Charset.forName(config.getEncoding()).toString().equals("UTF-8") ?
-         //       "Удалено" : new String("Удалено".getBytes(), config.getEncoding());
+         //       "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ" : new String("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ".getBytes(), config.getEncoding());
 
         operators.add(new AddElementIfAbsent("name", xmlEventFactory, Optional.of(removedStr)));
         operators.add(new AddElementIfAbsent("model", xmlEventFactory, Optional.of(removedStr)));

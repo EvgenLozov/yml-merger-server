@@ -7,23 +7,26 @@ import com.company.handlers.ProgressHandler;
 import com.company.operators.AddContentToDescription;
 import com.company.operators.ModifyOfferDescription;
 import company.StAXService;
-import company.conditions.*;
+import company.conditions.EndElement;
+import company.conditions.InElementCondition;
+import company.conditions.StartElement;
 import company.handlers.xml.*;
 import company.handlers.xml.buffered.*;
 import company.handlers.xml.insert.SimpleXmlEventSupplier;
 import company.handlers.xml.insert.XmlEventInserter;
 import company.handlers.xml.insert.XmlEventSupplier;
-import company.providers.FileXMLEventReaderProvider;
 import company.providers.XMLEventReaderProvider;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.XMLEvent;
-import java.io.*;
-//import java.nio.charset.Charset;
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.function.Predicate;
+
+//import java.nio.charset.Charset;
 
 public class ModifierXmlEventHandlerProvider {
 
