@@ -3,6 +3,9 @@ package com.company;
 
 import company.config.Config;
 import company.config.PswConfig;
+import company.replace.Replace;
+
+import java.util.List;
 
 public class ModifierConfig implements Config, PswConfig {
     private String id;
@@ -26,7 +29,7 @@ public class ModifierConfig implements Config, PswConfig {
     private long limitSize;
     private long epocheStart;
     private long epochePeriod;
-
+    private List<Replace> replaces;
 
     public long getEpocheStart() {
         return epocheStart;
@@ -201,5 +204,13 @@ public class ModifierConfig implements Config, PswConfig {
 
     public void setLimitSize(long limitSize) {
         this.limitSize = limitSize;
+    }
+
+    public void setReplaces(List<Replace> replaces) {
+        this.replaces = replaces;
+    }
+
+    public List<Replace> getReplaces() {
+        return replaces;
     }
 }

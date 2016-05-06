@@ -1,6 +1,6 @@
-package com.company.processing;
+package company.replace;
 
-import com.company.config.Replace;
+import company.replace.Replace;
 import company.bytearray.ByteArrayProcessor;
 
 import java.io.ByteArrayInputStream;

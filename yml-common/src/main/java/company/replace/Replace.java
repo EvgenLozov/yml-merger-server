@@ -1,4 +1,4 @@
-package com.company.config;
+package company.replace;
 
 import java.util.Set;
 

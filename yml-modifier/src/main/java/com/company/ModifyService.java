@@ -4,6 +4,7 @@ import company.StAXService;
 import company.handlers.xml.XmlEventHandler;
 import company.providers.ByteArrayXmlEventReaderProvider;
 import company.providers.XMLEventReaderProvider;
+import company.replace.ReplaceProcessing;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.FileNotFoundException;
@@ -16,7 +17,10 @@ public class ModifyService {
 
     public void process(ModifierConfig config)  {
         byte[] inputXmlBytes = new ModifierXmlBytesProvider(config).get();
-        XMLEventReaderProvider readerProvider = new ByteArrayXmlEventReaderProvider(inputXmlBytes, config.getEncoding());
+
+        byte[] replaceProcessedXmlBytes = new ReplaceProcessing(config.getEncoding(), config.getReplaces()).process(inputXmlBytes);
+
+        XMLEventReaderProvider readerProvider = new ByteArrayXmlEventReaderProvider(replaceProcessedXmlBytes, config.getEncoding());
         StAXService stAXService = new StAXService( readerProvider );
 
         try {
