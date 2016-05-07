@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class EpocheService {
+public class ModifierEpocheService {
 
     private ConfigRepository<ModifierConfig> configRepository;
 
-    public EpocheService(ConfigRepository<ModifierConfig> configRepository) {
+    public ModifierEpocheService(ConfigRepository<ModifierConfig> configRepository) {
         this.configRepository = configRepository;
     }
 

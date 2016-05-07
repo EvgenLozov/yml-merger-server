@@ -1,26 +1,26 @@
-ConfigManager.module("ConfigsApp.Show", function(Show,  ConfigManager,  Backbone, Marionette, $, _){
+define(["marionette", "app",
+        "tpl!apps/configs/show/templates/config_view.tpl"],
+function(Marionette, ConfigManager, showTpl){
 
-    Show.Config = Marionette.ItemView.extend({
-       template: "#config-view",
+        var Config = Marionette.ItemView.extend({
+            template: showTpl,
 
-        events: {
-            "click a.js-edit" : "editConfig",
-            "click a.js-list-configs" : "listConfigsClicked"
-        },
+            events: {
+                "click a.js-edit" : "editConfig",
+                "click a.js-list-configs" : "listConfigsClicked"
+            },
 
-        editConfig: function(e){
-            e.preventDefault();
-            e.stopPropagation();
-            this.trigger("config:edit", this.model);
-        },
+            editConfig: function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                this.trigger("config:edit", this.model);
+            },
 
-        listConfigsClicked: function(e){
-            e.preventDefault();
-            ConfigManager.trigger("configs:list");
-        }
-    });
+            listConfigsClicked: function(e){
+                e.preventDefault();
+                ConfigManager.trigger("configs:list");
+            }
+        });
 
-    Show.MissingConfig = Marionette.ItemView.extend({
-        template: "#missing-config-view"
-    });
+    return Config;
 });

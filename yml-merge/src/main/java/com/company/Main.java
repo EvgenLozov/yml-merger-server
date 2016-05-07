@@ -7,7 +7,7 @@ import com.company.service.MergeServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import company.config.ConfigRepository;
-import company.config.JsonBasedConfigRepository;
+import company.config.JsonConfigRepository;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
@@ -20,7 +20,7 @@ public class Main {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
-        ConfigRepository<MergerConfig> repository = new MergerConfigRepository(new JsonBasedConfigRepository<>("config/config.json",MergerConfig.class,mapper));
+        ConfigRepository<MergerConfig> repository = new MergerConfigRepository(new JsonConfigRepository<>("config/config.json",MergerConfig.class,mapper));
         new MergeServiceImpl(repository).process(config);
     }
 }

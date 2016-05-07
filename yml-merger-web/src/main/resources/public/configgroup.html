@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Настройка единых ссылок</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+          integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <script src="./js/configgroup/vendor/jquery.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <!--<link href="./css/bootstrap.css" rel="stylesheet">-->
+    <link href="./css/application.css" rel="stylesheet">
+    <link href="./css/jquery-ui-1.10.0.custom.css" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav">
+                <li><a href="/">Менеджер конфигов</a></li>
+                <li class="active"><a href="/configgroup.html">Настройка единых ссылок<span class="sr-only">(current)</span></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div id="app-container">
+    <div id="main-region" class="container">
+    </div>
+
+    <div id="dialog-region"></div>
+</div>
+
+<script type="text/template" id="group-list-panel">
+    <button class="btn btn-primary js-new">Новый список</button>
+</script>
+
+<script type="text/template" id="group-show">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="group-name" class="col-sm-3 control-label">
+                Название:</label>
+            <div class="col-sm-6">
+                <input id="group-name" name="group-name" class="form-control" type="text" value="<%= name %>"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="epochePeriod" class="col-sm-3 control-label">
+                Период подмены файлов, мин.:</label>
+            <div class="col-sm-6">
+                <input id="epochePeriod" name="epochePeriod" class="form-control" type="text" value="<%= epochePeriod/60000 %> "/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Список конфигов</label>
+            <div class="col-sm-9">
+                <table class="table table-hover">
+                    <tbody>
+                    <% _.each(configNames, function(name) { %>
+                        <tr><td><% print(name) %></td></tr>
+                    <% } )%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+</script>
+
+<script type="text/template" id="config-list">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="group-name" class="col-sm-3 control-label">
+                Название:</label>
+            <div class="col-sm-6">
+                <input id="group-name" name="group-name" class="form-control" type="text"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="epochePeriod" class="col-sm-3 control-label">
+                Период подмены файлов, мин.:</label>
+            <div class="col-sm-6">
+                <input id="epochePeriod" name="epochePeriod" class="form-control" type="text"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Список конфигов</label>
+            <div class="col-sm-9">
+                <table class="table table-hover">
+                    <tbody id="configs-content">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-10">
+                <button class="btn btn-default js-submit">Сохранить</button>
+            </div>
+        </div>
+    </form>
+</script>
+
+<script type="text/template" id="group-form">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="group-name" class="col-sm-3 control-label">
+                Название:</label>
+            <div class="col-sm-6">
+                <input id="group-name" name="group-name" class="form-control" type="text" value="<%= name %>"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="epochePeriod" class="col-sm-3 control-label">
+                Период подмены файлов, мин.:</label>
+            <div class="col-sm-6">
+                <input id="group-epochePeriod" name="group-epochePeriod" class="form-control" type="text" value="<%= epochePeriod/60000 %>"/>
+            </div>
+        </div>
+       <div class="form-group">
+            <label class="col-sm-3 control-label">Список конфигов</label>
+            <div class="col-sm-9">
+                <table class="table table-hover" id="configs-content">
+                    <tbody>
+                    <% _.each(configs, function(config) { %>
+                    <tr>
+                        <td><input type="checkbox" configId="<%= config.id %>"></td>
+                        <td><%= config.get("name") %></td>
+                    </tr>
+                    <% } )%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-10">
+                <button class="btn btn-default js-submit">Сохранить</button>
+                <button class="btn btn-default js-cancel">Отмена</button>
+            </div>
+        </div>
+    </form>
+</script>
+
+<script type="text/template" id="group-list">
+    <thead>
+    <tr>
+    <th>Название</th>
+    <th>Общая сылка</th>
+    <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</script>
+
+<script type="text/template" id="group-list-item">
+    <td><%- name %></td>
+    <td><div class="dropdown">
+        <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="downloadMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Скачать
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="downloadMenu">
+            <li><a href="/prices/RUR/<%= id %>.xml" class="download" currencyVal="RUR">RUR</a></li>
+            <li><a href="/prices/UAH/<%= id %>.xml" class="download" currencyVal="UAH">UAH</a></li>
+            <li><a href="/prices/BYR/<%= id %>.xml" class="download" currencyVal="BYR">BYR</a></li>
+            <li><a href="/prices/KZT/<%= id %>.xml" class="download" currencyVal="KZT">KZT</a></li>
+        </ul>
+    </div></td>
+    <td>
+        <button class="btn btn-default btn-sm js-edit">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            Редакт.
+        </button>
+       <button class="btn btn-default btn-sm js-delete">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            Удалить
+        </button>
+    </td>
+</script>
+
+<script type="text/template" id="config-list-item">
+    <td><input type="checkbox" configId="<%= id %>"></td>
+    <td><%- name %></td>
+</script>
+
+<script type="text/template" id="group-list-layout">
+        <div id="panel-region"></div>
+        <div class="row">
+            <div id="groups-region" class="col-sm-6"></div>
+            <div id="show-region" class="col-sm-6"></div>
+        </div>
+</script>
+
+<script src="./js/configgroup/vendor/jquery-ui-1.10.3.js"></script>
+<script src="./js/configgroup/vendor/json2.js"></script>
+<script src="./js/configgroup/vendor/underscore.js"></script>
+<script src="./js/configgroup/vendor/backbone.js"></script>
+<script src="./js/configgroup/vendor/backbone.syphon.js"></script>
+<script src="./js/configgroup/vendor/backbone.marionette.js"></script>
+
+<script src="./js/configgroup/app.js"></script>
+<script src="./js/configgroup/entities.js"></script>
+<script src="./js/configgroup/form.js"></script>
+<script src="./js/configgroup/new.js"></script>
+<script src="./js/configgroup/edit.js"></script>
+<script src="./js/configgroup/list_groups.js"></script>
+<script src="./js/configgroup/list_controller.js"></script>
+<script src="./js/configgroup/router.js"></script>
+
+<script type="text/javascript">
+
+    ConfigGroupManager.start();
+
+</script>
+
+</body>
+
+</html>

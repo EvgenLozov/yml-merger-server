@@ -9,13 +9,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
-public class JsonBasedConfigRepository<T extends Config> implements ConfigRepository<T> {
+public class JsonConfigRepository<T extends Config> implements ConfigRepository<T> {
 
     private String configFileName;
     private Class<T> configClass;
     private ObjectMapper objectMapper;
 
-    public JsonBasedConfigRepository(String configFileName, Class<T> configClass, ObjectMapper objectMapper) {
+    public JsonConfigRepository(String configFileName, Class<T> configClass, ObjectMapper objectMapper) {
         this.configFileName = configFileName;
         this.configClass = configClass;
         this.objectMapper = objectMapper;

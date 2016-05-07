@@ -3,11 +3,12 @@ package com.modifier.web.config;
 import com.company.*;
 import com.company.scheduler.InMemoryModifyTaskSchedulerInitializer;
 import com.company.scheduler.ModifyJobFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
 import company.scheduler.InMemoryQuartzTasksScheduler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import company.config.ConfigRepository;
-import company.config.JsonBasedConfigRepository;
+import company.config.JsonConfigRepository;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.impl.StdSchedulerFactory;
@@ -25,7 +26,7 @@ public class AppContext {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
-        return new ModifierConfigRepository(new JsonBasedConfigRepository<>("config/config.json",ModifierConfig.class,mapper));
+        return new ModifierConfigRepository(new JsonConfigRepository<>("config/config.json",ModifierConfig.class,mapper));
     }
 
     @Bean
@@ -41,8 +42,8 @@ public class AppContext {
     }
 
     @Bean
-    public EpocheService epocheService(ConfigRepository<ModifierConfig> configRepository){
-        return new EpocheService(configRepository);
+    public ModifierEpocheService epocheService(ConfigRepository<ModifierConfig> configRepository){
+        return new ModifierEpocheService(configRepository);
     }
 
     @Bean
