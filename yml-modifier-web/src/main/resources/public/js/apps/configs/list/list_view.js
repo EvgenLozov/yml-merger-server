@@ -1,98 +1,83 @@
-ConfigManager.module("ConfigsApp.List", function(List, ConfigManager,  Backbone, Marionette, $, _){
-    List.Config = Marionette.ItemView.extend({
-        tagName: "tr",
-        template: "#config-list-item",
+define(["jquery", "marionette", "app",
+        "tpl!apps/configs/list/templates/config_list.tpl",
+        "tpl!apps/configs/list/templates/config_list_item.tpl",
+        "tpl!apps/configs/list/templates/config_list_layout.tpl",
+        "tpl!apps/configs/list/templates/config_list_panel.tpl"],
+function($, Marionette, ConfigManager, listTpl, listItemTpl, listLayoutTpl, listPanelTpl){
 
-        events: {
-            "click button.js-delete" : "deleteClicked",
-            "click button.js-modify" : "modifyClicked",
-            "click button.js-copy" : "copyClicked",
-            "click a.js-show" : "showConfig",
-            "click a.js-edit" : "editConfig"
-        },
+        var Config = Marionette.ItemView.extend({
+            tagName: "tr",
+            template: listItemTpl,
 
-        deleteClicked: function(e){
-            e.stopPropagation();
-            this.trigger("config:delete", this.model);
-        },
+            triggers: {
+                "click button.js-delete" : "config:delete",
+                "click a.js-edit" : "config:edit",
+                "click a.js-show" : "config:show",
+                "click button.js-modify" : "config:modify",
+                "click button.js-copy" : "config:copy"
+            },
 
-        modifyClicked: function(e){
-            e.stopPropagation();
-            this.trigger("config:modify", this.model);
-        },
+            flash: function(cssClass){
+                var $view = this.$el;
+                $view.hide().toggleClass(cssClass).fadeIn(800, function(){
+                    setTimeout(function(){
+                        $view.toggleClass(cssClass)
+                    }, 500);
+                });
+            },
 
-        copyClicked: function(e){
-            e.stopPropagation();
-            this.trigger("config:copy", this.model);
-        },
-
-        showConfig: function(e){
-            e.preventDefault();
-            e.stopPropagation();
-            this.trigger("config:show", this.model);
-        },
-
-        editConfig: function(e){
-            e.preventDefault();
-            e.stopPropagation();
-            this.trigger("config:edit", this.model);
-        },
-
-        flash: function(cssClass){
-            var $view = this.$el;
-            $view.hide().toggleClass(cssClass).fadeIn(800, function(){
-                setTimeout(function(){
-                    $view.toggleClass(cssClass)
-                }, 500);
-            });
-        },
-
-        remove: function(){
-            var self = this;
-            this.$el.fadeOut(function(){
-                Marionette.ItemView.prototype.remove.call(self);
-            });
-        }
-
-    });
-
-    List.Configs = Marionette.CompositeView.extend({
-        tagName: "table",
-        className: "table table-hover",
-        template: "#config-list",
-        itemView: List.Config,
-        itemViewContainer: "tbody",
-
-        initialize: function(){
-            this.listenTo(this.collection, "reset", function(){
-                this.appendHtml = function(collectionView, itemView, index){
-                    collectionView.$el.append(itemView.el);
-                }
-            });
-        },
-
-        onCompositeCollectionRendered: function(){
-            this.appendHtml = function(collectionView, itemView, index){
-                collectionView.$el.prepend(itemView.el);
+            remove: function(){
+                var self = this;
+                this.$el.fadeOut(function(){
+                    Marionette.ItemView.prototype.remove.call(self);
+                });
             }
-        }
-    });
 
-    List.Layout = Marionette.Layout.extend({
-        template: "#config-list-layout",
+        });
 
-        regions: {
-            panelRegion: "#panel-region",
-            configsRegion: "#configs-region"
-        }
-    });
+        var Configs = Marionette.CompositeView.extend({
+            tagName: "table",
+            className: "table table-hover",
+            template: listTpl,
+            childView: Config,
+            childViewContainer: "tbody",
 
-    List.Panel = Marionette.ItemView.extend({
-        template: "#config-list-panel",
+            initialize: function(){
+                this.listenTo(this.collection, "reset", function(){
+                    this.appendHtml = function(collectionView, itemView, index){
+                        collectionView.$el.append(itemView.el);
+                    }
+                });
+            },
 
-        triggers: {
-            "click button.js-new" : "config:new"
-        }
-    });
+            onCompositeCollectionRendered: function(){
+                this.appendHtml = function(collectionView, itemView, index){
+                    collectionView.$el.prepend(itemView.el);
+                }
+            }
+        });
 
+        var Layout = Marionette.LayoutView.extend({
+            template: listLayoutTpl,
+
+            regions: {
+                panelRegion: "#panel-region",
+                configsRegion: "#configs-region"
+            }
+        });
+
+        var Panel = Marionette.ItemView.extend({
+            template: listPanelTpl,
+
+            triggers: {
+                "click button.js-new" : "config:new"
+            }
+        });
+
+    return {
+        Layout: Layout,
+        Panel: Panel,
+        Configs: Configs,
+        Config: Config
+    }
 });

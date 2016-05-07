@@ -1,0 +1,1 @@
+<div class="alert alert-error">Такого конфига не существует!</div>

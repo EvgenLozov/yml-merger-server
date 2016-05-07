@@ -1,5 +1,12 @@
-ConfigManager.module("ConfigsApp.New", function(New, ConfigManager,  Backbone, Marionette, $, _){
-    New.Config = ConfigManager.ConfigsApp.Common.Views.Form.extend({
-        title: "Новый конфиг"
-    });
+define(["app", "../common/config_form"],
+function(ConfigManager, ConfigFormView) {
+
+    var NewConfigView = ConfigFormView.extend({
+            initialize: function () {
+                this.title = "Новый конфиг";
+                NewConfigView.__super__.initialize.apply(this, arguments);
+            }
+        });
+
+    return NewConfigView;
 });
