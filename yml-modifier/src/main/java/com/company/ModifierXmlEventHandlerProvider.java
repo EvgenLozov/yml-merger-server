@@ -124,7 +124,8 @@ public class ModifierXmlEventHandlerProvider {
         for (XmlEventHandler fileXmlEventWriter : fileXmlEventWriters)
             handlers.add(new XmlEventFilter(fileXmlEventWriter, new InElementCondition("offers").negate()));
 
-        handlers.add(new XmlEventFilter(new OffersSeparator( fileXmlEventWriters, offerCount/config.getFilesCount() ), new InElementCondition("offers") ));
+        int offersPerFile = offerCount/config.getFilesCount() == 0 ? 1 : offerCount/config.getFilesCount();
+        handlers.add(new XmlEventFilter(new OffersSeparator( fileXmlEventWriters, offersPerFile ), new InElementCondition("offers") ));
         handlers.add(new ProgressHandler(offerCount));
 
         return new OldResultsCleanerXmlEventHandler(config.getOutputDir()+"/output0.xml", new SuccessiveXmlEventHandler(handlers));
