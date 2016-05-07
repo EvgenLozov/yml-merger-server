@@ -2,9 +2,6 @@ package com.company.scheduler;
 
 
 import com.company.EpochalModifyService;
-import com.company.ModifierConfig;
-import com.company.ModifyService;
-import com.google.gson.Gson;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;

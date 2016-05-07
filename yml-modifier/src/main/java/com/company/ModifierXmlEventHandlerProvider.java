@@ -7,23 +7,26 @@ import com.company.handlers.ProgressHandler;
 import com.company.operators.AddContentToDescription;
 import com.company.operators.ModifyOfferDescription;
 import company.StAXService;
-import company.conditions.*;
+import company.conditions.EndElement;
+import company.conditions.InElementCondition;
+import company.conditions.StartElement;
 import company.handlers.xml.*;
 import company.handlers.xml.buffered.*;
 import company.handlers.xml.insert.SimpleXmlEventSupplier;
 import company.handlers.xml.insert.XmlEventInserter;
 import company.handlers.xml.insert.XmlEventSupplier;
-import company.providers.FileXMLEventReaderProvider;
 import company.providers.XMLEventReaderProvider;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.XMLEvent;
-import java.io.*;
-//import java.nio.charset.Charset;
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.function.Predicate;
+
+//import java.nio.charset.Charset;
 
 public class ModifierXmlEventHandlerProvider {
 
@@ -52,9 +55,9 @@ public class ModifierXmlEventHandlerProvider {
         handlers.add(new XmlEventFilter(new ModifyTextData((old) -> old.equals("0") ? "10000" : old ), new InElementCondition("price")));
 
         TreeSet<String> forbiddenWords = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
-        forbiddenWords.add("опт");
-        forbiddenWords.add("опт.");
-        forbiddenWords.add("оптом");
+        forbiddenWords.add("пїЅпїЅпїЅ");
+        forbiddenWords.add("пїЅпїЅпїЅ.");
+        forbiddenWords.add("пїЅпїЅпїЅпїЅпїЅ");
 
         handlers.add(new XmlEventFilter(new ModifyTextData(new RemoveWordsOperator(forbiddenWords)), new InElementCondition("description").or(new InElementCondition("name"))));
 
@@ -89,7 +92,7 @@ public class ModifierXmlEventHandlerProvider {
         operators.add(new AddElementIfAbsent("currencyId", xmlEventFactory, Optional.of("RUR")));
         operators.add(new AddElementIfAbsent("description", xmlEventFactory, Optional.empty()));
 
-        String removedStr = new String("удалено".getBytes(), config.getEncoding());
+        String removedStr = new String("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ".getBytes(), config.getEncoding());
 
         operators.add(new AddElementIfAbsent("name", xmlEventFactory, Optional.of(removedStr)));
         operators.add(new AddElementIfAbsent("model", xmlEventFactory, Optional.of(removedStr)));
@@ -105,6 +108,11 @@ public class ModifierXmlEventHandlerProvider {
     }
 
     private XmlEventHandler getOutputHandler() throws XMLStreamException {
+
+        if (config.getLimitSize() > 0) {
+            return  new OldResultsCleanerXmlEventHandler(config.getOutputDir()+"/output0.xml",new WriteToLimitSizeFile(config.getOutputDir(), config.getEncoding(), config.getLimitSize()));
+        }
+
         int offerCount = getOfferCount();
 
         List<XmlEventHandler> fileXmlEventWriters = new ArrayList<>();
@@ -116,10 +124,11 @@ public class ModifierXmlEventHandlerProvider {
         for (XmlEventHandler fileXmlEventWriter : fileXmlEventWriters)
             handlers.add(new XmlEventFilter(fileXmlEventWriter, new InElementCondition("offers").negate()));
 
-        handlers.add(new XmlEventFilter(new OffersSeparator( fileXmlEventWriters, offerCount/config.getFilesCount() ), new InElementCondition("offers") ));
+        int offersPerFile = offerCount/config.getFilesCount() == 0 ? 1 : offerCount/config.getFilesCount();
+        handlers.add(new XmlEventFilter(new OffersSeparator( fileXmlEventWriters, offersPerFile ), new InElementCondition("offers") ));
         handlers.add(new ProgressHandler(offerCount));
 
-        return new SuccessiveXmlEventHandler(handlers);
+        return new OldResultsCleanerXmlEventHandler(config.getOutputDir()+"/output0.xml", new SuccessiveXmlEventHandler(handlers));
     }
 
     private BufferXmlEventOperator provideDescriptionModification()

@@ -26,4 +26,30 @@ public class HttpService {
             return responseHandler.handle(response);
         }
     }
+
+    public <T> T execute(HttpRequestProvider httpRequestProvider, HttpResponseHandler<T> responseHandler, long sleep, int maxTries) throws IOException {
+        int tryCount = 0;
+
+        while (++tryCount < maxTries - 1)
+        {
+            try {
+                return execute(httpRequestProvider, responseHandler);
+            } catch (Exception e) {
+                sleep(sleep);
+            }
+        }
+
+        return execute(httpRequestProvider, responseHandler);//last try
+
+    }
+
+    private void sleep(long sleep)
+    {
+        try {
+            Thread.sleep(sleep);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }

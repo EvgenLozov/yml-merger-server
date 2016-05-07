@@ -2,12 +2,12 @@ package com.company.service;
 
 import com.company.config.CategoryIdsPair;
 import com.company.config.MergerConfig;
-import com.company.config.Replace;
+import company.replace.Replace;
 import company.http.HttpClientProvider;
 import company.http.HttpService;
 import com.company.processing.MergePostProcessor;
 import com.company.processing.MergedYmlSource;
-import com.company.processing.ReplaceProcessing;
+import company.replace.ReplaceProcessing;
 import company.config.ConfigRepository;
 import company.providers.FileXMLEventReaderProvider;
 import com.company.readerproviders.HttpXMLEventReaderProvider;

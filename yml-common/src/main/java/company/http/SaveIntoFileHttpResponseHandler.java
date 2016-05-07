@@ -2,6 +2,7 @@ package company.http;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
@@ -20,7 +21,7 @@ public class SaveIntoFileHttpResponseHandler implements HttpResponseHandler<Stri
 
     @Override
     public String handle(CloseableHttpResponse httpResponse) {
-        String fileName = "tmp/" + UUID.randomUUID().toString();
+        String fileName = "tmp" + File.separator + UUID.randomUUID().toString();
 
         try {
             Scanner scanner = new Scanner(httpResponse.getEntity().getContent(), encoding);

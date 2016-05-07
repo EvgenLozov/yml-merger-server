@@ -1,18 +1,13 @@
 package com.company;
 
-import com.company.ModifierConfig;
-import com.company.ModifierXmlEventHandlerProvider;
 import company.StAXService;
-import company.config.Config;
 import company.handlers.xml.XmlEventHandler;
-import company.http.*;
-import company.providers.FileXMLEventReaderProvider;
+import company.providers.ByteArrayXmlEventReaderProvider;
 import company.providers.XMLEventReaderProvider;
-import org.apache.http.impl.client.CloseableHttpClient;
+import company.replace.ReplaceProcessing;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -21,43 +16,21 @@ import java.io.UnsupportedEncodingException;
 public class ModifyService {
 
     public void process(ModifierConfig config)  {
+        byte[] inputXmlBytes = new ModifierXmlBytesProvider(config).get();
 
+        if (config.getReplaces() != null && !config.getReplaces().isEmpty())
+            inputXmlBytes = new ReplaceProcessing(config.getEncoding(), config.getReplaces()).process(inputXmlBytes);
 
-        XMLEventReaderProvider readerProvider = config.getInputFileURL() !=null && !config.getInputFileURL().isEmpty() ?
-                    getHttpReaderProvider(config):
-                    new FileXMLEventReaderProvider(config.getInputFile(), config.getEncoding());
-
+        XMLEventReaderProvider readerProvider = new ByteArrayXmlEventReaderProvider(inputXmlBytes, config.getEncoding());
         StAXService stAXService = new StAXService( readerProvider );
 
         try {
-            XmlEventHandler handler = new ModifierXmlEventHandlerProvider(config,readerProvider).get();
+            XmlEventHandler handler = new ModifierXmlEventHandlerProvider(config, readerProvider).get();
             stAXService.process(handler);
+
         } catch (FileNotFoundException | UnsupportedEncodingException | XMLStreamException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
-    }
-
-    private XMLEventReaderProvider getHttpReaderProvider(ModifierConfig config)
-    {
-        try {
-            CloseableHttpClient httpClient;
-            try {
-                httpClient = new HttpClientProvider(config.getUser(), config.getPsw()).get();
-            } catch (Exception e){
-                e.printStackTrace();
-                throw new RuntimeException("Unable to get HttpClient");
-            }
-            HttpService httpService = new HttpService(httpClient);
-            HttpRequestProvider requestProvider = new DownloadPriceListRequest(config.getInputFileURL());
-            HttpResponseHandler<String> responseHandler = new SaveIntoFileHttpResponseHandler(config.getEncoding());
-
-            String tmpFile = httpService.execute(requestProvider, responseHandler);
-
-            return new FileXMLEventReaderProvider(tmpFile, config.getEncoding());
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Unable to do auto merge of " + config.getId());
-        }
     }
 }
