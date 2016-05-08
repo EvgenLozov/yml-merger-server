@@ -204,9 +204,9 @@
                 <% _.each(replaces, function(replace)
                 { %>
                 <tr>
-                    <td> <%= replace.wordsToReplace %> </td>
+                    <td> <% print(_.escape(replace.wordsToReplace)) %> </td>
                     <% if (replace.replacement != "") { %>
-                    <td> <%= replace.replacement %></td>
+                    <td> <% print(_.escape(replace.replacement)) %></td>
                     <% } else { %>
                     <td> [Пустая строка] </td> <% } %>
                 </tr>

@@ -1,12 +1,12 @@
 <td width="50%">
-    <%= wordsToReplace %>
+    <% print(_.escape(wordsToReplace)) %>
 </td>
 <td width="30%">
     <% if (replacement == "") {
-    print("[Пустая строка]")
-    } else {
-    print(replacement)
-    } %>
+            print("[Пустая строка]")
+        } else {
+            print(_.escape(replacement))
+        } %>
 </td>
 <td width="20%">
     <button class="btn btn-danger btn-sm js-delete">
