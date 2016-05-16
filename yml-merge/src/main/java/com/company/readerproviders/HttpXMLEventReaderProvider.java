@@ -38,7 +38,7 @@ public class HttpXMLEventReaderProvider implements XMLEventReaderProvider {
             if (fileName == null){
 
                 logger.info("Downloading " + url);
-                fileName = httpService.execute(new DownloadPriceListRequest(url), new SaveIntoFileHttpResponseHandler(encoding), 1000 * 60, 8);
+                fileName = httpService.execute(new DownloadPriceListRequest(url), new SaveIntoFileHttpResponseHandler(encoding), 1000 * 60, 100);
                 logger.info("Downloading " + url + " is completed");
             }
 
