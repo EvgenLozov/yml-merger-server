@@ -33,7 +33,7 @@ public class MergerConfig implements Config, PswConfig {
     private int periodInHours;
     private Set<String> notAllowedWords;
     private long nextFireTime;
-    private Filter filter;
+    private FilterParameter filterParameter;
 
     public String getUser() {
         return user;
@@ -195,11 +195,11 @@ public class MergerConfig implements Config, PswConfig {
         return nextFireTime;
     }
 
-    public Filter getFilter() {
-        return filter;
+    public FilterParameter getFilterParameter() {
+        return filterParameter;
     }
 
-    public void setFilter(Filter filter) {
-        this.filter = filter;
+    public void setFilterParameter(FilterParameter filterParameter) {
+        this.filterParameter = filterParameter;
     }
 }
