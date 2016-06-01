@@ -214,6 +214,22 @@
                         <input type="text" class="form-control" id="periodInHours" name="period" value="<%= periodInHours %>">
                     </div>
                 </div>
+                <div class="form-group">
+                <label class="col-md-4 control-label">Фильтр офферов:</label>
+                    <div class="col-md-8">
+                            <label class="checkbox-inline"><input type="checkbox" name="filterCurrency" value="RUR">Рубли (рус.)</label>
+                            <label class="checkbox-inline"><input type="checkbox" name="filterCurrency" value="UAH">Гривны</label>
+                            <label class="checkbox-inline"><input type="checkbox" name="filterCurrency" value="BYR">Рубли (бел.)</label>
+                            <label class="checkbox-inline"><input type="checkbox" name="filterCurrency" value="KZT">Тенге</label>
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-8">
+                            <label class="checkbox-inline"><input type="checkbox" name="filterImage" value="image">Изображение</label>
+                            <label class="checkbox-inline"><input type="checkbox" name="filterDescription" value="description">Описание</label>
+                            <label class="checkbox-inline"><input type="checkbox" name="filterAvailable" value="available">Наличие</label>
+                    </div>
+                </div>
             </div>
             </form>
 
@@ -542,6 +558,26 @@
             <label for="periodInHours" class="col-md-4 control-label">Обновлять каждые, часов</label>
             <div class="col-md-2">
                 <input type="text" class="form-control" id="periodInHours" name="period" value="<%= periodInHours %>" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Фильтр офферов:</label>
+            <div class="col-md-8">
+                <% if (filterParameter) {
+                    filterCriteria = "";
+                    if (filterParameter.image) filterCriteria += "Изображение;";
+                    if (filterParameter.description) filterCriteria += "Описание;";
+                    if (filterParameter.available) filterCriteria += "Наличие;";
+                %>
+                    <input type="text" class="form-control" id="filterCurrency" name="filterCurrency" value="<%= filterParameter.currencies %>" disabled>
+                    <input type="text" class="form-control" id="filterCriteria" name="filterCriteria" value="<%= filterCriteria %>" disabled>
+                <% } else { %>
+                    <label class="col-md-1 control-label">Нет</label>
+                <% } %>
+            </div>
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-8">
             </div>
         </div>
         </form>

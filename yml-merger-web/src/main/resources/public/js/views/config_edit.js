@@ -88,6 +88,26 @@ APP.ConfigEditView = Backbone.View.extend({
       }
     });
 
+    var filterParameter = this.config.get('filterParameter');
+
+    if (!filterParameter)
+      return this;
+
+    $.each(this.$el.find("input[name='filterCurrency']"), function(){
+      if (_.contains(filterParameter.currencies, $(this).val())){
+        $(this).prop('checked', true);
+      }
+    });
+    if (filterParameter.image) {
+      this.$el.find("input[name='filterImage']").prop('checked', true);
+    }
+    if (filterParameter.description) {
+      this.$el.find("input[name='filterDescription']").prop('checked', true);
+    }
+    if (filterParameter.available) {
+      this.$el.find("input[name='filterAvailable']").prop('checked', true);
+    }
+
     return this;
   },
 

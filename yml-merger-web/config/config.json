@@ -45,7 +45,8 @@
   "time" : "18:00",
   "periodInHours" : 0,
   "notAllowedWords" : [ "ваып ыва", "ывап", "вап ывап", "ваыпвыа", "пва" ],
-  "nextFireTime" : 1455379200000
+  "nextFireTime" : 1464879600000,
+  "filterParameter" : null
 }, {
   "id" : "72f15921-4601-45d9-ad2b-f0389a048995",
   "name" : "test config 9-45",
@@ -66,5 +67,11 @@
   "time" : "09:45",
   "periodInHours" : 2,
   "notAllowedWords" : [ ],
-  "nextFireTime" : 1455295891224
+  "nextFireTime" : 1464811110304,
+  "filterParameter" : {
+    "currencies" : [ "RUR", "UAH" ],
+    "image" : true,
+    "description" : true,
+    "available" : true
+  }
 } ]
