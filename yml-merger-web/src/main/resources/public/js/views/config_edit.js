@@ -117,12 +117,26 @@ APP.ConfigEditView = Backbone.View.extend({
       currencies.push($(this).val());
     });
 
+    var filterParameter = {};
+    filterParameter.currencies = [];
+    $.each($("input[name='filterCurrency']:checked"), function(){
+      filterParameter.currencies.push($(this).val());
+    });
+    if (filterParameter.currencies.length != 0) {
+      filterParameter.image = $("input[name='filterImage']").prop('checked');
+      filterParameter.description = $("input[name='filterDescription']").prop('checked');
+      filterParameter.available = $("input[name='filterAvailable']").prop('checked');
+    } else {
+      filterParameter = null;
+    }
+
     this.config.set({
       name: this.$el.find('#name').val(),
       user: this.$el.find('#user').val(),
       psw: btoa(this.$el.find('#psw').val()),
       encoding: this.$el.find('#encoding').val(),
       currencies: currencies,
+      filterParameter: filterParameter,
       oldPrice: this.$el.find('#oldPrice').val()/100,
       replaces: getReplaces(this.$el.find("#replacesTable").find('tbody').children()),
       parentIds : getParentIds(this.$el.find("#parentIdsTable").find('tbody').children())
