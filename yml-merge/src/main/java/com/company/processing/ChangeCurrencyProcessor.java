@@ -65,7 +65,7 @@ public class ChangeCurrencyProcessor implements ByteArrayProcessor {
         XmlEventHandler xmlEventHandler = new MergeXmlEventHandlerFactory(factories).get();
 
 
-        new BufferedXmlEventHandler(xmlEventHandler, new StartElement("offer"), new EndElement("offer"), getFilter() );
+        xmlEventHandler = new BufferedXmlEventHandler(xmlEventHandler, new StartElement("offer"), new EndElement("offer"), getFilter() );
 
         staxService.process(xmlEventHandler);
 
