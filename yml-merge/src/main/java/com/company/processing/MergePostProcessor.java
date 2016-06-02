@@ -1,8 +1,11 @@
 package com.company.processing;
 
+import com.company.config.FilterParameter;
+import com.company.config.MergerConfig;
 import company.Currency;
 import company.bytearray.ByteArrayPostProcessor;
 import company.bytearray.RenamingSaveIntoFile;
+import company.config.Config;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.File;
@@ -11,26 +14,20 @@ import java.util.List;
 
 public class MergePostProcessor implements ByteArrayPostProcessor {
 
-    String encoding;
-    List<Currency> currencies;
-    String foulder;
-    double oldPrice;
+    MergerConfig config;
 
-    public MergePostProcessor(String encoding, List<Currency> currencies, String foulder, double oldPrice) {
-        this.encoding = encoding;
-        this.currencies = currencies;
-        this.foulder = foulder;
-        this.oldPrice = oldPrice;
+    public MergePostProcessor(MergerConfig config) {
+        this.config = config;
     }
 
     @Override
     public void process(byte[] bytes) throws IOException, XMLStreamException {
-        new File(foulder).mkdirs();
+        new File(config.getOutputFile()).mkdirs();
 
-        for (Currency currency : currencies) {
-            byte[] processed = new ChangeCurrencyProcessor( encoding, currency, oldPrice ).process(bytes);
+        for (Currency currency : config.getCurrencies()) {
+            byte[] processed = new ChangeCurrencyProcessor( config.getEncoding(), currency, config.getOldPrice(), config.getFilterParameter() ).process(bytes);
 
-            new RenamingSaveIntoFile(foulder+"/"+currency.getFileName()).process(processed);
+            new RenamingSaveIntoFile(config.getOutputFile()+"/"+currency.getFileName()).process(processed);
         }
     }
 }

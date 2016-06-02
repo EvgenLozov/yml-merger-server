@@ -52,7 +52,7 @@ public class MergeServiceImpl implements MergeService {
         ReplaceProcessing processing = new ReplaceProcessing(config.getEncoding(), getReplaces(config));
         bytes = processing.process(bytes);
 
-        new MergePostProcessor(config.getEncoding(), config.getCurrencies(), config.getOutputFile(), config.getOldPrice()).process(bytes);
+        new MergePostProcessor(config).process(bytes);
 
         for (HttpXMLEventReaderProvider httpProvider : httpProviders) {
             httpProvider.removeTmpFile();

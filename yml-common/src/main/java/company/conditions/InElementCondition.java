@@ -4,7 +4,7 @@ import javax.xml.stream.events.XMLEvent;
 import java.util.function.Predicate;
 
 /**
- * повертае true якщо xmlEvent в елементі elementName
+ * РїРѕРІРµСЂС‚Р°Рµ true СЏРєС‰Рѕ xmlEvent РІ РµР»РµРјРµРЅС‚С– elementName
  */
 public class InElementCondition implements Predicate<XMLEvent> {
     String elementName;

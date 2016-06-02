@@ -1,5 +1,6 @@
 package company.util;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.XMLEvent;
 import java.util.Iterator;
@@ -48,6 +49,26 @@ public class XmlEventUtil {
             if (event.isStartElement() && event.asStartElement().getName().getLocalPart().equals(elementName))
                 return Optional.of(event);
 
+        }
+
+        return Optional.empty();
+    }
+
+    public static Optional<String> getAttributeValue(List<XMLEvent> events, String element, String attributeName)
+    {
+        for (XMLEvent event : events) {
+            if (!event.isStartElement())
+                continue;
+
+            if ( !event.asStartElement().getName().getLocalPart().equals(element) )
+                continue;
+
+            if (event.asStartElement().getAttributeByName(QName.valueOf(attributeName)) == null)
+                return Optional.empty();
+
+            String attValue = event.asStartElement().getAttributeByName(QName.valueOf(attributeName)).getValue();
+
+            return Optional.of(attValue);
         }
 
         return Optional.empty();

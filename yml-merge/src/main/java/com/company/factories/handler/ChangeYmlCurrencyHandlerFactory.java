@@ -6,7 +6,7 @@ import company.handlers.xml.XmlEventHandler;
 import company.handlers.xml.currency.ChangeYmlCurrencyHandler;
 
 /*
-* Конструюює обробник призначенням якого являється зміна валюти прайса
+* РљРѕРЅСЃС‚СЂСѓСЋСЋС” РѕР±СЂРѕР±РЅРёРє РїСЂРёР·РЅР°С‡РµРЅРЅСЏРј СЏРєРѕРіРѕ СЏРІР»СЏС”С‚СЊСЃСЏ Р·РјС–РЅР° РІР°Р»СЋС‚Рё РїСЂР°Р№СЃР°
 * */
 public class ChangeYmlCurrencyHandlerFactory implements Factory<XmlEventHandler> {
 
