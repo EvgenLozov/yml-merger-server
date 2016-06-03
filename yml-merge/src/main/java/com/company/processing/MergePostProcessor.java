@@ -27,6 +27,8 @@ public class MergePostProcessor implements ByteArrayPostProcessor {
         for (Currency currency : config.getCurrencies()) {
             byte[] processed = new ChangeCurrencyProcessor( config.getEncoding(), currency, config.getOldPrice(), config.getFilterParameter() ).process(bytes);
 
+            processed = new OffersFilter(config, currency).process(processed);
+
             new RenamingSaveIntoFile(config.getOutputFile()+"/"+currency.getFileName()).process(processed);
         }
     }
