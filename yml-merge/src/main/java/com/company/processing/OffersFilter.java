@@ -7,10 +7,7 @@ import company.Currency;
 import company.Factory;
 import company.StAXService;
 import company.bytearray.ByteArrayProcessor;
-import company.conditions.AttributeValuePredicate;
-import company.conditions.ElementIsEmpty;
-import company.conditions.EndElement;
-import company.conditions.StartElement;
+import company.conditions.*;
 import company.config.Config;
 import company.handlers.xml.ConditionalXmlEventWriter;
 import company.handlers.xml.XmlEventHandler;
@@ -65,20 +62,20 @@ public class OffersFilter implements ByteArrayProcessor {
     {
         FilterParameter filterParameter = config.getFilterParameter();
 
-        if (filterParameter == null || !filterParameter.getCurrencies().contains(currency))
-            return events -> events;
+        Predicate<List<XMLEvent>> filterPredicate = new OfferUniqueness();
 
-        Predicate<List<XMLEvent>> predicate = events->true;
+        if (filterParameter != null && filterParameter.getCurrencies().contains(currency))
+        {
+            if (filterParameter.isDescription())
+                filterPredicate = filterPredicate.and( new ElementIsEmpty("description").negate());
 
-        if (filterParameter.isDescription())
-            predicate = predicate.and( new ElementIsEmpty("description").negate());
+            if (filterParameter.isImage())
+                filterPredicate = filterPredicate.and( new ElementIsEmpty("picture").negate());
 
-        if (filterParameter.isImage())
-            predicate = predicate.and( new ElementIsEmpty("picture").negate());
+            if (filterParameter.isAvailable())
+                filterPredicate = filterPredicate.and( new AttributeValuePredicate("offer", "available", "true") );
+        }
 
-        if (filterParameter.isAvailable())
-            predicate = predicate.and( new AttributeValuePredicate("offer", "available", "true") );
-
-        return new XmlEventFilter(predicate);
+        return new XmlEventFilter(filterPredicate);
     }
 }
