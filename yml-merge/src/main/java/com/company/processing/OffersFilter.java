@@ -62,7 +62,7 @@ public class OffersFilter implements ByteArrayProcessor {
     {
         FilterParameter filterParameter = config.getFilterParameter();
 
-        Predicate<List<XMLEvent>> filterPredicate = new OfferUniqueness();
+        Predicate<List<XMLEvent>> filterPredicate = events -> true;
 
         if (filterParameter != null && filterParameter.getCurrencies().contains(currency))
         {
@@ -75,6 +75,8 @@ public class OffersFilter implements ByteArrayProcessor {
             if (filterParameter.isAvailable())
                 filterPredicate = filterPredicate.and( new AttributeValuePredicate("offer", "available", "true") );
         }
+
+        filterPredicate = filterPredicate.and(new OfferUniqueness());
 
         return new XmlEventFilter(filterPredicate);
     }
