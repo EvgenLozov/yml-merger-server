@@ -64,9 +64,6 @@ public class ChangeCurrencyProcessor implements ByteArrayProcessor {
 
         XmlEventHandler xmlEventHandler = new MergeXmlEventHandlerFactory(factories).get();
 
-
-        xmlEventHandler = new BufferedXmlEventHandler(xmlEventHandler, new StartElement("offer"), new EndElement("offer"), getFilter() );
-
         staxService.process(xmlEventHandler);
 
         mergedOut.close();
@@ -75,22 +72,4 @@ public class ChangeCurrencyProcessor implements ByteArrayProcessor {
         return byteOutputStream.toByteArray();
     }
 
-    private BufferXmlEventOperator getFilter()
-    {
-        if (filterParameter == null || !filterParameter.getCurrencies().contains(currency))
-            return events -> events;
-
-        Predicate<List<XMLEvent>> predicate = events->true;
-
-        if (filterParameter.isDescription())
-            predicate = predicate.and( new ElementIsEmpty("description").negate());
-
-        if (filterParameter.isImage())
-            predicate = predicate.and( new ElementIsEmpty("picture").negate());
-
-        if (filterParameter.isAvailable())
-            predicate = predicate.and( new AttributeValuePredicate("offer", "available", "true") );
-
-        return new XmlEventFilter(predicate);
-    }
 }

@@ -1,6 +1,8 @@
 package company.handlers.aggregated;
 
 
+import company.util.XmlEventUtil;
+
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLStreamException;
