@@ -36,7 +36,7 @@ public class MergeJob implements Job {
         try {
             mergeService.process(config);
         } catch (XMLStreamException | IOException e) {
-            logger.warning("Unable to do auto merge of " + config.getName());
+            logger.warning("Unable to do auto merge of " + config.getName()+"; reason:"+e.getMessage());
             e.printStackTrace();
         }
     }
