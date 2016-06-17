@@ -21,6 +21,9 @@ public class SaveIntoFileHttpResponseHandler implements HttpResponseHandler<Stri
 
     @Override
     public String handle(CloseableHttpResponse httpResponse) {
+        if (!httpResponse.getHeaders("content-type")[0].getValue().contains("application/octet-stream"))
+            throw new RuntimeException("Content-type must be application/octet-stream");
+
         String fileName = "tmp" + File.separator + UUID.randomUUID().toString();
 
         try {
@@ -39,4 +42,5 @@ public class SaveIntoFileHttpResponseHandler implements HttpResponseHandler<Stri
         }
 
     }
+
 }
