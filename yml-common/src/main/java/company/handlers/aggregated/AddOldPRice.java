@@ -69,6 +69,6 @@ public class AddOldPRice implements AggregatedXmlEventHandler {
                 return Double.valueOf(events.get(i+1).toString());
             }
 
-        throw new RuntimeException("Unable to find element price");
+        return 10000;
     }
 }
